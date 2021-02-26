@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "652379603467",
+    "project_id": "evermind-836fa",
+    "storage_bucket": "evermind-836fa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:652379603467:android:7353b950f6109d63befd0e",
+        "android_client_info": {
+          "package_name": "com.ferllop.evermind"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "652379603467-f9dkb8076runcsatgjojbpc3t8htsb6j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeKVT-sZhIW6yyC3BTupoINKLDVyqTSao"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "652379603467-f9dkb8076runcsatgjojbpc3t8htsb6j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
