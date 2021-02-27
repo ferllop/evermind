@@ -1,6 +1,12 @@
 package com.ferllop.evermind;
 
+import com.ferllop.evermind.models.Card;
+
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -11,7 +17,9 @@ import static org.junit.Assert.*;
  */
 public class ExampleUnitTest {
     @Test
-    public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
+    public void labels_should_be_provided_as_comma_separated_text() {
+        String inputText = "label1,label2,label3";
+        List<String> labels = Card.parseLabels(inputText);
+        assertEquals(Arrays.asList("label1", "label2", "label3"), labels);
     }
 }
