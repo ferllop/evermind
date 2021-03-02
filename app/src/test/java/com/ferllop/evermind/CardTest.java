@@ -4,7 +4,6 @@ import com.ferllop.evermind.models.Card;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,7 +14,7 @@ import static org.junit.Assert.*;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-public class ExampleUnitTest {
+public class CardTest {
     @Test
     public void labels_should_be_provided_as_comma_separated_text() {
         String inputText = "label1,label2,label3";
