@@ -33,7 +33,7 @@ public class SearchCardsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_cards);
         RecyclerView recycler = findViewById(R.id.card_frame_recycler);
-        CardsAdapter adapter = new CardsAdapter(new ArrayList<Card>());
+        CardsAdapter adapter = new CardsAdapter();
         recycler.setAdapter(adapter);
 
         findViewById(R.id.search_button).setOnClickListener(new View.OnClickListener() {
@@ -74,28 +74,11 @@ public class SearchCardsActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        adapter.addCard(document.toObject(Card.class));
-                    }
-                } else {
-                    Log.d(TAG, "Error getting documents: ", task.getException());
-                }
-            }
-        });
-    }
+                        String id = document.getId();
 
-    private void agetAllCards(CardsAdapter adapter) {
-        Log.d(TAG, "getting all cards");
-        List<Card> cards = new ArrayList<>();
+                        Card card = document.toObject(Card.class);
 
-        Query dbQuery = FirebaseFirestore.getInstance().collection("cards");
-
-        dbQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        Log.d(TAG, "card found: " + document.getData());
-                        adapter.addCard(document.toObject(Card.class));
+                        adapter.addCard(id, card);
                     }
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
@@ -110,7 +93,9 @@ public class SearchCardsActivity extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                            adapter.addCard(document.toObject(Card.class));
+                            String id = document.getId();
+                            Card card = document.toObject(Card.class);
+                            adapter.addCard(id, card);
                         }
                     } else {
                         Log.d(SearchCardsActivity.this.TAG, "failed getting all cards");

@@ -14,12 +14,22 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        Button button = findViewById(R.id.search_cards_button);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button searchButton = findViewById(R.id.search_cards_button);
+        searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(HomeActivity.this, SearchCardsActivity.class));
             }
         });
+
+
+        Button createButton = findViewById(R.id.create_card_button);
+        createButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this, CardDataActivity.class));
+            }
+        });
+
     }
 }

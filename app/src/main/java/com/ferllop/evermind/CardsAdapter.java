@@ -1,10 +1,10 @@
 package com.ferllop.evermind;
 
-import android.text.TextUtils;
-import android.util.Log;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,19 +17,19 @@ import java.util.List;
 
 public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
 
-    List<Card> cards;
+    List<IdentifiedCard> cards;
 
-    public CardsAdapter(List<Card> cards) {
-        this.cards = cards;
+    public CardsAdapter() {
+        this.cards = new ArrayList<>();
     }
 
-    public void addCard(Card card){
-        cards.add(card);
+    public void addCard(String id, Card card){
+        cards.add(new IdentifiedCard(id, card));
         notifyDataSetChanged();
     }
 
     public void clear(){
-        cards = new ArrayList<>();
+        cards.clear();
         notifyDataSetChanged();
     }
 
@@ -45,7 +45,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Card card = cards.get(position);
+        IdentifiedCard card = cards.get(position);
         holder.bind(card);
     }
 
@@ -54,11 +54,30 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
         return cards.size();
     }
 
+    class IdentifiedCard {
+        String id;
+        Card card;
+
+        public IdentifiedCard(String id, Card card){
+            this.id = id;
+            this.card = card;
+        }
+
+        public Card getCard(){
+            return card;
+        }
+
+        public String getId(){
+            return id;
+        }
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder{
         TextView author;
         TextView labels;
         TextView question;
         TextView answer;
+        Button edit;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -66,13 +85,22 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
             labels = itemView.findViewById(R.id.labels_textView);
             question = itemView.findViewById(R.id.question_textView);
             answer = itemView.findViewById(R.id.answer_textView);
+            edit = itemView.findViewById(R.id.edit_button);
         }
 
-        public void bind(Card card) {
-            author.setText("@" + card.getAuthor());
-            labels.setText(TextUtils.join(", ", card.getLabels()));
+        public void bind(IdentifiedCard identifiedCard) {
+            Card card = identifiedCard.getCard();
+            author.setText("@" + card.getAuthor() + "//" + identifiedCard.getId());
+            labels.setText(card.stringifyLabels());
             question.setText(card.getQuestion());
             answer.setText(card.getAnswer());
+            edit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), CardDataActivity.class);
+                    v.getContext().startActivity(intent.putExtra("id", identifiedCard.getId()));
+                }
+            });
         }
     }
 }

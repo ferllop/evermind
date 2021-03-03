@@ -19,6 +19,11 @@
     <string name="search_button">search</string>
     <string name="cards_to_review">Today you have #qty card#s to review</string>
     <string name="empty_query_search_error">You must provide a not empty search</string>
+    <string name="delete_button">delete</string>
+    <string name="save_button">save</string>
+    <string name="labels_editTextHint">labels...</string>
+    <string name="answer_editText_hint">And here goes the answer</string>
+    <string name="quesstion_editText_hint">Write the question here</string>
 
 
 </resources>
