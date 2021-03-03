@@ -41,7 +41,6 @@ public class SearchCardsActivity extends AppCompatActivity {
                 String searchText = ((EditText) findViewById(R.id.searchBar_textInput)).getText().toString();
                 try{
                     adapter.clear();
-                    Log.d(TAG, "contenido: " + searchText);
                     SearchCardsActivity.this.getCards(searchText, adapter);
                 } catch (IllegalArgumentException ex) {
                     Toast.makeText(getApplicationContext(), R.string.empty_query_search_error, Toast.LENGTH_SHORT).show();
@@ -56,7 +55,6 @@ public class SearchCardsActivity extends AppCompatActivity {
 
         Query dbQuery = FirebaseFirestore.getInstance().collection("cards");
         if(search.hasLabels()){
-            Log.d(TAG, "enter if labels");
             for(String label: search.getLabels()){
                 dbQuery = dbQuery.whereEqualTo("lab."+label, true);
             }
@@ -70,7 +68,6 @@ public class SearchCardsActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        Log.d(TAG, document.getId() + " => " + document.getData());
                         adapter.addCard(document.toObject(Card.class));
                     }
                 } else {
@@ -86,7 +83,6 @@ public class SearchCardsActivity extends AppCompatActivity {
         FirebaseFirestore.getInstance().collection("cards").get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        Log.d(SearchCardsActivity.this.TAG, "successfull getting all cards");
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             adapter.addCard(document.toObject(Card.class));
                         }

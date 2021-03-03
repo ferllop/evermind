@@ -8,17 +8,37 @@ import java.util.Map;
 
 public class Card {
 
+    protected String id;
+    protected String author;
     protected String question;
     protected String answer;
     protected List<String> labels;
 
     public Card(){}
 
-    public Card(String question, String answer, String labels){
+    public Card(String author, String question, String answer, String labels){
+        this.author = author;
         this.question = question;
         this.answer = answer;
         this.labels = Card.parseLabels(labels);
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
 
     public String getQuestion() {
         return question;
@@ -38,10 +58,6 @@ public class Card {
 
     public List<String> getLabels() {
         return labels;
-    }
-
-    public void NO_setLabels(List<String> labels) {
-        this.labels = labels;
     }
 
     public void setLabels(Map<String, Boolean> labels) {
