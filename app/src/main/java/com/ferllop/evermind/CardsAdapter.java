@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ferllop.evermind.models.Card;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
@@ -22,6 +23,11 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
 
     public void addCard(Card card){
         cards.add(card);
+        notifyDataSetChanged();
+    }
+
+    public void clear(){
+        cards = new ArrayList<>();
         notifyDataSetChanged();
     }
 
