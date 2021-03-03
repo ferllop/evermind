@@ -18,6 +18,7 @@
     <string name="search_existing_cards">Search for existing cards</string>
     <string name="search_button">search</string>
     <string name="cards_to_review">Today you have #qty card#s to review</string>
+    <string name="empty_query_search_error">You must provide a not empty search</string>
 
 
 </resources>
