@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_background"
+    tools:context=".HomeActivity">
+
+    <TextView
+        android:id="@+id/logo_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:fontFamily="arial"
+        android:text="@string/app_name"
+        android:textColor="@color/logo_color"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/review_cards_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="40dp"
+        android:minEms="2"
+        android:text="@string/cards_to_review"
+        android:textAlignment="center"
+        android:textColor="@color/text_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo_textView" />
+
+    <Button
+        android:id="@+id/review_cards_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/start_button"
+        android:textColor="@color/button_text_color"
+        app:backgroundTint="@android:color/white"
+        app:cornerRadius="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/review_cards_textView"
+        app:rippleColor="@color/button_ripple"
+        app:strokeColor="@color/button_border"
+        app:strokeWidth="2dp" />
+
+    <TextView
+        android:id="@+id/create_card_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="20dp"
+        android:minEms="2"
+        android:text="@string/create_new_card"
+        android:textAlignment="center"
+        android:textColor="@color/text_color"
+        app:layout_constraintBottom_toTopOf="@+id/create_card_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/create_card_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"
+        app:backgroundTint="@android:color/white"
+        android:text="@string/create_button"
+        app:iconTint="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/add_existing_cards_textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:rippleColor="@color/button_ripple"
+        app:strokeColor="@color/button_border"
+        app:strokeWidth="2dp"  />
+
+    <TextView
+        android:id="@+id/add_existing_cards_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="20dp"
+        android:minEms="2"
+        android:text="@string/search_existing_cards"
+        android:textAlignment="center"
+        android:textColor="@color/text_color"
+        app:layout_constraintBottom_toTopOf="@+id/search_cards_textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/search_cards_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        app:backgroundTint="@android:color/white"
+        android:text="@string/search_button"
+        app:iconTint="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:rippleColor="@color/button_ripple"
+        app:strokeColor="@color/button_border"
+        app:strokeWidth="2dp"  />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

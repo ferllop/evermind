@@ -11,6 +11,13 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="searchBarHint">search...</string>
     <string name="edit_button">edit</string>
+    <string name="brand">evermind</string>
+    <string name="start_button">start</string>
+    <string name="create_new_card">Create a new card</string>
+    <string name="create_button">create</string>
+    <string name="search_existing_cards">Search for existing cards</string>
+    <string name="search_button">search</string>
+    <string name="cards_to_review">Today you have #qty card#s to review</string>
 
 
 </resources>
