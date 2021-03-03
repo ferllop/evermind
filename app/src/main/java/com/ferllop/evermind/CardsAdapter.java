@@ -1,5 +1,7 @@
 package com.ferllop.evermind;
 
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,17 +55,22 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
-
+        TextView author;
+        TextView labels;
         TextView question;
         TextView answer;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            author = itemView.findViewById(R.id.author_textView);
+            labels = itemView.findViewById(R.id.labels_textView);
             question = itemView.findViewById(R.id.question_textView);
             answer = itemView.findViewById(R.id.answer_textView);
         }
 
         public void bind(Card card) {
+            author.setText("@" + card.getAuthor());
+            labels.setText(TextUtils.join(", ", card.getLabels()));
             question.setText(card.getQuestion());
             answer.setText(card.getAnswer());
         }

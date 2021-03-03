@@ -22,6 +22,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class SearchCardsActivity extends AppCompatActivity {
 
@@ -39,24 +40,29 @@ public class SearchCardsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String searchText = ((EditText) findViewById(R.id.searchBar_textInput)).getText().toString();
-                try{
                     adapter.clear();
-                    SearchCardsActivity.this.getCards(searchText, adapter);
-                } catch (IllegalArgumentException ex) {
-                    Toast.makeText(getApplicationContext(), R.string.empty_query_search_error, Toast.LENGTH_SHORT).show();
-                }
+                    if(searchText.equals("all")){
+                        SearchCardsActivity.this.getAllCards(adapter);
+                    } else {
+                        try{
+                            SearchCardsActivity.this.getCards(searchText, adapter);
+                        } catch (IllegalArgumentException ex) {
+                            Toast.makeText(getApplicationContext(), R.string.empty_query_search_error, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
             }
         });
     }
 
-    private List<Card> getCards(String query, CardsAdapter adapter) {
+    private void getCards(String query, CardsAdapter adapter) {
         List<Card> cards = new ArrayList<>();
         Search search = new Search(query);
 
         Query dbQuery = FirebaseFirestore.getInstance().collection("cards");
         if(search.hasLabels()){
             for(String label: search.getLabels()){
-                dbQuery = dbQuery.whereEqualTo("lab."+label, true);
+                dbQuery = dbQuery.whereEqualTo("labels."+label, true);
             }
         }
         if(search.hasAuthor()){
@@ -75,10 +81,30 @@ public class SearchCardsActivity extends AppCompatActivity {
                 }
             }
         });
-        return cards;
     }
 
-    private List<Card> getAllCards(CardsAdapter adapter){
+    private void agetAllCards(CardsAdapter adapter) {
+        Log.d(TAG, "getting all cards");
+        List<Card> cards = new ArrayList<>();
+
+        Query dbQuery = FirebaseFirestore.getInstance().collection("cards");
+
+        dbQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d(TAG, "card found: " + document.getData());
+                        adapter.addCard(document.toObject(Card.class));
+                    }
+                } else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
+                }
+            }
+        });
+    }
+
+    private void getAllCards(CardsAdapter adapter){
         List<Card> cards = new ArrayList<>();
         FirebaseFirestore.getInstance().collection("cards").get()
                 .addOnCompleteListener(task -> {
@@ -90,7 +116,6 @@ public class SearchCardsActivity extends AppCompatActivity {
                         Log.d(SearchCardsActivity.this.TAG, "failed getting all cards");
                     }
                 });
-        return cards;
     }
 
 }
