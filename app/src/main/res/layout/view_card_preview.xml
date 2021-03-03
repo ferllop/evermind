@@ -45,16 +45,18 @@
 
         <TextView
             android:id="@+id/author_textView"
-            android:layout_width="wrap_content"
+            android:layout_width="195dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
             android:textAlignment="textStart"
-            app:layout_constraintStart_toStartOf="@+id/question_textView"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/labels_textView"
-            android:layout_width="wrap_content"
+            android:layout_width="195dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
             android:textAlignment="textEnd"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
