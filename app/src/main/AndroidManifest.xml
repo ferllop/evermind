@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Evermind">
-        <activity android:name=".SearchCardsActivity"></activity>
+        <activity android:name=".SearchCardsActivity" android:theme="@style/Theme.Evermind.NoActionBar"></activity>
         <activity android:name=".CardDataActivity" />
         <activity android:name=".MainActivity" />
         <activity

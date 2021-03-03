@@ -19,7 +19,6 @@
             android:layout_width="200dp"
             android:layout_height="match_parent"
             android:layout_marginStart="10dp"
-            android:background="#FFE2C8"
             android:gravity="center"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="7dp" />
@@ -29,7 +28,6 @@
             android:layout_width="200dp"
             android:layout_height="match_parent"
             android:layout_marginEnd="10dp"
-            android:background="#FFE2C8"
             android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             tools:layout_editor_absoluteY="44dp" />
