@@ -10,19 +10,20 @@ import android.widget.Toast;
 
 import com.ferllop.evermind.db.DbController;
 import com.ferllop.evermind.db.DbUser;
-import com.ferllop.evermind.models.IdentifiedCard;
+import com.ferllop.evermind.db.ModelDao;
+import com.ferllop.evermind.models.Card;
 
 public class SearchCardsActivity extends AppCompatActivity implements DbUser {
 
     final String TAG = "SearchCardsActivity";
     CardsAdapter adapter;
-    DbController db;
+    DbController dbCards;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_cards);
-        db = new DbController(this);
+        dbCards = new DbController<Card>("cards", Card.class, this);
         RecyclerView recycler = findViewById(R.id.card_frame_recycler);
         adapter = new CardsAdapter();
         recycler.setAdapter(adapter);
@@ -32,10 +33,10 @@ public class SearchCardsActivity extends AppCompatActivity implements DbUser {
                 String searchText = ((EditText) findViewById(R.id.searchBar_textInput)).getText().toString();
                 adapter.clear();
                 if(searchText.equals("all")){
-                    db.getAllCards(adapter);
+                    dbCards.getAllCards();
                 } else {
                     try{
-                        db.getCards(searchText, adapter);
+                        dbCards.getCards(searchText);
                     } catch (IllegalArgumentException ex) {
                         onError(getString(R.string.empty_query_search_error));
                     }
@@ -45,8 +46,8 @@ public class SearchCardsActivity extends AppCompatActivity implements DbUser {
     }
 
     @Override
-    public void onLoad(IdentifiedCard card){
-        adapter.addCard(card);
+    public void onLoad(ModelDao cardDao){
+        adapter.addCard(cardDao);
     }
 
     @Override

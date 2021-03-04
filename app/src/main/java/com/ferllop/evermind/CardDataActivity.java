@@ -12,36 +12,37 @@ import android.widget.Toast;
 
 import com.ferllop.evermind.db.DbController;
 import com.ferllop.evermind.db.DbUser;
+import com.ferllop.evermind.db.FirestoreService;
+import com.ferllop.evermind.db.ModelDao;
 import com.ferllop.evermind.models.Card;
-import com.ferllop.evermind.models.IdentifiedCard;
 
 public class CardDataActivity extends AppCompatActivity implements DbUser {
     final private String TAG = "CardDataActivityClass";
-    private DbController db;
+    private DbController dbCards;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_data);
         Log.d(TAG, "onCreate");
-        db = new DbController(this);
+        dbCards = new DbController<Card>("cards", Card.class,this);
 
         String id = this.getIntent().getStringExtra("id");
         if(id != null){
             Log.d(TAG, "the id is " + id);
-            db.loadCard(id);
+            dbCards.getCard(id);
         } else {
             findViewById(R.id.saveButton).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Card card = createCardFrom(CardDataActivity.this);
-                    db.insertCard(card);
+                    dbCards.insertCard(card);
                 }
             });
         }
     }
 
-    private void setCardOnActivity(IdentifiedCard identifiedCard, Activity activity) {
-        Card card = identifiedCard.getCard();
+    private void setCardOnActivity(ModelDao cardDao, Activity activity) {
+        Card card = (Card) cardDao.getModel();
         ((EditText) activity.findViewById(R.id.questionTextMultiLine)).setText(card.getQuestion());
         ((EditText) activity.findViewById(R.id.answerTextMultiLine)).setText(card.getAnswer());
         ((EditText) activity.findViewById(R.id.labelsText)).setText(card.stringifyLabels());
@@ -49,13 +50,13 @@ public class CardDataActivity extends AppCompatActivity implements DbUser {
             @Override
             public void onClick(View v) {
                 Card modifiedCard = modifyCardFrom(card, CardDataActivity.this);
-                db.updateCard(identifiedCard.getId(), modifiedCard);
+                dbCards.updateCard(cardDao.getId(), modifiedCard);
             }
         });
         CardDataActivity.this.findViewById(R.id.deleteButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                db.deleteCard(identifiedCard.getId());
+                dbCards.deleteCard(cardDao.getId());
             }
         });
     }
@@ -73,7 +74,7 @@ public class CardDataActivity extends AppCompatActivity implements DbUser {
     }
 
     @Override
-    public void onLoad(IdentifiedCard card){
+    public void onLoad(ModelDao card){
         setCardOnActivity(card, this);
     }
 

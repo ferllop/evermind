@@ -10,21 +10,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ferllop.evermind.db.ModelDao;
 import com.ferllop.evermind.models.Card;
-import com.ferllop.evermind.models.IdentifiedCard;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
 
-    List<IdentifiedCard> cards;
+    List<ModelDao> cards;
 
     public CardsAdapter() {
         this.cards = new ArrayList<>();
     }
 
-    public void addCard(IdentifiedCard card){
+    public void addCard(ModelDao card){
         cards.add(card);
         notifyDataSetChanged();
     }
@@ -46,7 +46,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        IdentifiedCard card = cards.get(position);
+        ModelDao card = cards.get(position);
         holder.bind(card);
     }
 
@@ -71,9 +71,9 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
             edit = itemView.findViewById(R.id.edit_button);
         }
 
-        public void bind(IdentifiedCard identifiedCard) {
-            Card card = identifiedCard.getCard();
-            author.setText("@" + card.getAuthor() + "//" + identifiedCard.getId());
+        public void bind(ModelDao cardDao) {
+            Card card = (Card) cardDao.getModel();
+            author.setText("@" + card.getAuthor() + "//" + cardDao.getId());
             labels.setText(card.stringifyLabels());
             question.setText(card.getQuestion());
             answer.setText(card.getAnswer());
@@ -81,7 +81,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), CardDataActivity.class);
-                    v.getContext().startActivity(intent.putExtra("id", identifiedCard.getId()));
+                    v.getContext().startActivity(intent.putExtra("id", cardDao.getId()));
                 }
             });
         }

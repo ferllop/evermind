@@ -1,14 +1,9 @@
 package com.ferllop.evermind.models;
 
-import android.text.TextUtils;
-import android.util.Log;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class Card {
+public class Card extends Model{
 
     protected String author;
     protected String question;
