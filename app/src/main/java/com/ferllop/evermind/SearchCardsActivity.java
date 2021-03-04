@@ -56,7 +56,6 @@ public class SearchCardsActivity extends AppCompatActivity {
     }
 
     private void getCards(String query, CardsAdapter adapter) {
-        List<Card> cards = new ArrayList<>();
         Search search = new Search(query);
 
         Query dbQuery = FirebaseFirestore.getInstance().collection("cards");
@@ -75,9 +74,7 @@ public class SearchCardsActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         String id = document.getId();
-
                         Card card = document.toObject(Card.class);
-
                         adapter.addCard(id, card);
                     }
                 } else {
@@ -88,7 +85,6 @@ public class SearchCardsActivity extends AppCompatActivity {
     }
 
     private void getAllCards(CardsAdapter adapter){
-        List<Card> cards = new ArrayList<>();
         FirebaseFirestore.getInstance().collection("cards").get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {

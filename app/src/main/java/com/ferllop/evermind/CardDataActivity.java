@@ -45,27 +45,27 @@ public class CardDataActivity extends AppCompatActivity {
                     CardDataActivity.this.card.setLabels(CardDataActivity.this.card.mapLabels(labels));
                     CardDataActivity.this.card.setAuthor("newAuthor");
 
-                    FirebaseFirestore.getInstance().collection("cards")
-                            .add(CardDataActivity.this.card)
-                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                @Override
-                                public void onSuccess(DocumentReference documentReference) {
-                                    Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.w(TAG, "Error adding document", e);
-                                }
-                            });
+                    insertCard(CardDataActivity.this.card);
                 }
             });
         }
+    }
 
-
-
-
+    private void insertCard(Card card) {
+        FirebaseFirestore.getInstance().collection("cards")
+                .add(card)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                    }
+                });
     }
 
     private void loadCard(String id){
@@ -79,9 +79,6 @@ public class CardDataActivity extends AppCompatActivity {
                 ((EditText) findViewById(R.id.answerTextMultiLine)).setText(card.getAnswer());
                 ((EditText) findViewById(R.id.labelsText)).setText(card.stringifyLabels());
 
-
-
-
                 CardDataActivity.this.findViewById(R.id.saveButton).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -93,20 +90,7 @@ public class CardDataActivity extends AppCompatActivity {
                         card.setAnswer(answer);
                         card.setLabels(CardDataActivity.this.card.mapLabels(labels));
 
-                        FirebaseFirestore.getInstance().collection("cards").document(id)
-                                .set(card)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Log.d(TAG, "DocumentSnapshot successfully updated!");
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.w(TAG, "Error updating document", e);
-                                    }
-                                });
+                        updateCard(id, card);
                     }
                 });
 
@@ -115,26 +99,9 @@ public class CardDataActivity extends AppCompatActivity {
                     public void onClick(View v) {
 
 
-                        FirebaseFirestore.getInstance().collection("cards").document(id)
-                                .delete()
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.w(TAG, "Error deleting document", e);
-                                    }
-                                });
+                        deleteCard(id);
                     }
                 });
-
-
-
-
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -145,8 +112,37 @@ public class CardDataActivity extends AppCompatActivity {
         });
     }
 
+    private void deleteCard(String id) {
+        FirebaseFirestore.getInstance().collection("cards").document(id)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error deleting document", e);
+                    }
+                });
+    }
 
-    //public void remove(Storable storable){
-        //new dbController(new Firestore()).remove(storable);
-    //}
+    private void updateCard(String id, Card card) {
+        FirebaseFirestore.getInstance().collection("cards").document(id)
+                .set(card)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully updated!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error updating document", e);
+                    }
+                });
+    }
 }
