@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ferllop.evermind.models.Card;
+import com.ferllop.evermind.models.IdentifiedCard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +24,8 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
         this.cards = new ArrayList<>();
     }
 
-    public void addCard(String id, Card card){
-        cards.add(new IdentifiedCard(id, card));
+    public void addCard(IdentifiedCard card){
+        cards.add(card);
         notifyDataSetChanged();
     }
 
@@ -52,24 +53,6 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
     @Override
     public int getItemCount() {
         return cards.size();
-    }
-
-    class IdentifiedCard {
-        String id;
-        Card card;
-
-        public IdentifiedCard(String id, Card card){
-            this.id = id;
-            this.card = card;
-        }
-
-        public Card getCard(){
-            return card;
-        }
-
-        public String getId(){
-            return id;
-        }
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{

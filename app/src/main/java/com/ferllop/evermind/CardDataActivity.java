@@ -1,6 +1,5 @@
 package com.ferllop.evermind;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -11,73 +10,34 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.ferllop.evermind.db.DbController;
+import com.ferllop.evermind.db.DbUser;
 import com.ferllop.evermind.models.Card;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.ferllop.evermind.models.IdentifiedCard;
 
-public class CardDataActivity extends AppCompatActivity {
+public class CardDataActivity extends AppCompatActivity implements DbUser {
     final private String TAG = "CardDataActivityClass";
-
+    private DbController db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_data);
         Log.d(TAG, "onCreate");
+        db = new DbController(this);
 
         String id = this.getIntent().getStringExtra("id");
         if(id != null){
             Log.d(TAG, "the id is " + id);
-            this.dbLoadCard(id);
+            db.loadCard(id);
         } else {
             findViewById(R.id.saveButton).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Card card = createCardFrom(CardDataActivity.this);
-                    dbInsertCard(card);
+                    db.insertCard(card);
                 }
             });
         }
-    }
-
-    class IdentifiedCard {
-        String id;
-        Card card;
-
-        public IdentifiedCard(String id, Card card){
-            this.id = id;
-            this.card = card;
-        }
-
-        public Card getCard(){
-            return card;
-        }
-
-        public String getId(){
-            return id;
-        }
-    }
-
-    private void onLoad(IdentifiedCard card){
-        setCardOnActivity(card, this);
-    }
-
-    private void dbLoadCard(String id){
-        FirebaseFirestore.getInstance().collection("cards").document(id)
-                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        onLoad(new IdentifiedCard(id, documentSnapshot.toObject(Card.class)));
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(CardDataActivity.this, "fallaaaaa", Toast.LENGTH_LONG).show();
-                        Log.d("el tag", "fallaaaa");
-                    }
-                });
     }
 
     private void setCardOnActivity(IdentifiedCard identifiedCard, Activity activity) {
@@ -89,13 +49,13 @@ public class CardDataActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Card modifiedCard = modifyCardFrom(card, CardDataActivity.this);
-                dbUpdateCard(identifiedCard.getId(), modifiedCard);
+                db.updateCard(identifiedCard.getId(), modifiedCard);
             }
         });
         CardDataActivity.this.findViewById(R.id.deleteButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dbDeleteCard(identifiedCard.getId());
+                db.deleteCard(identifiedCard.getId());
             }
         });
     }
@@ -112,54 +72,27 @@ public class CardDataActivity extends AppCompatActivity {
         return new Card(author, question, answer, labels);
     }
 
-    private void dbInsertCard(Card card) {
-        FirebaseFirestore.getInstance().collection("cards")
-                .add(card)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                    }
-                });
+    @Override
+    public void onLoad(IdentifiedCard card){
+        setCardOnActivity(card, this);
     }
 
-    private void dbUpdateCard(String id, Card card) {
-        FirebaseFirestore.getInstance().collection("cards").document(id)
-                .set(card)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully updated!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error updating document", e);
-                    }
-                });
+    @Override
+    public void onSave() {
+        this.showToast("Card saved successfully");
     }
 
-    private void dbDeleteCard(String id) {
-        FirebaseFirestore.getInstance().collection("cards").document(id)
-                .delete()
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error deleting document", e);
-                    }
-                });
+    @Override
+    public void onDelete(){
+        this.showToast("Card deleted");
+    }
+
+    @Override
+    public void onError(String errorMessage) {
+        this.showToast(errorMessage);
+    }
+
+    private void showToast(String message){
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 }
