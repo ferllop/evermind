@@ -15,7 +15,9 @@ public class Card {
     protected String answer;
     protected Map<String, Boolean> labels;
 
-    public Card(){}
+    public Card(){
+        this.author = "anonymous";
+    }
 
     public Card(String author, String question, String answer, String labels){
         this.author = author;
