@@ -10,21 +10,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ferllop.evermind.db.ModelDao;
 import com.ferllop.evermind.models.Card;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
 
-    List<ModelDao> cards;
+    List<Card> cards;
 
     public CardsAdapter() {
         this.cards = new ArrayList<>();
     }
 
-    public void addCard(ModelDao card){
+    public void addCard(Card card){
         cards.add(card);
         notifyDataSetChanged();
     }
@@ -46,7 +46,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ModelDao card = cards.get(position);
+        Card card = cards.get(position);
         holder.bind(card);
     }
 
@@ -71,9 +71,8 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
             edit = itemView.findViewById(R.id.edit_button);
         }
 
-        public void bind(ModelDao cardDao) {
-            Card card = (Card) cardDao.getModel();
-            author.setText("@" + card.getAuthor() + "//" + cardDao.getId());
+        public void bind(Card card) {
+            author.setText(card.getAuthor());
             labels.setText(card.stringifyLabels());
             question.setText(card.getQuestion());
             answer.setText(card.getAnswer());
@@ -81,7 +80,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), CardDataActivity.class);
-                    v.getContext().startActivity(intent.putExtra("id", cardDao.getId()));
+                    v.getContext().startActivity(intent.putExtra("id", card.getId()));
                 }
             });
         }

@@ -21,16 +21,10 @@ public class CardTest {
     }
 
     @Test
-    public void labels_should_be_provided_as_comma_separated_text() {
+    public void labels_can_be_provided_as_comma_separated_text() {
         String inputText = "label1,label2,label3";
         Card card = new Card("_", "_", "_", inputText);
-
-        Map<String,Boolean> labelsAsMap = new HashMap<>();
-        labelsAsMap.put("label1", true);
-        labelsAsMap.put("label2", true);
-        labelsAsMap.put("label3", true);
-
-        assertEquals(labelsAsMap, card.getLabels());
+        assertEquals("label1, label2, label3", card.stringifyLabels());
     }
 
     @Test

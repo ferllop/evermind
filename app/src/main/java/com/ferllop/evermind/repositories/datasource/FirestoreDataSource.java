@@ -1,4 +1,4 @@
-package com.ferllop.evermind.db;
+package com.ferllop.evermind.repositories.datasource;
 
 import android.util.Log;
 
@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.ferllop.evermind.models.Model;
 import com.ferllop.evermind.models.Search;
+import com.ferllop.evermind.repositories.DatastoreListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -17,67 +18,75 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-public class FirestoreService<T extends Model> implements DatabaseService<T> {
+import java.util.HashMap;
+import java.util.Map;
+
+public abstract class FirestoreDataSource<T extends Model> implements DataSource<T> {
     final private String TAG = "Firestore Service";
 
     Class<T> typeParameterClass;
-    FirebaseFirestore db;
-    DbUser dbUser;
+    DatastoreListener<T> listener;
 
-    public FirestoreService(Class<T> typeParameterClass, DbUser dbUser) {
+    public FirestoreDataSource(Class<T> typeParameterClass, DatastoreListener<T> listener) {
         this.typeParameterClass = typeParameterClass;
-        this.db = FirebaseFirestore.getInstance();
-        this.dbUser = dbUser;
+        this.listener = listener;
     }
 
+    protected abstract T fromMap(String id, Map map);
+    protected abstract Map<String, Object> toMap(T model);
+
     @Override
-    public void insert(String collection, T model) {
-        db.collection(collection)
-                .add(model)
+    public void insert(String collection, T item) {
+        FirebaseFirestore.getInstance().collection(collection)
+                .add(toMap(item))
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                        dbUser.onSave();
+                        listener.onSave();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.w(TAG, "Error adding document", e);
-                        dbUser.onError("Error adding document");
+                        listener.onError("Error adding document");
                     }
                 });
     }
 
     @Override
     public void load(String collection, String id){
-        db.collection(collection).document(id)
+        FirebaseFirestore.getInstance().collection(collection).document(id)
                 .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                dbUser.onLoad(new ModelDao(id, documentSnapshot.toObject(typeParameterClass)));
+            public void onSuccess(DocumentSnapshot document) {
+                Map<String, Object> identifiedResult = new HashMap<>();
+                identifiedResult.put("data", document.getData());
+                identifiedResult.put("id", document.getId());
+                listener.onLoad(fromMap(document.getId(), document.getData()));
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.d("el tag", "fallaaaa");
-                dbUser.onError("falla");
+                listener.onError("falla");
             }
         });
     }
 
+
     @Override
     public void getAll(String collection){
-        db.collection(collection).get()
+        FirebaseFirestore.getInstance().collection(collection).get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                            dbUser.onLoad(new ModelDao(document.getId(), document.toObject(typeParameterClass)));
+                            listener.onLoad(fromMap(document.getId(), document.getData()));
                         }
                     } else {
                         Log.d(TAG, "failed getting all cards");
-                        dbUser.onError("failed getting all cards");
+                        listener.onError("failed getting all cards");
                     }
                 });
     }
@@ -85,10 +94,11 @@ public class FirestoreService<T extends Model> implements DatabaseService<T> {
     @Override
     public void getFromSearch(String collection, String query) {
         Search search = new Search(query);
-
-        Query dbQuery = db.collection(collection);
+        Log.d(TAG, "search=> " + query);
+        Query dbQuery = FirebaseFirestore.getInstance().collection(collection);
         if(search.hasLabels()){
             for(String label: search.getLabels()){
+                Log.d(TAG, "label=> " + label);
                 dbQuery = dbQuery.whereEqualTo("labels."+label, true);
             }
         }
@@ -101,54 +111,56 @@ public class FirestoreService<T extends Model> implements DatabaseService<T> {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        dbUser.onLoad(new ModelDao(document.getId(), document.toObject(typeParameterClass)));
+                        listener.onLoad(fromMap(document.getId(), document.getData()));
                     }
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
-                    dbUser.onError("Error getting documents: ");
+                    listener.onError("Error getting documents: ");
                 }
             }
         });
     }
 
     @Override
-    public void update(String collection, String id, Model model) {
-        db.collection(collection).document(id)
-                .set(model)
+    public void update(String collection, String id, T item) {
+        FirebaseFirestore.getInstance().collection(collection).document(id)
+                .set(toMap(item))
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d(TAG, "DocumentSnapshot successfully updated!");
-                        dbUser.onSave();
+                        listener.onSave();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.w(TAG, "Error updating document", e);
-                        dbUser.onError("Error updating document");
+                        listener.onError("Error updating document");
                     }
                 });
     }
 
     @Override
     public void delete(String collection, String id) {
-        db.collection(collection).document(id)
+        FirebaseFirestore.getInstance().collection(collection).document(id)
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d(TAG, "DocumentSnapshot successfully deleted!");
-                        dbUser.onDelete();
+                        listener.onDelete();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.w(TAG, "Error deleting document", e);
-                        dbUser.onError("Error deleting document");
+                        listener.onError("Error deleting document");
                     }
                 });
     }
+
+
 
 }
