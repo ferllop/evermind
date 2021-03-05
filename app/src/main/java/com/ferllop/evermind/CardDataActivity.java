@@ -41,25 +41,6 @@ public class CardDataActivity extends AppCompatActivity implements DatastoreList
         }
     }
 
-    private void setCardOnActivity(Card card, Activity activity) {
-        ((EditText) activity.findViewById(R.id.questionTextMultiLine)).setText(card.getQuestion());
-        ((EditText) activity.findViewById(R.id.answerTextMultiLine)).setText(card.getAnswer());
-        ((EditText) activity.findViewById(R.id.labelsText)).setText(card.stringifyLabels());
-        ((Button)   activity.findViewById(R.id.saveButton)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Card modifiedCard = modifyCardFrom(card, CardDataActivity.this);
-                cardController.update(card.getId(), modifiedCard);
-            }
-        });
-        CardDataActivity.this.findViewById(R.id.deleteButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cardController.delete(card.getId());
-            }
-        });
-    }
-
     private Card createCardFrom(Activity activity) {
         return this.modifyCardFrom(null, activity);
     }
@@ -85,7 +66,22 @@ public class CardDataActivity extends AppCompatActivity implements DatastoreList
 
     @Override
     public void onLoad(Card card) {
-        setCardOnActivity(card, this);
+        ((EditText) findViewById(R.id.questionTextMultiLine)).setText(card.getQuestion());
+        ((EditText) findViewById(R.id.answerTextMultiLine)).setText(card.getAnswer());
+        ((EditText) findViewById(R.id.labelsText)).setText(card.stringifyLabels());
+        ((Button)   findViewById(R.id.saveButton)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Card modifiedCard = modifyCardFrom(card, CardDataActivity.this);
+                cardController.update(card.getId(), modifiedCard);
+            }
+        });
+        CardDataActivity.this.findViewById(R.id.deleteButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cardController.delete(card.getId());
+            }
+        });
     }
 
     @Override
