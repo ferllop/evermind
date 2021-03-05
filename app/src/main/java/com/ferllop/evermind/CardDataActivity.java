@@ -2,17 +2,16 @@ package com.ferllop.evermind;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.ferllop.evermind.models.Card;
 import com.ferllop.evermind.repositories.DatastoreListener;
 import com.ferllop.evermind.controllers.CardController;
+
 
 public class CardDataActivity extends AppCompatActivity implements DatastoreListener<Card> {
     final private String TAG = "CardDataActivityClass";
@@ -34,29 +33,13 @@ public class CardDataActivity extends AppCompatActivity implements DatastoreList
             findViewById(R.id.saveButton).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Card card = createCardFrom(CardDataActivity.this);
-                    cardController.insert(card);
+                    String question = ((EditText) findViewById(R.id.questionTextMultiLine)).getText().toString();
+                    String answer = ((EditText) findViewById(R.id.answerTextMultiLine)).getText().toString();
+                    String labels = ((EditText) findViewById(R.id.labelsText)).getText().toString();
+                    cardController.insert(question, answer, labels);
                 }
             });
         }
-    }
-
-    private Card createCardFrom(Activity activity) {
-        return this.modifyCardFrom(null, activity);
-    }
-
-    private Card modifyCardFrom(Card card, Activity activity){
-        String author;
-        if (card == null) {
-            author = "anonymous";
-        } else {
-            author = card.getAuthor();
-
-        }
-        String question = ((EditText) activity.findViewById(R.id.questionTextMultiLine)).getText().toString();
-        String answer = ((EditText) activity.findViewById(R.id.answerTextMultiLine)).getText().toString();
-        String labels = ((EditText) activity.findViewById(R.id.labelsText)).getText().toString();
-        return new Card(author, question, answer, labels);
     }
 
     @Override
@@ -68,12 +51,14 @@ public class CardDataActivity extends AppCompatActivity implements DatastoreList
     public void onLoad(Card card) {
         ((EditText) findViewById(R.id.questionTextMultiLine)).setText(card.getQuestion());
         ((EditText) findViewById(R.id.answerTextMultiLine)).setText(card.getAnswer());
-        ((EditText) findViewById(R.id.labelsText)).setText(card.stringifyLabels());
-        ((Button)   findViewById(R.id.saveButton)).setOnClickListener(new View.OnClickListener() {
+        ((EditText) findViewById(R.id.labelsText)).setText(card.getCommaSeparatedLabels());
+        findViewById(R.id.saveButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Card modifiedCard = modifyCardFrom(card, CardDataActivity.this);
-                cardController.update(card.getId(), modifiedCard);
+                String question = ((EditText) findViewById(R.id.questionTextMultiLine)).getText().toString();
+                String answer = ((EditText) findViewById(R.id.answerTextMultiLine)).getText().toString();
+                String labels = ((EditText) findViewById(R.id.labelsText)).getText().toString();
+                cardController.update(card.getId(), card.getAuthor(), question, answer, labels);
             }
         });
         CardDataActivity.this.findViewById(R.id.deleteButton).setOnClickListener(new View.OnClickListener() {

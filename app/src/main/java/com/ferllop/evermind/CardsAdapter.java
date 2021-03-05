@@ -73,7 +73,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
 
         public void bind(Card card) {
             author.setText(card.getAuthor());
-            labels.setText(card.stringifyLabels());
+            labels.setText(card.getCommaSeparatedLabels());
             question.setText(card.getQuestion());
             answer.setText(card.getAnswer());
             edit.setOnClickListener(new View.OnClickListener() {

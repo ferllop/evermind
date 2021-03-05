@@ -4,11 +4,6 @@ import com.ferllop.evermind.models.Card;
 
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import static org.junit.Assert.*;
 
 public class CardTest {
@@ -24,21 +19,21 @@ public class CardTest {
     public void labels_can_be_provided_as_comma_separated_text() {
         String inputText = "label1,label2,label3";
         Card card = new Card("_", "_", "_", inputText);
-        assertEquals("label1, label2, label3", card.stringifyLabels());
+        assertEquals("label1, label2, label3", card.getCommaSeparatedLabels());
     }
 
     @Test
     public void labels_can_be_stringified_in_a_comma_separated_string() {
         Card card = new Card("_", "_", "_", "label1, label2, label3");
         String expected = "label1, label2, label3";
-        assertEquals(expected, card.stringifyLabels());
+        assertEquals(expected, card.getCommaSeparatedLabels());
     }
 
     @Test
     public void wrong_labels_in_comma_separated_list_will_be_ignored() {
         Card card = new Card("_", "_", "_", ",label1, ,label2, label3,");
         String expected = "label1, label2, label3";
-        assertEquals(expected, card.stringifyLabels());
+        assertEquals(expected, card.getCommaSeparatedLabels());
     }
 
 }

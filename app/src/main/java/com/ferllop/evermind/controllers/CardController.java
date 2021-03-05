@@ -21,6 +21,9 @@ public class CardController {
         getRepositoryService().insert(card);
     }
 
+    public void insert(String question, String answer, String labels) {
+        insert(new Card("anonymous", question, answer, labels));
+    }
 
     public void load(String id) {
         getRepositoryService().load(id);
@@ -41,6 +44,9 @@ public class CardController {
         getRepositoryService().update(id, card);
     }
 
+    public void update(String id, String author, String question, String answer, String labels) {
+        update(id, new Card(author, question, answer, labels));
+    }
 
     public void delete(String id) {
         getRepositoryService().delete(id);

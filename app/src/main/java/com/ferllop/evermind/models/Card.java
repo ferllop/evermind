@@ -10,10 +10,6 @@ public class Card extends Model{
     protected String answer;
     protected List<String> labels;
 
-    private Card(){
-        this.author = "anonymous";
-    }
-
     public Card(String author, String question, String answer, String labels){
         this.author = author;
         this.question = question;
@@ -27,7 +23,10 @@ public class Card extends Model{
         this.question = question;
         this.answer = answer;
         this.labels = labels;
+    }
 
+    public Card clone(){
+        return new Card(getAuthor(), getQuestion(), getAnswer(), getCommaSeparatedLabels());
     }
 
     public String getAuthor() {
@@ -46,7 +45,7 @@ public class Card extends Model{
         return labels;
     }
 
-    public String stringifyLabels(){
+    public String getCommaSeparatedLabels(){
         if(labels == null){
             return "unlabeled";
         }
