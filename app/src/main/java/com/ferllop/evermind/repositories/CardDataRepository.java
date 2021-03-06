@@ -1,46 +1,46 @@
 package com.ferllop.evermind.repositories;
 
 import com.ferllop.evermind.models.Card;
-import com.ferllop.evermind.repositories.datasource.DataSource;
-import com.ferllop.evermind.repositories.datasource.FirestoreCardDataSource;
+import com.ferllop.evermind.repositories.datastores.CardDataStore;
+import com.ferllop.evermind.repositories.datastores.FirestoreCardDataStore;
 
 
 public class CardDataRepository implements CardRepository {
 
-    DataSource dataSource;
+    CardDataStore dataStore;
 
     public CardDataRepository(DatastoreListener activity) {
-        this.dataSource = new FirestoreCardDataSource(activity);
+        this.dataStore = new FirestoreCardDataStore(activity);
     }
 
     @Override
     public void insert(Card card) {
-        dataSource.insert("cards", card);
+        dataStore.insert(card);
     }
 
     @Override
     public void load(String id) {
-        dataSource.load("cards", id);
+        dataStore.load( id);
     }
 
     @Override
     public void getAll() {
-        dataSource.getAll("cards");
+        dataStore.getAll();
     }
 
     @Override
     public void getFromSearch(String query) {
-        dataSource.getFromSearch("cards", query);
+        dataStore.getFromSearch(query);
     }
 
     @Override
     public void update(String id, Card card) {
-        dataSource.update("cards", id, card);
+        dataStore.update(id, card);
     }
 
     @Override
     public void delete(String id) {
-        dataSource.delete("cards", id);
+        dataStore.delete(id);
     }
 
 

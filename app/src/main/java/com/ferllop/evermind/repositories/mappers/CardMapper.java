@@ -1,22 +1,15 @@
-package com.ferllop.evermind.repositories.datasource;
+package com.ferllop.evermind.repositories.mappers;
 
 import com.ferllop.evermind.models.Card;
 import com.ferllop.evermind.models.Labelling;
-import com.ferllop.evermind.repositories.DatastoreListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FirestoreCardDataSource extends FirestoreDataSource<Card> {
-
-    public FirestoreCardDataSource(DatastoreListener<Card> listener) {
-        super(Card.class, listener);
-    }
-
-    @Override
-    protected Card fromMap(String id, Map map) {
+public class CardMapper implements ModelMapper<Card>{
+    public Card fromMap(String id, Map map) {
         String author = (String) map.get("author");
         String question = (String) map.get("question");
         String answer = (String) map.get("answer");
@@ -25,8 +18,7 @@ public class FirestoreCardDataSource extends FirestoreDataSource<Card> {
         return new Card(id, author, question, answer, labelling);
     }
 
-    @Override
-    protected Map<String, Object> toMap(Card card) {
+    public Map<String, Object> toMap(Card card) {
         Map<String, Object> result = new HashMap<>();
         result.put("author", card.getAuthor());
         result.put("question", card.getQuestion());
@@ -34,7 +26,6 @@ public class FirestoreCardDataSource extends FirestoreDataSource<Card> {
         result.put("labels", listToBooleanMap(card.getLabelling().getLabels()));
         return result;
     }
-
 
     private List<String> booleanMapToList(Map<String, Boolean> rawLabels) {
         List<String> result = new ArrayList<>();
@@ -54,6 +45,4 @@ public class FirestoreCardDataSource extends FirestoreDataSource<Card> {
         }
         return result;
     }
-
-
 }
