@@ -1,6 +1,7 @@
 package com.ferllop.evermind.repositories.datasource;
 
 import com.ferllop.evermind.models.Card;
+import com.ferllop.evermind.models.Labelling;
 import com.ferllop.evermind.repositories.DatastoreListener;
 
 import java.util.ArrayList;
@@ -20,8 +21,8 @@ public class FirestoreCardDataSource extends FirestoreDataSource<Card> {
         String question = (String) map.get("question");
         String answer = (String) map.get("answer");
         Map<String, Boolean> rawLabels = (Map<String, Boolean>) map.get("labels");
-        List<String> labels = booleanMapToList(rawLabels);
-        return new Card(id, author, question, answer, labels);
+        Labelling labelling = new Labelling(booleanMapToList(rawLabels));
+        return new Card(id, author, question, answer, labelling);
     }
 
     @Override
@@ -30,7 +31,7 @@ public class FirestoreCardDataSource extends FirestoreDataSource<Card> {
         result.put("author", card.getAuthor());
         result.put("question", card.getQuestion());
         result.put("answer", card.getAnswer());
-        result.put("labels", listToBooleanMap(card.getLabels()));
+        result.put("labels", listToBooleanMap(card.getLabelling().getLabels()));
         return result;
     }
 

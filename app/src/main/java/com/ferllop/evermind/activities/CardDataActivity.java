@@ -52,7 +52,7 @@ public class CardDataActivity extends AppCompatActivity implements DatastoreList
     public void onLoad(Card card) {
         ((EditText) findViewById(R.id.questionTextMultiLine)).setText(card.getQuestion());
         ((EditText) findViewById(R.id.answerTextMultiLine)).setText(card.getAnswer());
-        ((EditText) findViewById(R.id.labelsText)).setText(card.getCommaSeparatedLabels());
+        ((EditText) findViewById(R.id.labelsText)).setText(card.getLabelling().toString());
         findViewById(R.id.saveButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

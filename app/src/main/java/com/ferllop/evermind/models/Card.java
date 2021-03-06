@@ -1,32 +1,29 @@
 package com.ferllop.evermind.models;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Card extends Model{
 
     protected String author;
     protected String question;
     protected String answer;
-    protected List<String> labels;
+    protected Labelling labelling;
 
     public Card(String author, String question, String answer, String labels){
         this.author = author;
         this.question = question;
         this.answer = answer;
-        this.labels = listifyLabels(labels);
+        this.labelling = new Labelling(labels);
     }
 
-    public Card(String id, String author, String question, String answer, List<String> labels){
+    public Card(String id, String author, String question, String answer, Labelling labelling){
         this.setId(id);
         this.author = author;
         this.question = question;
         this.answer = answer;
-        this.labels = labels;
+        this.labelling = labelling;
     }
 
     public Card clone(){
-        return new Card(getAuthor(), getQuestion(), getAnswer(), getCommaSeparatedLabels());
+        return new Card(getAuthor(), getQuestion(), getAnswer(), getLabelling().toString());
     }
 
     public String getAuthor() {
@@ -41,28 +38,8 @@ public class Card extends Model{
         return answer;
     }
 
-    public List<String> getLabels() {
-        return labels;
+    public Labelling getLabelling() {
+        return labelling;
     }
 
-    public String getCommaSeparatedLabels(){
-        if(labels == null){
-            return "unlabeled";
-        }
-        String result = "";
-        for (String label : labels){
-            result = result + label + ", ";
-        }
-        return result.substring(0, result.length() -2);
-    }
-
-    public List<String> listifyLabels(String labels){
-        List<String> result = new ArrayList<>();
-        for(String label : labels.toLowerCase().split(",")){
-            if(!label.trim().isEmpty()) {
-                result.add(label.trim());
-            }
-        }
-        return result;
-    }
 }
