@@ -1,6 +1,5 @@
 package com.ferllop.evermind.repositories.datastores.technologies;
 
-import com.ferllop.evermind.models.Card;
 import com.ferllop.evermind.models.Model;
 import com.ferllop.evermind.repositories.DatastoreListener;
 import com.ferllop.evermind.repositories.mappers.ModelMapper;

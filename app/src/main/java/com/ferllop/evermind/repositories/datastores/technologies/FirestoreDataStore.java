@@ -34,7 +34,7 @@ public class FirestoreDataStore<T extends Model> extends DataStore<T> {
     @Override
     public void insert(T item) {
         FirebaseFirestore.getInstance().collection(collection)
-                .add(mapper.toMap(item))
+                .add(mapper.execute(item))
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
@@ -60,7 +60,7 @@ public class FirestoreDataStore<T extends Model> extends DataStore<T> {
                 Map<String, Object> identifiedResult = new HashMap<>();
                 identifiedResult.put("data", document.getData());
                 identifiedResult.put("id", document.getId());
-                listener.onLoad(mapper.fromMap(document.getId(), document.getData()));
+                listener.onLoad(mapper.execute(document.getId(), document.getData()));
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -78,7 +78,7 @@ public class FirestoreDataStore<T extends Model> extends DataStore<T> {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                            listener.onLoad(mapper.fromMap(document.getId(), document.getData()));
+                            listener.onLoad(mapper.execute(document.getId(), document.getData()));
                         }
                     } else {
                         Log.d(TAG, "failed getting all cards");
@@ -107,7 +107,7 @@ public class FirestoreDataStore<T extends Model> extends DataStore<T> {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        listener.onLoad(mapper.fromMap(document.getId(), document.getData()));
+                        listener.onLoad(mapper.execute(document.getId(), document.getData()));
                     }
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
@@ -120,7 +120,7 @@ public class FirestoreDataStore<T extends Model> extends DataStore<T> {
     @Override
     public void update(String id, T item) {
         FirebaseFirestore.getInstance().collection(collection).document(id)
-                .set(mapper.toMap(item))
+                .set(mapper.execute(item))
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CardMapper implements ModelMapper<Card>{
-    public Card fromMap(String id, Map map) {
+    public Card execute(String id, Map map) {
         String author = (String) map.get("author");
         String question = (String) map.get("question");
         String answer = (String) map.get("answer");
@@ -18,7 +18,7 @@ public class CardMapper implements ModelMapper<Card>{
         return new Card(id, author, question, answer, labelling);
     }
 
-    public Map<String, Object> toMap(Card card) {
+    public Map<String, Object> execute(Card card) {
         Map<String, Object> result = new HashMap<>();
         result.put("author", card.getAuthor());
         result.put("question", card.getQuestion());
