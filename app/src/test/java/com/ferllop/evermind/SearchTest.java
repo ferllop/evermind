@@ -1,6 +1,7 @@
 package com.ferllop.evermind;
 
 import com.ferllop.evermind.repositories.datastores.technologies.Search;
+import com.ferllop.evermind.repositories.fields.CardField;
 
 import org.junit.Test;
 
@@ -20,13 +21,13 @@ public class SearchTest {
     @Test
     public void should_be_able_to_provide_the_author_when_a_word_prefixed_with_at_symbol_is_provided_alone(){
         Search search = new Search("@author");
-        assertEquals(search.getAuthor(), "author");
+        assertEquals(search.getAuthor(), CardField.AUTHOR.getValue());
     }
 
     @Test
     public void sshould_be_able_to_provide_the_author_when_a_word_prefixed_with_at_symbol_is_provided_in_a_comma_separated_list(){
         Search search = new Search("@author,label1");
-        assertEquals(search.getAuthor(), "author");
+        assertEquals(search.getAuthor(), CardField.AUTHOR.getValue());
     }
 
     @Test

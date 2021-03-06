@@ -4,8 +4,10 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.ferllop.evermind.models.DataStoreError;
 import com.ferllop.evermind.models.Model;
 import com.ferllop.evermind.repositories.DatastoreListener;
+import com.ferllop.evermind.repositories.fields.CardField;
 import com.ferllop.evermind.repositories.mappers.ModelMapper;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -46,7 +48,7 @@ public class FirestoreDataStore<T extends Model> extends DataStore<T> {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.w(TAG, "Error adding document", e);
-                        listener.onError("Error adding document");
+                        listener.onError(DataStoreError.ON_INSERT);
                     }
                 });
     }
@@ -57,16 +59,13 @@ public class FirestoreDataStore<T extends Model> extends DataStore<T> {
                 .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot document) {
-                Map<String, Object> identifiedResult = new HashMap<>();
-                identifiedResult.put("data", document.getData());
-                identifiedResult.put("id", document.getId());
                 listener.onLoad(mapper.execute(document.getId(), document.getData()));
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.d("el tag", "fallaaaa");
-                listener.onError("falla");
+                Log.d(TAG, "failed loading card");
+                listener.onError(DataStoreError.ON_LOAD);
             }
         });
     }
@@ -82,7 +81,7 @@ public class FirestoreDataStore<T extends Model> extends DataStore<T> {
                         }
                     } else {
                         Log.d(TAG, "failed getting all cards");
-                        listener.onError("failed getting all cards");
+                        listener.onError(DataStoreError.ON_LOAD_ALL);
                     }
                 });
     }
@@ -90,16 +89,15 @@ public class FirestoreDataStore<T extends Model> extends DataStore<T> {
     @Override
     public void getFromSearch(String query) {
         Search search = new Search(query);
-        Log.d(TAG, "search=> " + query);
+
         Query dbQuery = FirebaseFirestore.getInstance().collection(collection);
         if(search.hasLabels()){
             for(String label: search.getLabels()){
-                Log.d(TAG, "label=> " + label);
-                dbQuery = dbQuery.whereEqualTo("labels."+label, true);
+                dbQuery = dbQuery.whereEqualTo(CardField.LABELLING.getValue()+"."+label, true);
             }
         }
         if(search.hasAuthor()){
-            dbQuery = dbQuery.whereEqualTo("author", search.getAuthor());
+            dbQuery = dbQuery.whereEqualTo(CardField.AUTHOR.getValue(), search.getAuthor());
         }
 
         dbQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -111,7 +109,7 @@ public class FirestoreDataStore<T extends Model> extends DataStore<T> {
                     }
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
-                    listener.onError("Error getting documents: ");
+                    listener.onError(DataStoreError.ON_SEARCH);
                 }
             }
         });
@@ -132,7 +130,7 @@ public class FirestoreDataStore<T extends Model> extends DataStore<T> {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.w(TAG, "Error updating document", e);
-                        listener.onError("Error updating document");
+                        listener.onError(DataStoreError.ON_UPDATE);
                     }
                 });
     }
@@ -152,7 +150,7 @@ public class FirestoreDataStore<T extends Model> extends DataStore<T> {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.w(TAG, "Error deleting document", e);
-                        listener.onError("Error deleting document");
+                        listener.onError(DataStoreError.ON_DELETE);
                     }
                 });
     }

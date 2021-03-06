@@ -2,6 +2,7 @@ package com.ferllop.evermind;
 
 import com.ferllop.evermind.models.Card;
 import com.ferllop.evermind.models.Labelling;
+import com.ferllop.evermind.repositories.fields.CardField;
 import com.ferllop.evermind.repositories.mappers.CardMapper;
 
 import org.junit.Before;
@@ -47,34 +48,34 @@ public class CardMapperTest {
         labelling.put(label2, true);
 
         cardAsMap = new HashMap<>();
-        cardAsMap.put("author", author);
-        cardAsMap.put("question", question);
-        cardAsMap.put("answer", answer);
-        cardAsMap.put("labels", labelling);
+        cardAsMap.put(CardField.AUTHOR.getValue(), author);
+        cardAsMap.put(CardField.QUESTION.getValue(), question);
+        cardAsMap.put(CardField.ANSWER.getValue(), answer);
+        cardAsMap.put(CardField.LABELLING.getValue(), labelling);
     }
 
     @Test
     public void should_convert_a_Card_to_a_String_key_Object_value_Map_with_an_author(){
         createCardAsCard();
-        assertEquals(author, new CardMapper().execute(cardAsCard).get("author"));
+        assertEquals(author, new CardMapper().execute(cardAsCard).get(CardField.AUTHOR.getValue()));
     }
 
     @Test
     public void should_convert_a_Card_to_a_String_key_Object_value_Map_with_a_question(){
         createCardAsCard();
-        assertEquals(question, new CardMapper().execute(cardAsCard).get("question"));
+        assertEquals(question, new CardMapper().execute(cardAsCard).get(CardField.QUESTION.getValue()));
     }
 
     @Test
     public void should_convert_a_Card_to_a_String_key_Object_value_Map_with_an_answer(){
         createCardAsCard();
-        assertEquals(answer, new CardMapper().execute(cardAsCard).get("answer"));
+        assertEquals(answer, new CardMapper().execute(cardAsCard).get(CardField.ANSWER.getValue()));
     }
 
     @Test
     public void should_convert_a_Card_to_a_String_key_Object_value_Map_with_labels(){
         createCardAsCard();
-        Map<String, Boolean> labelling = (Map<String, Boolean>) new CardMapper().execute(cardAsCard).get("labels");
+        Map<String, Boolean> labelling = (Map<String, Boolean>) new CardMapper().execute(cardAsCard).get(CardField.LABELLING.getValue());
 
         assertTrue(labelling.get(label1));
         assertTrue(labelling.get(label2));

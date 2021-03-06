@@ -18,12 +18,21 @@
     <string name="search_existing_cards">Search for existing cards</string>
     <string name="search_button">search</string>
     <string name="cards_to_review">Today you have #qty card#s to review</string>
-    <string name="empty_query_search_error">You must provide a not empty search</string>
+    <string name="error_empty_query_search">You must provide a not empty search</string>
     <string name="delete_button">delete</string>
     <string name="save_button">save</string>
     <string name="labels_editTextHint">labels...</string>
     <string name="answer_editText_hint">And here goes the answer</string>
     <string name="quesstion_editText_hint">Write the question here</string>
+    <string name="error_searching_card">Error when searching</string>
+    <string name="error_inserting_card">Error creating the card</string>
+    <string name="error_loading_card">Error loading the card</string>
+    <string name="error_loading_all_cards">Error loading all cards</string>
+    <string name="error_searching_cards">Error while searching</string>
+    <string name="error_updateing_card">Error updating the card</string>
+    <string name="error_deleting_card">Error deleting the card</string>
+    <string name="card_deleted">Card deleted</string>
+    <string name="card_saved">Card saved successfully</string>
 
 
 </resources>

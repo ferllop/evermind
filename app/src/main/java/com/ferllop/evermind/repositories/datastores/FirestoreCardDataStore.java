@@ -6,12 +6,11 @@ import com.ferllop.evermind.repositories.datastores.technologies.FirestoreDataSt
 import com.ferllop.evermind.repositories.mappers.CardMapper;
 
 public class FirestoreCardDataStore extends CardDataStore{
-    final String CARDS_COLLECTION = "cards";
     FirestoreDataStore<Card> firestoreDataStore;
 
     public FirestoreCardDataStore(DatastoreListener<Card> listener) {
         super(listener);
-        firestoreDataStore = new FirestoreDataStore<>(CARDS_COLLECTION, new CardMapper(), this);
+        firestoreDataStore = new FirestoreDataStore<>(FirestoreCollectionsLabels.CARD.getValue(), new CardMapper(), this);
     }
 
     @Override

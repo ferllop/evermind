@@ -1,6 +1,7 @@
 package com.ferllop.evermind.repositories.datastores;
 
 import com.ferllop.evermind.models.Card;
+import com.ferllop.evermind.models.DataStoreError;
 import com.ferllop.evermind.repositories.DatastoreListener;
 
 public abstract class CardDataStore implements DatastoreListener<Card>{
@@ -21,7 +22,7 @@ public abstract class CardDataStore implements DatastoreListener<Card>{
     }
 
     @Override
-    public void onError(String error) {
+    public void onError(DataStoreError error) {
         listener.onError(error);
     }
 

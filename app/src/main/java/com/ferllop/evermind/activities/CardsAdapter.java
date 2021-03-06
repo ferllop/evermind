@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ferllop.evermind.R;
 import com.ferllop.evermind.models.Card;
+import com.ferllop.evermind.repositories.fields.CardField;
 
 
 import java.util.ArrayList;
@@ -81,7 +82,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), CardDataActivity.class);
-                    v.getContext().startActivity(intent.putExtra("id", card.getId()));
+                    v.getContext().startActivity(intent.putExtra(CardField.ID.getValue(), card.getId()));
                 }
             });
         }

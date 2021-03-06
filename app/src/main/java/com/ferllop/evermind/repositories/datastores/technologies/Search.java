@@ -1,5 +1,7 @@
 package com.ferllop.evermind.repositories.datastores.technologies;
 
+import com.ferllop.evermind.repositories.fields.CardField;
+import com.ferllop.evermind.repositories.fields.UserField;
 import com.google.common.base.Strings;
 
 import java.util.ArrayList;
@@ -24,7 +26,7 @@ public class Search {
     }
 
     private String[] parseQuery(String query){
-        return query.trim().split(",");
+        return query.trim().split(CardField.LABEL_LIST_SEPARATOR.getValue());
     }
 
     private Token getFirstAuthorToken(){
@@ -55,7 +57,7 @@ public class Search {
     }
 
     public String getAuthor(){
-        return this.getFirstAuthorToken().toString().replace("@", "");
+        return this.getFirstAuthorToken().toString().replace(UserField.USER_PREFIX.getValue(), "");
     }
 
     public boolean hasLabels(){
@@ -74,7 +76,7 @@ public class Search {
         }
 
         public boolean isAuthor(){
-            return value.startsWith("@");
+            return value.startsWith(UserField.USER_PREFIX.getValue());
         }
 
         public boolean isLabel(){

@@ -1,5 +1,7 @@
 package com.ferllop.evermind.models;
 
+import com.ferllop.evermind.repositories.fields.CardField;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +30,7 @@ public class Labelling {
 
     private List<String> toList(String labels){
         List<String> result = new ArrayList<>();
-        for(String label : labels.toLowerCase().split(",")){
+        for(String label : labels.toLowerCase().split(CardField.LABEL_LIST_SEPARATOR.getValue())){
             if(!label.trim().isEmpty()) {
                 result.add(label.trim());
             }
