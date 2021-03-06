@@ -1,4 +1,4 @@
-package com.ferllop.evermind.models;
+package com.ferllop.evermind.repositories.datastores.technologies;
 
 import com.google.common.base.Strings;
 

@@ -5,9 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.ferllop.evermind.models.Model;
-import com.ferllop.evermind.models.Search;
 import com.ferllop.evermind.repositories.DatastoreListener;
-import com.ferllop.evermind.repositories.datastores.technologies.DataStore;
 import com.ferllop.evermind.repositories.mappers.ModelMapper;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;

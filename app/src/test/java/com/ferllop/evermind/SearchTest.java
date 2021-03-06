@@ -1,6 +1,6 @@
 package com.ferllop.evermind;
 
-import com.ferllop.evermind.models.Search;
+import com.ferllop.evermind.repositories.datastores.technologies.Search;
 
 import org.junit.Test;
 
