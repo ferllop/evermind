@@ -1,7 +1,8 @@
-package com.ferllop.evermind;
+package com.ferllop.evermind.activities;
 
 import android.os.Bundle;
 
+import com.ferllop.evermind.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 

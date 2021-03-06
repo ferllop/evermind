@@ -9,11 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Evermind">
-        <activity android:name=".SearchCardsActivity" android:theme="@style/Theme.Evermind.NoActionBar"></activity>
-        <activity android:name=".CardDataActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".activities.SearchCardsActivity" android:theme="@style/Theme.Evermind.NoActionBar"></activity>
+        <activity android:name=".activities.CardDataActivity" />
+        <activity android:name=".activities.MainActivity" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".activities.HomeActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.Evermind.NoActionBar">
             <intent-filter>

@@ -1,4 +1,4 @@
-package com.ferllop.evermind;
+package com.ferllop.evermind.activities;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ferllop.evermind.R;
 import com.ferllop.evermind.models.Card;
 
 

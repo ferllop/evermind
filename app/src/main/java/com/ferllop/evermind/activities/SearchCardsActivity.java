@@ -1,4 +1,4 @@
-package com.ferllop.evermind;
+package com.ferllop.evermind.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.ferllop.evermind.R;
 import com.ferllop.evermind.models.Card;
 import com.ferllop.evermind.repositories.DatastoreListener;
 import com.ferllop.evermind.controllers.CardController;
