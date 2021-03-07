@@ -33,6 +33,7 @@
     <string name="error_deleting_card">Error deleting the card</string>
     <string name="card_deleted">Card deleted</string>
     <string name="card_saved">Card saved successfully</string>
+    <string name="general_preferences_id">com.ferllop.evermind.GENERAL_PREFERENCES</string>
 
 
 </resources>

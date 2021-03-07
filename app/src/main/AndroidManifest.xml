@@ -8,7 +8,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Evermind">
+        android:theme="@style/Theme.Evermind"
+        android:name=".AndroidApplication"
+        >
+
         <activity android:name=".activities.SearchCardsActivity" android:theme="@style/Theme.Evermind.NoActionBar"></activity>
         <activity android:name=".activities.CardDataActivity" />
         <activity android:name=".activities.MainActivity" />
@@ -18,7 +21,6 @@
             android:theme="@style/Theme.Evermind.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

@@ -2,11 +2,16 @@ package com.ferllop.evermind.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
+import com.ferllop.evermind.AndroidApplication;
 import com.ferllop.evermind.R;
 
 public class HomeActivity extends AppCompatActivity {
@@ -32,6 +37,9 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(new Intent(HomeActivity.this, CardDataActivity.class));
             }
         });
+
+        ((TextView) findViewById(R.id.logo_textView))
+                .setText(AndroidApplication.getUser(this));
 
     }
 }
