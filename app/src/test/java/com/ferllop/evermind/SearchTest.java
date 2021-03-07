@@ -1,6 +1,6 @@
 package com.ferllop.evermind;
 
-import com.ferllop.evermind.repositories.datastores.technologies.Search;
+import com.ferllop.evermind.repositories.datastores.Search;
 import com.ferllop.evermind.repositories.fields.CardField;
 
 import org.junit.Test;

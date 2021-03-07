@@ -1,52 +1,50 @@
 @startuml
 package controllers {
     class CardController
-
-
 }
+
 package models {
     class Card
     class Labelling
-    class Search
     abstract class Model
     Card -right-|> Model
     Card *-- Labelling
 }
 
 package activities{
-    package fragments{
-    }
-    class CardDataActivity
-    class CardsAdpater
-    class HomeActivity
-    class SearchCardsActivity
-    class MainActivity
-
     abstract class CardView
-    CardView -up-> CardController
+    class CardDataActivity
+    class SearchCardsActivity
     CardView <|-- CardDataActivity
     CardView <|-- SearchCardsActivity
+    CardView -up-> CardController
+    class CardsAdpater
+    SearchCardsActivity *-- CardsAdpater
+    class HomeActivity
+    class MainActivity
 }
 
 package repositories{
-    CardController -down-> CardRepository
+    interface CardRepository
+    class CardFirestoreRepository
+    CardController --> CardRepository
+    CardFirestoreRepository .up.|> CardRepository
     package mappers {
         interface ModelMapper
         ModelMapper --> Model
         CardMapper ..|> ModelMapper
         CardMapper --> Card
     }
-    interface CardRepository
-    interface DataStoreListener
-    class CardFirestoreRepository
-    CardFirestoreRepository ..|> CardRepository
-    CardFirestoreRepository --> FirestoreDataStore
-
-    class FirestoreDataStore<T>
-    FirestoreDataStore *-- DataStoreListener
-    FirestoreDataStore *-- ModelMapper
-    CardController *-- DataStoreListener
-    CardView ..|> DataStoreListener
+    package datastores {
+        interface DataStoreListener
+        interface DataStore<T>
+        CardView ..|> DataStoreListener
+        class FirestoreDataStore<T>
+        CardFirestoreRepository --> DataStore
+        FirestoreDataStore .up.|> DataStore
+        FirestoreDataStore *-- DataStoreListener
+        FirestoreDataStore *-- ModelMapper
+    }
 }
 
 @enduml

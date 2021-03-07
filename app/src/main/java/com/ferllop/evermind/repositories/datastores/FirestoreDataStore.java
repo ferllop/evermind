@@ -1,4 +1,4 @@
-package com.ferllop.evermind.repositories.datastores.technologies;
+package com.ferllop.evermind.repositories.datastores;
 
 import android.util.Log;
 
@@ -20,16 +20,16 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class FirestoreDataStore<T extends Model> extends DataStore<T> {
+public class FirestoreDataStore<T extends Model> implements DataStore<T> {
     final private String TAG = "Firestore Service";
 
     String collection;
+    ModelMapper<T> mapper;
+    DatastoreListener<T> listener;
 
     public FirestoreDataStore(String collection, ModelMapper mapper, DatastoreListener<T> listener) {
-        super(mapper, listener);
+        this.mapper = mapper;
+        this.listener = listener;
         this.collection = collection;
     }
 

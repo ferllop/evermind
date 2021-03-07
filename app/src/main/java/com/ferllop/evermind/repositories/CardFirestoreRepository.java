@@ -1,16 +1,17 @@
 package com.ferllop.evermind.repositories;
 
 import com.ferllop.evermind.models.Card;
-import com.ferllop.evermind.repositories.datastores.CardDataStore;
-import com.ferllop.evermind.repositories.datastores.FirestoreCardDataStore;
+import com.ferllop.evermind.repositories.datastores.FirestoreCollectionsLabels;
+import com.ferllop.evermind.repositories.datastores.DataStore;
+import com.ferllop.evermind.repositories.datastores.FirestoreDataStore;
+import com.ferllop.evermind.repositories.mappers.CardMapper;
 
+public class CardFirestoreRepository implements CardRepository {
 
-public class CardDataRepository implements CardRepository {
+    DataStore<Card> dataStore;
 
-    CardDataStore dataStore;
-
-    public CardDataRepository(DatastoreListener activity) {
-        this.dataStore = new FirestoreCardDataStore(activity);
+    public CardFirestoreRepository(DatastoreListener listener) {
+        this.dataStore = new FirestoreDataStore<>(FirestoreCollectionsLabels.CARD.getValue(), new CardMapper(), listener);
     }
 
     @Override
@@ -42,6 +43,5 @@ public class CardDataRepository implements CardRepository {
     public void delete(String id) {
         dataStore.delete(id);
     }
-
 
 }
