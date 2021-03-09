@@ -5,13 +5,19 @@ import com.ferllop.evermind.repositories.datastores.FirestoreCollectionsLabels;
 import com.ferllop.evermind.repositories.datastores.DataStore;
 import com.ferllop.evermind.repositories.datastores.FirestoreDataStore;
 import com.ferllop.evermind.repositories.mappers.CardMapper;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class CardFirestoreRepository implements CardRepository {
 
     DataStore<Card> dataStore;
 
     public CardFirestoreRepository(DatastoreListener listener) {
-        this.dataStore = new FirestoreDataStore<>(FirestoreCollectionsLabels.CARD.getValue(), new CardMapper(), listener);
+        this.dataStore = new FirestoreDataStore<>(
+                FirebaseFirestore.getInstance(),
+                FirestoreCollectionsLabels.CARD.getValue(),
+                new CardMapper(),
+                listener
+        );
     }
 
     @Override
@@ -44,4 +50,7 @@ public class CardFirestoreRepository implements CardRepository {
         dataStore.delete(id);
     }
 
+    public void getCardsFromUsername(String username) {
+        dataStore.getFromUniqueField("authorUsername", username);
+    }
 }

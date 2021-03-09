@@ -21,19 +21,19 @@ public class SearchTest {
     @Test
     public void should_be_able_to_provide_the_author_when_a_word_prefixed_with_at_symbol_is_provided_alone(){
         Search search = new Search("@author");
-        assertEquals(search.getAuthor(), CardField.AUTHOR.getValue());
+        assertEquals(search.getAuthorUsername(), "author");
     }
 
     @Test
     public void sshould_be_able_to_provide_the_author_when_a_word_prefixed_with_at_symbol_is_provided_in_a_comma_separated_list(){
         Search search = new Search("@author,label1");
-        assertEquals(search.getAuthor(), CardField.AUTHOR.getValue());
+        assertEquals(search.getAuthorUsername(), "author");
     }
 
     @Test
     public void should_be_able_to_provide_only_the_first_author_when_multiple_authors_are_provided(){
         Search search = new Search("@author1,@author2");
-        assertEquals(search.getAuthor(), "author1");
+        assertEquals(search.getAuthorUsername(), "author1");
     }
 
     @Test
@@ -91,7 +91,7 @@ public class SearchTest {
         Search lowerCaseSearch = new Search("@author");
         Search mixedCaseSearch = new Search("@AUthor");
 
-        assertEquals(lowerCaseSearch.getAuthor(), mixedCaseSearch.getAuthor());
+        assertEquals(lowerCaseSearch.getAuthorUsername(), mixedCaseSearch.getAuthorUsername());
     }
 
 

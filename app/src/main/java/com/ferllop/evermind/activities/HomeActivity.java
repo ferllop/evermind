@@ -13,6 +13,9 @@ import android.widget.TextView;
 
 import com.ferllop.evermind.AndroidApplication;
 import com.ferllop.evermind.R;
+import com.ferllop.evermind.models.User;
+
+import java.security.NoSuchAlgorithmException;
 
 public class HomeActivity extends AppCompatActivity {
 

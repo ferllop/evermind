@@ -8,4 +8,5 @@ public interface DataStore<T extends Model> {  void insert(T card);
     void getFromSearch(String query);
     void update(String id, T item);
     void delete(String id);
+    void getFromUniqueField(String field, String value);
 }

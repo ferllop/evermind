@@ -1,17 +1,17 @@
 package com.ferllop.evermind.models;
 
-public enum UserCardLevel {
-    LEVEL1(1),
-    LEVEL2(3),
-    LEVEL3(7),
-    LEVEL4(15),
-    LEVEL5(30),
-    LEVEL6(60),
-    LEVEL7(120);
+public enum Level {
+    LEVEL_1(1),
+    LEVEL_2(3),
+    LEVEL_3(7),
+    LEVEL_4(15),
+    LEVEL_5(30),
+    LEVEL_6(60),
+    LEVEL_7(120);
 
     private final int value;
 
-    UserCardLevel(int value){
+    Level(int value){
         this.value = value;
     }
 

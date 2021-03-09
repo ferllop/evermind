@@ -14,17 +14,21 @@ public class AndroidApplication extends Application {
     public void onCreate(){
         super.onCreate();
         setFixedAuthor();
-      Log.d("ARRANCA", "si");
     }
 
     private void setFixedAuthor(){
         SharedPreferences.Editor prefs = getSharedPreferences(getString(R.string.general_preferences_id), Context.MODE_PRIVATE).edit();
-        prefs.putString("user", "ferllop").commit();
+        prefs.putString("user", "ferllop").putString("userID", "Q8tMRaXVhVm0GGvCGiuc").commit();
     }
 
-    public static String getUser(Activity activity){
+    public static String getUser(Context activity){
         return activity.getSharedPreferences(activity.getString(R.string.general_preferences_id), Context.MODE_PRIVATE)
                 .getString("user", "anonymous");
+    }
+
+    public static String getUserID(Context activity){
+        return activity.getSharedPreferences(activity.getString(R.string.general_preferences_id), Context.MODE_PRIVATE)
+                .getString("userID", "none");
     }
 
 }

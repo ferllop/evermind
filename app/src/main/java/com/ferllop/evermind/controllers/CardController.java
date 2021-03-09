@@ -4,6 +4,7 @@ import com.ferllop.evermind.models.Card;
 import com.ferllop.evermind.repositories.CardFirestoreRepository;
 import com.ferllop.evermind.repositories.CardRepository;
 import com.ferllop.evermind.repositories.DatastoreListener;
+import com.ferllop.evermind.repositories.datastores.Search;
 
 public class CardController {
     CardRepository cardRepository;
@@ -21,33 +22,32 @@ public class CardController {
     }
 
     public void insert(String question, String answer, String labels) {
-        insert(new Card("anonymous", question, answer, labels));
+        insert(new Card("none", "anonymous", question, answer, labels));
     }
 
     public void load(String id) {
         cardRepository.load(id);
     }
 
-
     public void getAll() {
         cardRepository.getAll();
     }
-
 
     public void getFromSearch(String query) {
         cardRepository.getFromSearch(query);
     }
 
-
     public void update(String id, Card card) {
         cardRepository.update(id, card);
     }
 
-    public void update(String id, String author, String question, String answer, String labels) {
-        update(id, new Card(author, question, answer, labels));
+    public void update(String id, String authorID, String authorUsername, String question, String answer, String labels) {
+        update(id, new Card(authorID, authorUsername, question, answer, labels));
     }
 
     public void delete(String id) {
         cardRepository.delete(id);
     }
+
+
 }

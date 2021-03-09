@@ -14,16 +14,21 @@ import com.ferllop.evermind.models.DataStoreError;
 import com.ferllop.evermind.repositories.DatastoreListener;
 import com.ferllop.evermind.controllers.CardController;
 
+import com.ferllop.evermind.repositories.datastores.Search;
+
+
 public class SearchCardsActivity extends AppCompatActivity implements DatastoreListener<Card> {
 
     final String TAG = "SearchCardsActivity";
     CardsAdapter adapter;
+    CardController cardController;
+    Search search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_cards);
-        CardController cardController = new CardController(this);
+        cardController = new CardController(this);
         RecyclerView recycler = findViewById(R.id.card_frame_recycler);
         adapter = new CardsAdapter();
         recycler.setAdapter(adapter);
@@ -32,10 +37,10 @@ public class SearchCardsActivity extends AppCompatActivity implements DatastoreL
             public void onClick(View v) {
                 adapter.clear();
                 String searchText = ((EditText) findViewById(R.id.searchBar_textInput)).getText().toString();
-                if(searchText.equals("all")){
+                if (searchText.equals("all")) {
                     cardController.getAll();
                 } else {
-                    try{
+                    try {
                         cardController.getFromSearch(searchText);
                     } catch (IllegalArgumentException ex) {
                         Toast.makeText(SearchCardsActivity.this, R.string.error_empty_query_search, Toast.LENGTH_LONG).show();
@@ -46,15 +51,16 @@ public class SearchCardsActivity extends AppCompatActivity implements DatastoreL
     }
 
     @Override
-    public void onSave() { }
+    public void onSave() {
+    }
 
-    @Override
     public void onLoad(Card card) {
         adapter.addCard(card);
     }
 
     @Override
-    public void onDelete(){ }
+    public void onDelete() {
+    }
 
     @Override
     public void onError(DataStoreError error) {

@@ -1,7 +1,6 @@
 package com.ferllop.evermind.repositories.datastores;
 
 import com.ferllop.evermind.repositories.fields.CardField;
-import com.ferllop.evermind.repositories.fields.UserField;
 import com.google.common.base.Strings;
 
 import java.util.ArrayList;
@@ -9,6 +8,7 @@ import java.util.List;
 
 public class Search {
     Token[] tokens;
+    final String USER_PREFIX = "@";
 
     public Search(String query){
         if (Strings.isNullOrEmpty(query)){
@@ -29,9 +29,9 @@ public class Search {
         return query.trim().split(CardField.LABEL_LIST_SEPARATOR.getValue());
     }
 
-    private Token getFirstAuthorToken(){
+    private Token getFirstAuthorUsernameToken(){
         for(Token token : tokens){
-            if(token.isAuthor()){
+            if(token.isAuthorUsername()){
                 return token;
             }
         }
@@ -56,8 +56,8 @@ public class Search {
         return labels;
     }
 
-    public String getAuthor(){
-        return this.getFirstAuthorToken().toString().replace(UserField.USER_PREFIX.getValue(), "");
+    public String getAuthorUsername(){
+        return this.getFirstAuthorUsernameToken().toString().replace(USER_PREFIX, "");
     }
 
     public boolean hasLabels(){
@@ -65,7 +65,7 @@ public class Search {
     }
 
     public boolean hasAuthor(){
-        return getFirstAuthorToken() != null;
+        return getFirstAuthorUsernameToken() != null;
     }
 
     class Token{
@@ -75,12 +75,12 @@ public class Search {
             this.value = token;
         }
 
-        public boolean isAuthor(){
-            return value.startsWith(UserField.USER_PREFIX.getValue());
+        public boolean isAuthorUsername(){
+            return value.startsWith(USER_PREFIX);
         }
 
         public boolean isLabel(){
-            return !this.isAuthor();
+            return !this.isAuthorUsername();
         }
 
         @Override

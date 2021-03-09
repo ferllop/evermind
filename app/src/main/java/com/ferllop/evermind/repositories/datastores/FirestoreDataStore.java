@@ -21,13 +21,15 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 public class FirestoreDataStore<T extends Model> implements DataStore<T> {
-    final private String TAG = "Firestore Service";
+    final private String TAG = "MYAPP";
 
     String collection;
     ModelMapper<T> mapper;
     DatastoreListener<T> listener;
+    FirebaseFirestore firestore;
 
-    public FirestoreDataStore(String collection, ModelMapper mapper, DatastoreListener<T> listener) {
+    public FirestoreDataStore(FirebaseFirestore firestore, String collection, ModelMapper mapper, DatastoreListener<T> listener) {
+        this.firestore = firestore;
         this.mapper = mapper;
         this.listener = listener;
         this.collection = collection;
@@ -35,7 +37,7 @@ public class FirestoreDataStore<T extends Model> implements DataStore<T> {
 
     @Override
     public void insert(T item) {
-        FirebaseFirestore.getInstance().collection(collection)
+        firestore.collection(collection)
                 .add(mapper.execute(item))
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
@@ -55,7 +57,7 @@ public class FirestoreDataStore<T extends Model> implements DataStore<T> {
 
     @Override
     public void load(String id){
-        FirebaseFirestore.getInstance().collection(collection).document(id)
+        firestore.collection(collection).document(id)
                 .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot document) {
@@ -73,7 +75,7 @@ public class FirestoreDataStore<T extends Model> implements DataStore<T> {
 
     @Override
     public void getAll(){
-        FirebaseFirestore.getInstance().collection(collection).get()
+        firestore.collection(collection).get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
@@ -89,15 +91,14 @@ public class FirestoreDataStore<T extends Model> implements DataStore<T> {
     @Override
     public void getFromSearch(String query) {
         Search search = new Search(query);
-
-        Query dbQuery = FirebaseFirestore.getInstance().collection(collection);
+        Query dbQuery = firestore.collection(collection);
         if(search.hasLabels()){
             for(String label: search.getLabels()){
                 dbQuery = dbQuery.whereEqualTo(CardField.LABELLING.getValue()+"."+label, true);
             }
         }
         if(search.hasAuthor()){
-            dbQuery = dbQuery.whereEqualTo(CardField.AUTHOR.getValue(), search.getAuthor());
+            dbQuery = dbQuery.whereEqualTo(CardField.AUTHOR_USERNAME.getValue(), search.getAuthorUsername());
         }
 
         dbQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -117,7 +118,7 @@ public class FirestoreDataStore<T extends Model> implements DataStore<T> {
 
     @Override
     public void update(String id, T item) {
-        FirebaseFirestore.getInstance().collection(collection).document(id)
+        firestore.collection(collection).document(id)
                 .set(mapper.execute(item))
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -137,7 +138,7 @@ public class FirestoreDataStore<T extends Model> implements DataStore<T> {
 
     @Override
     public void delete(String id) {
-        FirebaseFirestore.getInstance().collection(collection).document(id)
+        firestore.collection(collection).document(id)
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -154,4 +155,24 @@ public class FirestoreDataStore<T extends Model> implements DataStore<T> {
                     }
                 });
     }
+
+    @Override
+    public void getFromUniqueField(String field, String value) {
+        firestore.collection(collection).whereEqualTo(field, value)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        listener.onLoad(mapper.execute(document.getId(), document.getData()));
+                    }
+                } else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
+                    listener.onError(DataStoreError.ON_SEARCH);
+                }
+            }
+        });
+    }
+
+
 }

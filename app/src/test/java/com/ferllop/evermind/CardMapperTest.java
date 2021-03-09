@@ -18,7 +18,8 @@ import static org.junit.Assert.assertTrue;
 public class CardMapperTest {
 
     String id;
-    String author;
+    String authorID;
+    String authorUsername;
     String question;
     String answer;
     String label1;
@@ -30,7 +31,8 @@ public class CardMapperTest {
     @Before
     public void setId(){
         id = "xyz";
-        author = "TheAuthor";
+        authorID = "TheAuthorID";
+        authorUsername = "TheAuthorUsername";
         question = "The question?";
         answer = "The answer";
         label1 = "label1";
@@ -38,7 +40,7 @@ public class CardMapperTest {
     }
 
     public void createCardAsCard(){
-        cardAsCard = new Card(id, author, question, answer, new Labelling(Arrays.asList(label1, label2)));
+        cardAsCard = new Card(id, authorID, authorUsername, question, answer, new Labelling(Arrays.asList(label1, label2)));
     }
 
 
@@ -48,16 +50,23 @@ public class CardMapperTest {
         labelling.put(label2, true);
 
         cardAsMap = new HashMap<>();
-        cardAsMap.put(CardField.AUTHOR.getValue(), author);
+        cardAsMap.put(CardField.AUTHOR_ID.getValue(), authorID);
+        cardAsMap.put(CardField.AUTHOR_USERNAME.getValue(), authorUsername);
         cardAsMap.put(CardField.QUESTION.getValue(), question);
         cardAsMap.put(CardField.ANSWER.getValue(), answer);
         cardAsMap.put(CardField.LABELLING.getValue(), labelling);
     }
 
     @Test
-    public void should_convert_a_Card_to_a_String_key_Object_value_Map_with_an_author(){
+    public void should_convert_a_Card_to_a_String_key_Object_value_Map_with_an_author_username(){
         createCardAsCard();
-        assertEquals(author, new CardMapper().execute(cardAsCard).get(CardField.AUTHOR.getValue()));
+        assertEquals(authorUsername, new CardMapper().execute(cardAsCard).get(CardField.AUTHOR_USERNAME.getValue()));
+    }
+
+    @Test
+    public void should_convert_a_Card_to_a_String_key_Object_value_Map_with_an_author_ID(){
+        createCardAsCard();
+        assertEquals(authorID, new CardMapper().execute(cardAsCard).get(CardField.AUTHOR_ID.getValue()));
     }
 
     @Test
@@ -86,10 +95,17 @@ public class CardMapperTest {
         createCardAsMap();
         assertEquals(id, new CardMapper().execute(id, cardAsMap).getId());
 
-    }@Test
-    public void should_convert_a_String_key_Object_value_map_to_a_Card_with_an_author(){
+    }
+
+    @Test
+    public void should_convert_a_String_key_Object_value_map_to_a_Card_with_an_author_ID(){
         createCardAsMap();
-        assertEquals("TheAuthor", new CardMapper().execute(id, cardAsMap).getAuthor());
+        assertEquals("TheAuthorID", new CardMapper().execute(id, cardAsMap).getAuthorID());
+    }
+    @Test
+    public void should_convert_a_String_key_Object_value_map_to_a_Card_with_an_author_username(){
+        createCardAsMap();
+        assertEquals("TheAuthorUsername", new CardMapper().execute(id, cardAsMap).getAuthorUsername());
     }
 
     @Test

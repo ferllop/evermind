@@ -60,7 +60,7 @@ public class CardDataActivity extends AppCompatActivity implements DatastoreList
                 String question = ((EditText) findViewById(R.id.questionTextMultiLine)).getText().toString();
                 String answer = ((EditText) findViewById(R.id.answerTextMultiLine)).getText().toString();
                 String labels = ((EditText) findViewById(R.id.labelsText)).getText().toString();
-                cardController.update(card.getId(), card.getAuthor(), question, answer, labels);
+                cardController.update(card.getId(), card.getAuthorID(), card.getAuthorUsername(), question, answer, labels);
             }
         });
         findViewById(R.id.deleteButton).setOnClickListener(new View.OnClickListener() {

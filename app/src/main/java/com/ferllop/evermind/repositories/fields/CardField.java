@@ -2,7 +2,8 @@ package com.ferllop.evermind.repositories.fields;
 
 public enum CardField {
     ID("id"),
-    AUTHOR("author"),
+    AUTHOR_ID("authorID"),
+    AUTHOR_USERNAME("authorUsername"),
     QUESTION("question"),
     ANSWER("answer"),
     LABELLING("labels"),

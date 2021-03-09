@@ -1,6 +1,7 @@
 package com.ferllop.evermind.activities;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +11,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ferllop.evermind.AndroidApplication;
 import com.ferllop.evermind.R;
 import com.ferllop.evermind.models.Card;
+import com.ferllop.evermind.repositories.SubscriptionRepository;
 import com.ferllop.evermind.repositories.fields.CardField;
 
 
@@ -58,11 +61,12 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
+        final String TAG = "MYAPP";
         TextView author;
         TextView labels;
         TextView question;
         TextView answer;
-        Button edit;
+        Button action;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -70,21 +74,34 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
             labels = itemView.findViewById(R.id.labels_textView);
             question = itemView.findViewById(R.id.question_textView);
             answer = itemView.findViewById(R.id.answer_textView);
-            edit = itemView.findViewById(R.id.edit_button);
+            action = itemView.findViewById(R.id.search_item_card_action);
         }
 
         public void bind(Card card) {
-            author.setText(card.getAuthor());
+            author.setText(card.getAuthorUsername());
             labels.setText(card.getLabelling().toString());
             question.setText(card.getQuestion());
             answer.setText(card.getAnswer());
-            edit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(), CardDataActivity.class);
-                    v.getContext().startActivity(intent.putExtra(CardField.ID.getValue(), card.getId()));
-                }
-            });
+//            Log.d(TAG, AndroidApplication.getUserID(author.getContext()));
+//            Log.d(TAG, card.getAuthorID());
+            if (!AndroidApplication.getUserID(author.getContext()).equals(card.getAuthorID())){
+                action.setText(R.string.suscribe_to_card);
+                action.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //new SubscriptionRepository(author.getContext());
+                    }
+                });
+            } else {
+                action.setText(R.string.edit_button);
+                action.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(v.getContext(), CardDataActivity.class);
+                        v.getContext().startActivity(intent.putExtra(CardField.ID.getValue(), card.getId()));
+                    }
+                });
+            }
         }
     }
 }

@@ -2,7 +2,8 @@ package com.ferllop.evermind.repositories.datastores;
 
 public enum FirestoreCollectionsLabels {
     CARD("cards"),
-    USER("users");
+    USER("users"),
+    SUBSCRIPTION("subscriptions");
 
     private final String value;
 
