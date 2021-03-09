@@ -1,0 +1,35 @@
+@startuml
+
+skinparam nodesep 100
+hide methods
+hide attributes
+hide stereotypes
+
+title Evermind - Domain model
+
+class User
+class Creator
+class Collection
+class Card
+class Question
+class Answer
+class Label
+class Search
+class Keyword
+class ReviewRound
+
+User ..> Search
+User *--> Collection
+Creator --|> User
+Collection o--> "0..*" Card
+Collection ..> ReviewRound
+Card *--> "1..*" Label
+Card *--> Creator
+Card *--> Question
+Card *--> Answer
+Search *--> "1..*" Keyword
+Keyword -left-> "0..1" Creator
+Keyword --> "0..*" Label
+ReviewRound *--> "1..10" Card
+
+@enduml

@@ -1,0 +1,50 @@
+{
+  "database": {
+    "users": {
+      "user_id1": {
+        "name": "John",
+        "username": "john_72",
+        "email": "john@example.com",
+        "password": "23pass$&",
+        "status": "LOGGED_OUT",
+        "lastConnection": 1615140643946,
+        "signIn": 1405140643376,
+        "subscriptions" : [
+          "subscription_id1",
+          "subscription_id33",
+          "...x500"
+        ]
+      }
+    },
+    "cards": {
+      "cardid1": {
+        "author_id": "user_id1",
+        "question": "What is this {} in javascript?",
+        "answer": "An object",
+        "labels": {
+          "programming": true,
+          "languages": true,
+          "...x3" : true
+        }
+      },
+      "cardid2": {
+        "authorID": "user_id2",
+        "question": "What is this {} in javascript?",
+        "answer": "An object",
+        "labels": {
+          "programming": true,
+          "languages": true
+        }
+      }
+    },
+    "subscriptions": {
+       "subscriptionid1": {
+         "userID": "user_id1",
+         "cardID": "card_id23",
+         "level": 1,
+         "lastReview": 12345678644,
+         "nextReview": 12335567776
+       }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+@startuml
+class Users {
+    PK id: string
+    email: string
+    username: string
+    password: string
+    username: string
+    verification: string
+}
+
+class Cards {
+    PK id: string
+    author: string
+    question: string
+    answer: string
+    labels: string[]
+}
+
+class Suscriptions {
+    PK id: string
+    FK user_id: string
+    FK card_id: string
+    level: int
+    last_review: timestamp
+    next_review: timestamp
+}
+
+@enduml

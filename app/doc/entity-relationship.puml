@@ -1,0 +1,52 @@
+@startuml
+
+title Evermind - entity relationship
+skinparam nodesep 100
+
+' uncomment the line below if you're using computer with a retina display
+' skinparam dpi 300
+!define Table(name,desc) class name as "desc" << (T,#FFAAAA) >>
+' we use bold for primary key
+' green color for unique
+' and underscore for not_null
+!define primary_key(x) <b>x</b>
+!define foreign_key(x) <i>x</i>
+!define unique(x) <color:green>x</color>
+!define not_null(x) <u>x</u>
+' other tags available:
+' <i></i>
+' <back:COLOR></color>, where color is a color name or html color code
+' (#FFAACC)
+' see: http://plantuml.com/classes.html#More
+hide methods
+hide stereotypes
+
+' entities
+
+Table(user, "user\n(User in our system)") {
+    primary_key(id) INTEGER
+    not_null(unique(username)) VARCHAR[16]
+    not_null(unique(email)) VARCHAR[64]
+    not_null(password) VARCHAR[64]
+}
+
+Table(card, "card\n(An answer/question set)") {
+    primary_key(id) INTEGER
+    question VARCHAR
+    answer VARCHAR
+    foreign_key(user_id) INTEGER
+    created TIMESTAMP
+    lastUpdated TIMESTAMP
+}
+
+Table(label, "label\n(Word that describe a card)") {
+    primary_key(id) INTEGER
+    name VARCHAR
+}
+
+
+user "1" -right- "0..*" card : create
+user "1..*" -right- "0..*" card : is subcribed to
+card "0..*" -down- "1..*" label : has
+
+@enduml

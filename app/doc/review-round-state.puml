@@ -1,0 +1,17 @@
+@startuml
+skinparam nodesep 100
+
+title Evermind - Review Round State
+
+state "Question(num)" as ViewQuestion
+state choice <<choice>>
+
+[*] --> ViewQuestion
+ViewQuestion : initially num = 1
+ViewQuestion : in next iterations num = num + 1
+ViewQuestion --> ViewAnswer : Flip
+ViewAnswer --> choice : Evaluate
+choice --> ViewQuestion : [num<=10]
+choice --> [*] : [num>10]
+
+@enduml
