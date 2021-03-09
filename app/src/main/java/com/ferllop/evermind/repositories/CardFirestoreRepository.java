@@ -50,7 +50,4 @@ public class CardFirestoreRepository implements CardRepository {
         dataStore.delete(id);
     }
 
-    public void getCardsFromUsername(String username) {
-        dataStore.getFromUniqueField("authorUsername", username);
-    }
 }
