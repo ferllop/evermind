@@ -1,14 +1,24 @@
 package com.ferllop.evermind.models;
 
+import com.google.firebase.Timestamp;
+
 public class Subscription extends Model{
     String userID;
     String cardID;
     Level level;
-    int lastReview;
-    int nextReview;
+    Timestamp lastReview;
+    Timestamp nextReview;
 
-    public Subscription(String id, String userID, String cardID, Level level, int lastReview, int nextReview) {
+    public Subscription(String id, String userID, String cardID, Level level, Timestamp lastReview, Timestamp nextReview) {
         setId(id);
+        this.userID = userID;
+        this.cardID = cardID;
+        this.level = level;
+        this.lastReview = lastReview;
+        this.nextReview = nextReview;
+    }
+
+    public Subscription(String userID, String cardID, Level level, Timestamp lastReview, Timestamp nextReview) {
         this.userID = userID;
         this.cardID = cardID;
         this.level = level;
@@ -28,12 +38,13 @@ public class Subscription extends Model{
         return level;
     }
 
-    public int getLastReview() {
+    public Timestamp getLastReview() {
         return lastReview;
     }
 
-    public int getNextReview() {
+    public Timestamp getNextReview() {
         return nextReview;
     }
+
 
 }

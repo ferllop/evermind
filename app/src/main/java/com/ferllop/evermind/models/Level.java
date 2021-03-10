@@ -1,6 +1,7 @@
 package com.ferllop.evermind.models;
 
 public enum Level {
+    LEVEL_0(0),
     LEVEL_1(1),
     LEVEL_2(3),
     LEVEL_3(7),
@@ -17,5 +18,12 @@ public enum Level {
 
     public int getValue(){
         return value;
+    }
+
+    public Level nextLevel(){
+        if (this.ordinal() == Level.values().length - 1){
+            return this;
+        }
+        return Level.values()[this.ordinal()];
     }
 }

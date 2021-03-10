@@ -1,7 +1,6 @@
 package com.ferllop.evermind.activities;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ferllop.evermind.AndroidApplication;
 import com.ferllop.evermind.R;
 import com.ferllop.evermind.models.Card;
+import com.ferllop.evermind.models.Level;
+import com.ferllop.evermind.models.Subscription;
+import com.ferllop.evermind.repositories.DatastoreListener;
+import com.ferllop.evermind.repositories.SubscriptionFirestoreRepository;
 import com.ferllop.evermind.repositories.SubscriptionRepository;
 import com.ferllop.evermind.repositories.fields.CardField;
+import com.google.firebase.Timestamp;
 
 
 import java.util.ArrayList;
@@ -89,7 +93,13 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
                 action.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //new SubscriptionRepository(author.getContext());
+                        String authorID = card.getAuthorID();
+                        String cardID = card.getId();
+                        Level level = Level.LEVEL_0;
+                        Timestamp now = Timestamp.now();
+                        Timestamp next = new Timestamp(level.getValue() * 86400 + Timestamp.now().getSeconds(), 0);
+                        Subscription sub = new Subscription(authorID, cardID, level, now, next);
+                        new SubscriptionFirestoreRepository((DatastoreListener) author.getContext()).insert(sub);
                     }
                 });
             } else {

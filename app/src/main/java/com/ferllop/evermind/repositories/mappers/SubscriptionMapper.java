@@ -1,9 +1,10 @@
 package com.ferllop.evermind.repositories.mappers;
 
-
 import com.ferllop.evermind.models.Level;
 import com.ferllop.evermind.models.Subscription;
 import com.ferllop.evermind.repositories.fields.SubscriptionField;
+import com.google.firebase.Timestamp;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,9 +14,9 @@ public class SubscriptionMapper implements ModelMapper<Subscription> {
         String authorID = (String) map.get(SubscriptionField.USER_ID.getValue());
         String cardID = (String) map.get(SubscriptionField.CARD_ID.getValue());
         String level = (String) map.get(SubscriptionField.LEVEL.getValue());
-        String lastReview = (String) map.get(SubscriptionField.LAST_REVIEW.getValue());
-        String nextReview = (String) map.get(SubscriptionField.NEXT_REVIEW.getValue());
-        return new Subscription(id, authorID, cardID, Level.valueOf(level), Integer.parseInt(lastReview), Integer.parseInt(nextReview));
+        Timestamp lastReview = (Timestamp) map.get(SubscriptionField.LAST_REVIEW.getValue());
+        Timestamp nextReview = (Timestamp) map.get(SubscriptionField.NEXT_REVIEW.getValue());
+        return new Subscription(id, authorID, cardID, Level.valueOf(level), lastReview, nextReview);
     }
 
     @Override
