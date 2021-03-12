@@ -20,10 +20,17 @@ public enum Level {
         return value;
     }
 
-    public Level nextLevel(){
+    public Level next(){
         if (this.ordinal() == Level.values().length - 1){
             return this;
         }
-        return Level.values()[this.ordinal()];
+        return Level.values()[this.ordinal() + 1];
+    }
+
+    public Level previous(){
+        if (this.ordinal() == 0){
+            return this;
+        }
+        return Level.values()[this.ordinal()-1];
     }
 }

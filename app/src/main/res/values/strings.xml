@@ -36,6 +36,10 @@
     <string name="general_preferences_id">com.ferllop.evermind.GENERAL_PREFERENCES</string>
     <string name="suscribe_to_card">suscribe</string>
     <string name="USER_PREFIX">\@</string>
+    <string name="subscribed">Subscribed to card</string>
+    <string name="right">right</string>
+    <string name="resolve">resolve</string>
+    <string name="wrong">wrong</string>
 
 
 </resources>

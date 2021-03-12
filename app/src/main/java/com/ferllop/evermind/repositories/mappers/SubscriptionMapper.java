@@ -24,7 +24,7 @@ public class SubscriptionMapper implements ModelMapper<Subscription> {
         Map<String, Object> result = new HashMap<>();
         result.put(SubscriptionField.USER_ID.getValue(), subscription.getUserID());
         result.put(SubscriptionField.CARD_ID.getValue(), subscription.getCardID());
-        result.put(SubscriptionField.LEVEL.getValue(), subscription.getLevel().getValue());
+        result.put(SubscriptionField.LEVEL.getValue(), subscription.getLevel().name());
         result.put(SubscriptionField.LAST_REVIEW.getValue(), subscription.getLastReview());
         result.put(SubscriptionField.NEXT_REVIEW.getValue(), subscription.getNextReview());
         return result;

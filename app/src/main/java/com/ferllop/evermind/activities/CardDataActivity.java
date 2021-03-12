@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.ferllop.evermind.AndroidApplication;
 import com.ferllop.evermind.R;
 import com.ferllop.evermind.models.Card;
 import com.ferllop.evermind.models.DataStoreError;
@@ -37,7 +38,7 @@ public class CardDataActivity extends AppCompatActivity implements DatastoreList
                     String question = ((EditText) findViewById(R.id.questionTextMultiLine)).getText().toString();
                     String answer = ((EditText) findViewById(R.id.answerTextMultiLine)).getText().toString();
                     String labels = ((EditText) findViewById(R.id.labelsText)).getText().toString();
-                    new CardController(CardDataActivity.this).insert(question, answer, labels);
+                    new CardController(CardDataActivity.this).insert(AndroidApplication.getUserID(CardDataActivity.this), AndroidApplication.getUser(CardDataActivity.this), question, answer, labels);
                 }
             });
         }

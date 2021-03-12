@@ -52,6 +52,7 @@ public class SearchCardsActivity extends AppCompatActivity implements DatastoreL
 
     @Override
     public void onSave() {
+        Toast.makeText(this, R.string.subscribed, Toast.LENGTH_LONG).show();
     }
 
     public void onLoad(Card card) {

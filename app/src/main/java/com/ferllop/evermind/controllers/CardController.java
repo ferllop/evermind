@@ -1,5 +1,6 @@
 package com.ferllop.evermind.controllers;
 
+import com.ferllop.evermind.AndroidApplication;
 import com.ferllop.evermind.models.Card;
 import com.ferllop.evermind.repositories.CardFirestoreRepository;
 import com.ferllop.evermind.repositories.CardRepository;
@@ -21,8 +22,8 @@ public class CardController {
         cardRepository.insert(card);
     }
 
-    public void insert(String question, String answer, String labels) {
-        insert(new Card("none", "anonymous", question, answer, labels));
+    public void insert(String userID, String username, String question, String answer, String labels) {
+        insert(new Card(userID, username, question, answer, labels));
     }
 
     public void load(String id) {

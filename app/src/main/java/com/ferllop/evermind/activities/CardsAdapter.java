@@ -93,13 +93,13 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
                 action.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String authorID = card.getAuthorID();
+                        String authorID = AndroidApplication.getUserID(author.getContext());
                         String cardID = card.getId();
                         Level level = Level.LEVEL_0;
                         Timestamp now = Timestamp.now();
                         Timestamp next = new Timestamp(level.getValue() * 86400 + Timestamp.now().getSeconds(), 0);
                         Subscription sub = new Subscription(authorID, cardID, level, now, next);
-                        new SubscriptionFirestoreRepository((DatastoreListener) author.getContext()).insert(sub);
+                        new SubscriptionFirestoreRepository((DatastoreListener) author.getContext(), null).insert(sub);
                     }
                 });
             } else {
