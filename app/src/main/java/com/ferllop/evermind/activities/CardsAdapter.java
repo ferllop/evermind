@@ -17,7 +17,6 @@ import com.ferllop.evermind.models.Level;
 import com.ferllop.evermind.models.Subscription;
 import com.ferllop.evermind.repositories.DatastoreListener;
 import com.ferllop.evermind.repositories.SubscriptionFirestoreRepository;
-import com.ferllop.evermind.repositories.SubscriptionRepository;
 import com.ferllop.evermind.repositories.fields.CardField;
 import com.google.firebase.Timestamp;
 
@@ -89,7 +88,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
 //            Log.d(TAG, AndroidApplication.getUserID(author.getContext()));
 //            Log.d(TAG, card.getAuthorID());
             if (!AndroidApplication.getUserID(author.getContext()).equals(card.getAuthorID())){
-                action.setText(R.string.suscribe_to_card);
+                action.setText(R.string.subscribe_to_card);
                 action.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
