@@ -11,13 +11,19 @@ import android.widget.Toast;
 import com.ferllop.evermind.R;
 import com.ferllop.evermind.models.Card;
 import com.ferllop.evermind.models.DataStoreError;
+import com.ferllop.evermind.models.Subscription;
 import com.ferllop.evermind.repositories.DatastoreListener;
 import com.ferllop.evermind.controllers.CardController;
 
+import com.ferllop.evermind.repositories.SubscriptionFirestoreRepository;
+import com.ferllop.evermind.repositories.SubscriptionsGlobal;
 import com.ferllop.evermind.repositories.datastores.Search;
+import com.ferllop.evermind.repositories.datastores.SubscriptionListener;
+
+import java.util.List;
 
 
-public class SearchCardsActivity extends AppCompatActivity implements DatastoreListener<Card> {
+public class SearchCardsActivity extends AppCompatActivity implements DatastoreListener<Card>, SubscriptionListener {
 
     final String TAG = "SearchCardsActivity";
     CardsAdapter adapter;
@@ -51,8 +57,10 @@ public class SearchCardsActivity extends AppCompatActivity implements DatastoreL
     }
 
     @Override
-    public void onSave() {
-        Toast.makeText(this, R.string.subscribed, Toast.LENGTH_LONG).show();
+    public void onSave(Subscription subscription) {
+        adapter.updateCard(subscription.getCardID());
+        SubscriptionsGlobal.getInstance().addSubscription(subscription);
+        Toast.makeText(this, R.string.subscribed, Toast.LENGTH_SHORT).show();
     }
 
     public void onLoad(Card card) {
@@ -61,10 +69,38 @@ public class SearchCardsActivity extends AppCompatActivity implements DatastoreL
 
     @Override
     public void onDelete() {
+
+    }
+
+    @Override
+    public void onDelete(String subscriptionID) {
+        adapter.updateCard(SubscriptionsGlobal.getInstance().getCardIdFrom(subscriptionID));
+        SubscriptionsGlobal.getInstance().deleteSubscription(subscriptionID);
+        Toast.makeText(this, R.string.unsubscribed_from_card, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onLoad(List<Subscription> subscriptions) {
+
+    }
+
+    @Override
+    public void onLoad(Subscription subscription) {
+
+    }
+
+    @Override
+    public void onNotFound() {
+
     }
 
     @Override
     public void onError(DataStoreError error) {
         Toast.makeText(this, R.string.error_searching_card, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onSave() {
+
     }
 }

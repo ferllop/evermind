@@ -46,5 +46,14 @@ public class Subscription extends Model{
         return nextReview;
     }
 
+    public void setId(String id){
+        super.setId(id);
+    }
+
+    public boolean isToReviewToday(){
+        return this.nextReview.getSeconds() <= Timestamp.now().getSeconds();
+    }
+
+
 
 }

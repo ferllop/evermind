@@ -1,19 +1,24 @@
 package com.ferllop.evermind.repositories;
 
+import android.util.Log;
+
+import com.ferllop.evermind.models.Card;
 import com.ferllop.evermind.models.Subscription;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SubscriptionsGlobal {
+    final String TAG = "MYAPP";
 
-    List<Subscription> subsList;
+    List<Subscription> allSubscriptions;
+    List<Subscription> subscriptionsForToday;
     int pointer;
 
     private static SubscriptionsGlobal subscriptionsGlobal;
 
     private SubscriptionsGlobal() {
-        setSubsList(new ArrayList<>());
+        setAllSubscriptions(new ArrayList<>());
     }
 
     public static SubscriptionsGlobal getInstance(){
@@ -24,34 +29,94 @@ public class SubscriptionsGlobal {
     }
 
     public List<Subscription> getSubscriptions(){
-        return subsList;
+        return allSubscriptions;
     }
 
-    public void setSubsList(List<Subscription> subsList) {
-        this.subsList = subsList;
+    public void setAllSubscriptions(List<Subscription> allSubscriptions) {
+        this.allSubscriptions = allSubscriptions;
+        this.subscriptionsForToday = extractSubscriptionsForToday();
         pointer = 0;
     }
 
     public boolean hasNext(){
-        return pointer < subsList.size();
+        return pointer < allSubscriptions.size();
     }
 
     public void next(){
         pointer++;
     }
 
-    public List<Subscription> getTenOrRemaining(){
+    public List<Subscription> getTenOrRemainingForToday(){
+        List<Subscription> subsForToday = this.extractSubscriptionsForToday();
         List<Subscription> result;
-        if(subsList.size() > 10){
-            result = subsList.subList(pointer, pointer + 10);
+        if(subsForToday.size() > 10){
+            result = subsForToday.subList(pointer, pointer + 10);
         } else {
-            result = subsList.subList(pointer, subsList.size());
+            result = subsForToday.subList(pointer, subsForToday.size());
         }
         pointer += result.size();
         return result;
     }
 
+    private List<Subscription> extractSubscriptionsForToday(){
+        List<Subscription> result = new ArrayList<>();
+        for (Subscription sub : allSubscriptions) {
+            if (sub.isToReviewToday()){
+                result.add(sub);
+            }
+        }
+        return result;
+    }
+
+    public List<Subscription> getSubscriptionsForToday(){
+        return subscriptionsForToday;
+    }
+
+    public String getSubscriptionID(String userID, String cardID){
+        for (Subscription sub : allSubscriptions){
+            if (sub.getUserID().equals(userID) && sub.getCardID().equals(cardID)){
+                return sub.getId();
+            }
+        }
+        return null;
+    }
+
     public int getPosition(){
         return pointer;
+    }
+
+    public void addSubscription(Subscription subscription) {
+       List<Subscription> clone = allSubscriptions;
+       clone.add(subscription);
+       setAllSubscriptions(clone);
+    }
+
+    public void deleteSubscription(String subscriptionID) {
+        List<Subscription> result = new ArrayList<>();
+        for(Subscription sub : allSubscriptions){
+            if (!sub.getId().equals(subscriptionID)){
+                result.add(sub);
+            }
+        }
+        setAllSubscriptions(result);
+    }
+
+    public boolean isSubscribedTo(String cardID) {
+        for(Subscription sub : allSubscriptions){
+            if (sub.getCardID().equals(cardID)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public String getCardIdFrom(String subscriptionID) {
+        for(Subscription sub : allSubscriptions){
+            Log.d(TAG, "getCardIdFrom: " + subscriptionID + " -- "+ sub.getId());
+            if (sub.getId().equals(subscriptionID)){
+                return sub.getCardID();
+            }
+        }
+        return null;
     }
 }

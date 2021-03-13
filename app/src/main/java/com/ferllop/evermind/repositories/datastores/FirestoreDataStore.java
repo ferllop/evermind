@@ -72,7 +72,6 @@ public class FirestoreDataStore<T extends Model> implements DataStore<T> {
         });
     }
 
-
     @Override
     public void getAll(){
         firestore.collection(collection).get()
@@ -173,8 +172,4 @@ public class FirestoreDataStore<T extends Model> implements DataStore<T> {
             }
         });
     }
-
-
-
-
 }

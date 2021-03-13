@@ -40,6 +40,8 @@
     <string name="right">right</string>
     <string name="resolve">resolve</string>
     <string name="wrong">wrong</string>
+    <string name="unsubscribe_to_card">Unsubscribe</string>
+    <string name="unsubscribed_from_card">Unsubscribed from card</string>
 
 
 </resources>

@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.ferllop.evermind.R;
 import com.ferllop.evermind.models.Card;
 import com.ferllop.evermind.models.DataStoreError;
+import com.ferllop.evermind.models.SubscribedCard;
 import com.ferllop.evermind.models.Subscription;
 import com.ferllop.evermind.repositories.CardFirestoreRepository;
 import com.ferllop.evermind.repositories.DatastoreListener;
@@ -22,33 +23,6 @@ import java.util.List;
 
 public class ReviewActivity extends AppCompatActivity implements DatastoreListener<Card> {
     final String TAG = "MYAPP-ReviewActivity";
-    class SubscribedCard {
-        String cardID;
-        Card card;
-        Subscription subscription;
-
-        public SubscribedCard(String cardID, Subscription subscription) {
-            this.cardID = cardID;
-            this.subscription = subscription;
-        }
-
-        public String getCardID() {
-            return cardID;
-        }
-
-        public Card getCard() {
-            return card;
-        }
-
-        public void setCard(Card card) {
-            this.card = card;
-        }
-
-        public Subscription getSubscription() {
-            return subscription;
-        }
-
-    }
 
     List<SubscribedCard> cardsToReview;
     List<Subscription> cardsToLoad;
@@ -80,7 +54,7 @@ public class ReviewActivity extends AppCompatActivity implements DatastoreListen
         CardFirestoreRepository cardRepo = new CardFirestoreRepository(this);
         cardsToReview = new ArrayList<>();
         loadedCards = 0;
-        cardsToLoad = SubscriptionsGlobal.getInstance().getTenOrRemaining();
+        cardsToLoad = SubscriptionsGlobal.getInstance().getTenOrRemainingForToday();
         for(Subscription sub : cardsToLoad){
             cardRepo.load(sub.getCardID());
             cardsToReview.add(new SubscribedCard(sub.getCardID(), sub));
@@ -118,14 +92,14 @@ public class ReviewActivity extends AppCompatActivity implements DatastoreListen
         right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new SubscriptionFirestoreRepository(null, null).upgradeLevel(subCard.getSubscription());
+                new SubscriptionFirestoreRepository(null).upgradeLevel(subCard.getSubscription());
                 ReviewActivity.this.reviewSubscriptions();
             }
         });
         wrong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new SubscriptionFirestoreRepository(null, null).downgradeLevel(subCard.getSubscription());
+                new SubscriptionFirestoreRepository(null).downgradeLevel(subCard.getSubscription());
                 ReviewActivity.this.reviewSubscriptions();
             }
         });
