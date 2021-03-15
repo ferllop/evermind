@@ -101,9 +101,9 @@ public class SubscriptionsGlobal {
         setAllSubscriptions(result);
     }
 
-    public boolean isSubscribedTo(String cardID) {
+    public boolean isUserSubscribedTo(String userID, String cardID) {
         for(Subscription sub : allSubscriptions){
-            if (sub.getCardID().equals(cardID)){
+            if (sub.getCardID().equals(cardID) && sub.getUserID().equals(userID)){
                 return true;
             }
         }
@@ -115,6 +115,17 @@ public class SubscriptionsGlobal {
             Log.d(TAG, "getCardIdFrom: " + subscriptionID + " -- "+ sub.getId());
             if (sub.getId().equals(subscriptionID)){
                 return sub.getCardID();
+            }
+        }
+        return null;
+    }
+
+    public String getSubscriptionIDContainingCardID(String cardID){
+        Log.d(TAG, "getSubscriptionIDContainingCardID: " + allSubscriptions.size());
+        for(Subscription sub : allSubscriptions){
+            Log.d(TAG, "getSubscriptionIDContainingCardID: " + sub.getId() + " -- " + cardID);
+            if (sub.getCardID().equals(cardID)){
+                return sub.getId();
             }
         }
         return null;

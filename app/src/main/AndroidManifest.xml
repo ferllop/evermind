@@ -10,7 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Evermind">
-        <activity android:name=".activities.ReviewActivity"></activity>
+        <activity android:name=".activities.RegisterActivity"></activity>
+        <activity android:name=".activities.LoginActivity" />
+        <activity android:name=".activities.ReviewActivity" />
         <activity
             android:name=".activities.SearchCardsActivity"
             android:theme="@style/Theme.Evermind.NoActionBar" />

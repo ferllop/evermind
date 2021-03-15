@@ -7,7 +7,7 @@
     tools:context=".activities.HomeActivity">
 
     <TextView
-        android:id="@+id/logo_textView"
+        android:id="@+id/register_logo_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
@@ -32,7 +32,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo_textView" />
+        app:layout_constraintTop_toBottomOf="@+id/register_logo_textView" />
 
     <Button
         android:id="@+id/review_cards_button"

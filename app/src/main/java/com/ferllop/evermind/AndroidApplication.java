@@ -1,14 +1,10 @@
 package com.ferllop.evermind;
 
-import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
-
 
 public class AndroidApplication extends Application {
-
 
     @Override
     public void onCreate(){
@@ -18,7 +14,7 @@ public class AndroidApplication extends Application {
 
     private void setFixedAuthor(){
         SharedPreferences.Editor prefs = getSharedPreferences(getString(R.string.general_preferences_id), Context.MODE_PRIVATE).edit();
-        prefs.putString("user", "ferllop").putString("userID", "Q8tMRaXVhVm0GGvCGiuc").commit();
+        prefs.putString("user", "ferllop").putString("userID", "Q8tMRaXVhVm0GGvCGiuc").apply();
     }
 
     public static String getUser(Context activity){

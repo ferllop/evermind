@@ -13,15 +13,16 @@ import com.ferllop.evermind.models.Card;
 import com.ferllop.evermind.models.DataStoreError;
 import com.ferllop.evermind.models.SubscribedCard;
 import com.ferllop.evermind.models.Subscription;
-import com.ferllop.evermind.repositories.CardFirestoreRepository;
-import com.ferllop.evermind.repositories.DatastoreListener;
-import com.ferllop.evermind.repositories.SubscriptionFirestoreRepository;
+import com.ferllop.evermind.repositories.CardRepository;
+import com.ferllop.evermind.repositories.listeners.CardDataStoreListener;
+import com.ferllop.evermind.repositories.listeners.CrudDataStoreListener;
+import com.ferllop.evermind.repositories.SubscriptionRepository;
 import com.ferllop.evermind.repositories.SubscriptionsGlobal;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReviewActivity extends AppCompatActivity implements DatastoreListener<Card> {
+public class ReviewActivity extends AppCompatActivity implements CardDataStoreListener {
     final String TAG = "MYAPP-ReviewActivity";
 
     List<SubscribedCard> cardsToReview;
@@ -51,7 +52,7 @@ public class ReviewActivity extends AppCompatActivity implements DatastoreListen
         right.setVisibility(View.INVISIBLE);
         wrong.setVisibility(View.INVISIBLE);
 
-        CardFirestoreRepository cardRepo = new CardFirestoreRepository(this);
+        CardRepository cardRepo = new CardRepository(this);
         cardsToReview = new ArrayList<>();
         loadedCards = 0;
         cardsToLoad = SubscriptionsGlobal.getInstance().getTenOrRemainingForToday();
@@ -76,9 +77,14 @@ public class ReviewActivity extends AppCompatActivity implements DatastoreListen
         }
     }
 
+
+    @Override
+    public void onDelete(String id) {
+
+    }
+
     private void reviewSubscriptions() {
         if (cardsToReviewCount < 1){
-            Log.d(TAG, "reviewSubscriptions: back!!!");
             finish();
             return;
         }
@@ -88,18 +94,17 @@ public class ReviewActivity extends AppCompatActivity implements DatastoreListen
         wrong.setVisibility(View.INVISIBLE);
 
         SubscribedCard subCard = cardsToReview.get(--cardsToReviewCount);
-        this.printCard(subCard.getCard());
         right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new SubscriptionFirestoreRepository(null).upgradeLevel(subCard.getSubscription());
+                new SubscriptionRepository(null).upgradeLevel(subCard.getSubscription());
                 ReviewActivity.this.reviewSubscriptions();
             }
         });
         wrong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new SubscriptionFirestoreRepository(null).downgradeLevel(subCard.getSubscription());
+                new SubscriptionRepository(null).downgradeLevel(subCard.getSubscription());
                 ReviewActivity.this.reviewSubscriptions();
             }
         });
@@ -110,24 +115,12 @@ public class ReviewActivity extends AppCompatActivity implements DatastoreListen
         resolve.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                resolve.setVisibility(View.INVISIBLE);
                 answer.setVisibility(View.VISIBLE);
                 right.setVisibility(View.VISIBLE);
                 wrong.setVisibility(View.VISIBLE);
             }
         });
-    }
-
-    private void printCard(Card card){
-        String result = "empty";
-        if(card != null){
-            result = card.getQuestion();
-        }
-        Log.d("MYAPP", "printCard: " + result);
-    }
-
-    @Override
-    public void onDelete() {
-
     }
 
     @Override
@@ -136,7 +129,18 @@ public class ReviewActivity extends AppCompatActivity implements DatastoreListen
     }
 
     @Override
-    public void onSave() {
+    public void onSave(Card item) {
 
     }
+
+    @Override
+    public void onNotFound() {
+
+    }
+
+    @Override
+    public void onLoadAllCards(List<Card> cards) {
+
+    }
+
 }

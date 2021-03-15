@@ -12,23 +12,21 @@ import com.ferllop.evermind.R;
 import com.ferllop.evermind.models.Card;
 import com.ferllop.evermind.models.DataStoreError;
 import com.ferllop.evermind.models.Subscription;
-import com.ferllop.evermind.repositories.DatastoreListener;
 import com.ferllop.evermind.controllers.CardController;
 
-import com.ferllop.evermind.repositories.SubscriptionFirestoreRepository;
 import com.ferllop.evermind.repositories.SubscriptionsGlobal;
-import com.ferllop.evermind.repositories.datastores.Search;
-import com.ferllop.evermind.repositories.datastores.SubscriptionListener;
+import com.ferllop.evermind.repositories.listeners.CardDataStoreListener;
+import com.ferllop.evermind.repositories.listeners.CrudDataStoreListener;
+import com.ferllop.evermind.repositories.listeners.SubscriptionDataStoreListener;
 
 import java.util.List;
 
 
-public class SearchCardsActivity extends AppCompatActivity implements DatastoreListener<Card>, SubscriptionListener {
+public class SearchCardsActivity extends AppCompatActivity implements CardDataStoreListener, SubscriptionDataStoreListener {
 
     final String TAG = "SearchCardsActivity";
     CardsAdapter adapter;
     CardController cardController;
-    Search search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,19 +39,30 @@ public class SearchCardsActivity extends AppCompatActivity implements DatastoreL
         findViewById(R.id.search_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adapter.clear();
-                String searchText = ((EditText) findViewById(R.id.searchBar_textInput)).getText().toString();
-                if (searchText.equals("all")) {
-                    cardController.getAll();
-                } else {
-                    try {
-                        cardController.getFromSearch(searchText);
-                    } catch (IllegalArgumentException ex) {
-                        Toast.makeText(SearchCardsActivity.this, R.string.error_empty_query_search, Toast.LENGTH_LONG).show();
-                    }
-                }
+                executeSearch();
             }
         });
+    }
+
+    private void executeSearch(){
+        adapter.clear();
+
+        String searchText = ((EditText) findViewById(R.id.searchBar_textInput)).getText().toString();
+        if (searchText.equals("all")) {
+            cardController.getAll();
+        } else {
+            try {
+                cardController.getFromSearch(searchText);
+            } catch (IllegalArgumentException ex) {
+                Toast.makeText(SearchCardsActivity.this, R.string.error_empty_query_search, Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    @Override
+    public void onRestart(){
+        super.onRestart();
+        executeSearch();
     }
 
     @Override
@@ -63,13 +72,13 @@ public class SearchCardsActivity extends AppCompatActivity implements DatastoreL
         Toast.makeText(this, R.string.subscribed, Toast.LENGTH_SHORT).show();
     }
 
-    public void onLoad(Card card) {
-        adapter.addCard(card);
+    @Override
+    public void onLoadAll(List<Subscription> subscriptions) {
+
     }
 
-    @Override
-    public void onDelete() {
-
+    public void onLoad(Card card) {
+        adapter.addCard(card);
     }
 
     @Override
@@ -77,11 +86,6 @@ public class SearchCardsActivity extends AppCompatActivity implements DatastoreL
         adapter.updateCard(SubscriptionsGlobal.getInstance().getCardIdFrom(subscriptionID));
         SubscriptionsGlobal.getInstance().deleteSubscription(subscriptionID);
         Toast.makeText(this, R.string.unsubscribed_from_card, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onLoad(List<Subscription> subscriptions) {
-
     }
 
     @Override
@@ -95,12 +99,18 @@ public class SearchCardsActivity extends AppCompatActivity implements DatastoreL
     }
 
     @Override
+    public void onLoadAllCards(List<Card> items) {
+
+    }
+
+
+    @Override
     public void onError(DataStoreError error) {
         Toast.makeText(this, R.string.error_searching_card, Toast.LENGTH_LONG).show();
     }
 
     @Override
-    public void onSave() {
+    public void onSave(Card item) {
 
     }
 }

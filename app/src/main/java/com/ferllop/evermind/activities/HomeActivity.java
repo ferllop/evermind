@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -13,13 +12,13 @@ import com.ferllop.evermind.AndroidApplication;
 import com.ferllop.evermind.R;
 import com.ferllop.evermind.models.DataStoreError;
 import com.ferllop.evermind.models.Subscription;
-import com.ferllop.evermind.repositories.SubscriptionFirestoreRepository;
+import com.ferllop.evermind.repositories.SubscriptionRepository;
 import com.ferllop.evermind.repositories.SubscriptionsGlobal;
-import com.ferllop.evermind.repositories.datastores.SubscriptionListener;
+import com.ferllop.evermind.repositories.listeners.SubscriptionDataStoreListener;
 
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity implements SubscriptionListener {
+public class HomeActivity extends AppCompatActivity implements SubscriptionDataStoreListener {
     final String TAG = "MYAPP-Home";
 
     @Override
@@ -46,7 +45,7 @@ public class HomeActivity extends AppCompatActivity implements SubscriptionListe
             }
         });
 
-        ((TextView) findViewById(R.id.logo_textView))
+        ((TextView) findViewById(R.id.register_logo_textView))
                 .setText(AndroidApplication.getUser(this));
 
     }
@@ -54,19 +53,16 @@ public class HomeActivity extends AppCompatActivity implements SubscriptionListe
     private void getAllSubsFromUser() {
         ((Button) findViewById(R.id.review_cards_button)).setEnabled(false);
         findViewById(R.id.review_cards_textView).setVisibility(View.INVISIBLE);
-        //new SubscriptionFirestoreRepository(null, this).getCountForToday(AndroidApplication.getUserID(this));
-        new SubscriptionFirestoreRepository(this).getAllFromUser(AndroidApplication.getUserID(this));
+        new SubscriptionRepository((SubscriptionDataStoreListener) this).getAllFromUser(AndroidApplication.getUserID(this));
     }
 
     @Override
     public void onRestart() {
         super.onRestart();
         getAllSubsFromUser();
-        Log.d(TAG, "onResume");
     }
 
     private void setCount(int count) {
-        Log.d(TAG, "setCount: " + count);
         TextView view = findViewById(R.id.review_cards_textView);
         view.setVisibility(View.INVISIBLE);
         String cardsToReview = getString(R.string.cards_to_review);
@@ -93,7 +89,7 @@ public class HomeActivity extends AppCompatActivity implements SubscriptionListe
     }
 
     @Override
-    public void onLoad(List<Subscription> subs) {
+    public void onLoadAll(List<Subscription> subs) {
         SubscriptionsGlobal.getInstance().setAllSubscriptions(subs);
         List<Subscription> subsForToday = SubscriptionsGlobal.getInstance().getSubscriptionsForToday();
         setCount(subsForToday.size());

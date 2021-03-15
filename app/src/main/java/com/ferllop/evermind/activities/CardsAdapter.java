@@ -16,10 +16,10 @@ import com.ferllop.evermind.R;
 import com.ferllop.evermind.models.Card;
 import com.ferllop.evermind.models.Level;
 import com.ferllop.evermind.models.Subscription;
-import com.ferllop.evermind.repositories.SubscriptionFirestoreRepository;
+import com.ferllop.evermind.repositories.SubscriptionRepository;
 import com.ferllop.evermind.repositories.SubscriptionsGlobal;
-import com.ferllop.evermind.repositories.datastores.SubscriptionListener;
 import com.ferllop.evermind.repositories.fields.CardField;
+import com.ferllop.evermind.repositories.listeners.SubscriptionDataStoreListener;
 import com.google.firebase.Timestamp;
 
 
@@ -102,16 +102,16 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
 //            Log.d(TAG, AndroidApplication.getUserID(author.getContext()));
 //            Log.d(TAG, card.getAuthorID());
             if (!AndroidApplication.getUserID(author.getContext()).equals(card.getAuthorID())){
-                String authorID = AndroidApplication.getUserID(author.getContext());
+                String userID = AndroidApplication.getUserID(author.getContext());
                 String cardID = card.getId();
-                String subscriptionID = SubscriptionsGlobal.getInstance().getSubscriptionID(authorID, cardID);
+                String subscriptionID = SubscriptionsGlobal.getInstance().getSubscriptionID(userID, cardID);
                 if (subscriptionID != null) {
                     action.setText(R.string.unsubscribe_to_card);
                     action.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Log.d(TAG, "onClick: " + subscriptionID);
-                            new SubscriptionFirestoreRepository((SubscriptionListener) author.getContext()).delete(subscriptionID);
+                            new SubscriptionRepository((SubscriptionDataStoreListener) author.getContext()).delete(subscriptionID);
 
                             Log.d(TAG, "onClick: unsuscribe");
                         }
@@ -121,12 +121,12 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
                     action.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if(!SubscriptionsGlobal.getInstance().isSubscribedTo(cardID)) {
+                            if(!SubscriptionsGlobal.getInstance().isUserSubscribedTo(userID, cardID)) {
                                 Level level = Level.LEVEL_0;
                                 Timestamp now = Timestamp.now();
                                 Timestamp next = new Timestamp(level.getValue() * 86400 + Timestamp.now().getSeconds(), 0);
-                                Subscription sub = new Subscription(authorID, cardID, level, now, next);
-                                new SubscriptionFirestoreRepository((SubscriptionListener) author.getContext()).insert(sub);
+                                Subscription sub = new Subscription(userID, cardID, level, now, next);
+                                new SubscriptionRepository((SubscriptionDataStoreListener) author.getContext()).insert(sub);
                                 Log.d(TAG, "onClick: suscribe");
                             }
                         }

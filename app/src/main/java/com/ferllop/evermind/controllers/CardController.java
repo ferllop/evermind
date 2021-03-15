@@ -1,21 +1,19 @@
 package com.ferllop.evermind.controllers;
 
-import com.ferllop.evermind.AndroidApplication;
 import com.ferllop.evermind.models.Card;
-import com.ferllop.evermind.repositories.CardFirestoreRepository;
 import com.ferllop.evermind.repositories.CardRepository;
-import com.ferllop.evermind.repositories.DatastoreListener;
-import com.ferllop.evermind.repositories.datastores.Search;
+import com.ferllop.evermind.repositories.listeners.CardDataStoreListener;
+import com.ferllop.evermind.repositories.listeners.CrudDataStoreListener;
 
 public class CardController {
     CardRepository cardRepository;
 
-    public CardController(DatastoreListener listener) {
+    public CardController(CardDataStoreListener listener) {
         this.cardRepository = getRepositoryService(listener);
     }
 
-    private CardRepository getRepositoryService(DatastoreListener listener){
-        return new CardFirestoreRepository(listener);
+    private CardRepository getRepositoryService(CardDataStoreListener listener){
+        return new CardRepository(listener);
     }
 
     public void insert(Card card) {

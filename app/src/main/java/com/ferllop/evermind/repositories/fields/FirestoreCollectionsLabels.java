@@ -1,4 +1,4 @@
-package com.ferllop.evermind.repositories.datastores;
+package com.ferllop.evermind.repositories.fields;
 
 public enum FirestoreCollectionsLabels {
     CARD("cards"),

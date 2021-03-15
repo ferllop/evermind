@@ -42,6 +42,20 @@
     <string name="wrong">wrong</string>
     <string name="unsubscribe_to_card">Unsubscribe</string>
     <string name="unsubscribed_from_card">Unsubscribed from card</string>
+    <string name="delete_dialog_confirm_title">Delete card</string>
+    <string name="delete_dialog_confirm_message">Are you sure that you want to delete this card?</string>
+    <string name="ok">Yes</string>
+    <string name="cancel">Cancel</string>
+    <string name="register_button">create account</string>
+    <string name="register_name">name</string>
+    <string name="register_username">username</string>
+    <string name="register_email">email</string>
+    <string name="register_password">password</string>
+    <string name="login_button">login</string>
+    <string name="forgot_password">forgot your password?</string>
+    <string name="or">or</string>
+    <string name="register">register</string>
+    <string name="weak_password">*weak password</string>
 
 
 </resources>
