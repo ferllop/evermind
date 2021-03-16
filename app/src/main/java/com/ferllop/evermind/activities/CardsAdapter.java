@@ -90,7 +90,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
             labels = itemView.findViewById(R.id.labels_textView);
             question = itemView.findViewById(R.id.question_textView);
             answer = itemView.findViewById(R.id.answer_textView);
-            action = itemView.findViewById(R.id.search_item_card_action);
+            action = itemView.findViewById(R.id.suscribe_item_button);
         }
 
         public void bind(Card card) {
