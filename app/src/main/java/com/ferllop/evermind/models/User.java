@@ -5,30 +5,37 @@ import com.google.firebase.Timestamp;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
 
 public class User extends Model{
+    String authID;
     String name;
     String username;
     String email;
-    String password;
     UserStatus status;
+    Timestamp lastLogin;
     Timestamp lastConnection;
     Timestamp signIn;
-    List<String> subscriptionsID;
 
-    public User(String id, String name, String username, String email, String password,
-                UserStatus status, Timestamp lastConnection, Timestamp signIn,
-                List<String> subscriptionsID) {
-        setId(id);
+    public User(String authID, String name, String username, String email,
+                UserStatus status, Timestamp lastLogin, Timestamp lastConnection, Timestamp signIn) {
+        this.authID = authID;
         this.name = name;
         this.username = username;
         this.email = email;
-        this.password = password;
         this.status = status;
+        this.lastLogin = lastLogin;
         this.lastConnection = lastConnection;
         this.signIn = signIn;
-        this.subscriptionsID = subscriptionsID;
+    }
+
+    public User(String id, String authID, String name, String username, String email,
+                UserStatus status, Timestamp lastLogin, Timestamp lastConnection, Timestamp signIn) {
+        this(authID, name, username, email, status, lastLogin, lastConnection, signIn);
+        this.setId(id);
+    }
+
+    public String getAuthID() {
+        return authID;
     }
 
     public String getName() {
@@ -43,12 +50,12 @@ public class User extends Model{
         return email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public UserStatus getStatus() {
         return status;
+    }
+
+    public Timestamp getLastLogin() {
+        return lastLogin;
     }
 
     public Timestamp getLastConnection() {
@@ -57,10 +64,6 @@ public class User extends Model{
 
     public Timestamp getSignIn() {
         return signIn;
-    }
-
-    public List<String> getSubscriptionsID() {
-        return subscriptionsID;
     }
 
     public String encrypt(String text) throws NoSuchAlgorithmException {

@@ -10,13 +10,12 @@ import android.widget.Toast;
 
 import com.ferllop.evermind.R;
 import com.ferllop.evermind.models.Card;
-import com.ferllop.evermind.models.DataStoreError;
+import com.ferllop.evermind.repositories.fields.DataStoreError;
 import com.ferllop.evermind.models.Subscription;
 import com.ferllop.evermind.controllers.CardController;
 
 import com.ferllop.evermind.repositories.SubscriptionsGlobal;
 import com.ferllop.evermind.repositories.listeners.CardDataStoreListener;
-import com.ferllop.evermind.repositories.listeners.CrudDataStoreListener;
 import com.ferllop.evermind.repositories.listeners.SubscriptionDataStoreListener;
 
 import java.util.List;
@@ -94,15 +93,9 @@ public class SearchCardsActivity extends AppCompatActivity implements CardDataSt
     }
 
     @Override
-    public void onNotFound() {
-
-    }
-
-    @Override
     public void onLoadAllCards(List<Card> items) {
 
     }
-
 
     @Override
     public void onError(DataStoreError error) {

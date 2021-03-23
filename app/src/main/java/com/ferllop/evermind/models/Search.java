@@ -1,4 +1,4 @@
-package com.ferllop.evermind.repositories.datastores;
+package com.ferllop.evermind.models;
 
 import com.ferllop.evermind.repositories.fields.CardField;
 import com.google.common.base.Strings;

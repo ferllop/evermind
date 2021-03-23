@@ -5,10 +5,12 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.ferllop.evermind.models.Card;
-import com.ferllop.evermind.models.DataStoreError;
+import com.ferllop.evermind.models.Search;
+import com.ferllop.evermind.repositories.fields.DataStoreError;
 import com.ferllop.evermind.repositories.fields.CardField;
 import com.ferllop.evermind.repositories.listeners.CardDataStoreListener;
 import com.ferllop.evermind.repositories.listeners.CrudDataStoreListener;
+import com.ferllop.evermind.repositories.listeners.DataStoreMessage;
 import com.ferllop.evermind.repositories.mappers.ModelMapper;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -83,12 +85,12 @@ public class CardFirestoreDataStore extends FirestoreDataStore<Card> implements 
     }
 
     @Override
-    public void onNotFound() {
-        listener.onNotFound();
+    public void onLoadAll(List<Card> items) {
+
     }
 
     @Override
-    public void onLoadAll(List<Card> items) {
+    public void onUserDataStoreResult(DataStoreMessage message) {
 
     }
 

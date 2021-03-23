@@ -1,0 +1,26 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+left to right direction
+
+rectangle Evermind {
+    usecase "Register"
+    usecase "Login"
+    usecase "Logout"
+    usecase "Create card"
+    usecase "Edit card"
+    usecase "Delete card"
+    usecase "Search"
+    usecase "Subscribe to card"
+    usecase "Review card"
+}
+
+User --> (Register)
+User --> (Login)
+User --> (Logout)
+User --> (Delete card)
+User --> (Edit card)
+User --> (Create card)
+User --> (Search)
+User --> (Subscribe to card)
+User --> (Review card)
+@enduml

@@ -4,7 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.ferllop.evermind.models.DataStoreError;
+import com.ferllop.evermind.repositories.fields.DataStoreError;
 import com.ferllop.evermind.models.Model;
 import com.ferllop.evermind.repositories.listeners.CrudDataStoreListener;
 import com.ferllop.evermind.repositories.mappers.ModelMapper;

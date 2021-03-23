@@ -9,7 +9,7 @@ title Evermind - Domain model
 
 class User
 class Creator
-class Collection
+class Subscription
 class Card
 class Question
 class Answer
@@ -17,12 +17,14 @@ class Label
 class Search
 class Keyword
 class ReviewRound
+class Level
 
 User ..> Search
-User *--> Collection
+User o--> "0..*" Subscription
 Creator --|> User
-Collection o--> "0..*" Card
-Collection ..> ReviewRound
+Subscription *--> Card
+User ..> ReviewRound
+Subscription *--> Level
 Card *--> "1..*" Label
 Card *--> Creator
 Card *--> Question
@@ -30,6 +32,7 @@ Card *--> Answer
 Search *--> "1..*" Keyword
 Keyword -left-> "0..1" Creator
 Keyword --> "0..*" Label
-ReviewRound *--> "1..10" Card
+ReviewRound *--> "1..10" Subscription
+
 
 @enduml

@@ -4,17 +4,22 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.ferllop.evermind.AndroidApplication;
 import com.ferllop.evermind.R;
-import com.ferllop.evermind.models.DataStoreError;
+import com.ferllop.evermind.models.User;
+import com.ferllop.evermind.repositories.GlobalUser;
+import com.ferllop.evermind.repositories.UserRepository;
+import com.ferllop.evermind.repositories.fields.DataStoreError;
 import com.ferllop.evermind.models.Subscription;
 import com.ferllop.evermind.repositories.SubscriptionRepository;
 import com.ferllop.evermind.repositories.SubscriptionsGlobal;
 import com.ferllop.evermind.repositories.listeners.SubscriptionDataStoreListener;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
@@ -46,14 +51,22 @@ public class HomeActivity extends AppCompatActivity implements SubscriptionDataS
         });
 
         ((TextView) findViewById(R.id.register_logo_textView))
-                .setText(AndroidApplication.getUser(this));
+                .setText(GlobalUser.getInstance().getUser().getUsername());
+
+        findViewById(R.id.home_signOut_textView).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new UserRepository(null).signOut();
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+            }
+        });
 
     }
 
     private void getAllSubsFromUser() {
         ((Button) findViewById(R.id.review_cards_button)).setEnabled(false);
         findViewById(R.id.review_cards_textView).setVisibility(View.INVISIBLE);
-        new SubscriptionRepository((SubscriptionDataStoreListener) this).getAllFromUser(AndroidApplication.getUserID(this));
+        new SubscriptionRepository((SubscriptionDataStoreListener) this).getAllFromUser(GlobalUser.getInstance().getUser().getId());
     }
 
     @Override
@@ -97,11 +110,6 @@ public class HomeActivity extends AppCompatActivity implements SubscriptionDataS
 
     @Override
     public void onLoad(Subscription subscription) {
-
-    }
-
-    @Override
-    public void onNotFound() {
 
     }
 

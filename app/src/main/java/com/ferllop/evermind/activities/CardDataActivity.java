@@ -13,7 +13,8 @@ import com.ferllop.evermind.AndroidApplication;
 import com.ferllop.evermind.R;
 import com.ferllop.evermind.activities.fragments.DeleteCardDialogFragment;
 import com.ferllop.evermind.models.Card;
-import com.ferllop.evermind.models.DataStoreError;
+import com.ferllop.evermind.repositories.GlobalUser;
+import com.ferllop.evermind.repositories.fields.DataStoreError;
 import com.ferllop.evermind.models.Subscription;
 import com.ferllop.evermind.repositories.SubscriptionRepository;
 import com.ferllop.evermind.repositories.listeners.CardDataStoreListener;
@@ -47,7 +48,7 @@ public class CardDataActivity extends AppCompatActivity implements
                     String question = ((EditText) findViewById(R.id.questionTextMultiLine)).getText().toString();
                     String answer = ((EditText) findViewById(R.id.answerTextMultiLine)).getText().toString();
                     String labels = ((EditText) findViewById(R.id.labelsText)).getText().toString();
-                    new CardController(CardDataActivity.this).insert(AndroidApplication.getUserID(CardDataActivity.this), AndroidApplication.getUser(CardDataActivity.this), question, answer, labels);
+                    new CardController(CardDataActivity.this).insert(GlobalUser.getInstance().getUser().getId(), GlobalUser.getInstance().getUser().getUsername(), question, answer, labels);
                 }
             });
         }
@@ -120,14 +121,9 @@ public class CardDataActivity extends AppCompatActivity implements
         this.showToast(getString(R.string.card_saved));
         if (isNew){
             new SubscriptionRepository((SubscriptionDataStoreListener) this)
-                    .subscribeUserToCard(AndroidApplication.getUserID(this), card.getId());
+                    .subscribeUserToCard(GlobalUser.getInstance().getUser().getId(), card.getId());
             finish();
         }
-    }
-
-    @Override
-    public void onNotFound() {
-
     }
 
     @Override

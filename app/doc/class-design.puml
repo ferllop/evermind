@@ -1,50 +1,97 @@
 @startuml
-package controllers {
-    class CardController
+left to right direction
+package activities{
+    abstract DataStoreActivity
+    CardDataActivity -up-|> DataStoreActivity
+    SearchCardsActivity -up-|> DataStoreActivity
+    HomeActivity -up-|> DataStoreActivity
+    LoginActivity --|> DataStoreActivity
+    RegisterActivity --|> DataStoreActivity
+    ReviewActivity --|> DataStoreActivity
+    class MainActivity
+    class CardsAdpater
+    SearchCardsActivity *-- CardsAdpater
 }
 
 package models {
+    class User
     class Card
+    class Subscription
     class Labelling
+    class Search
     abstract class Model
     Card -right-|> Model
+    User --|> Model
+    Subscription --|> Model
     Card *-- Labelling
-}
 
-package activities{
-    abstract class CardView
-    class CardDataActivity
-    class SearchCardsActivity
-    CardView <|-- CardDataActivity
-    CardView <|-- SearchCardsActivity
-    CardView -up-> CardController
-    class CardsAdpater
-    SearchCardsActivity *-- CardsAdpater
-    class HomeActivity
-    class MainActivity
 }
-
-package repositories{
-    interface CardRepository
-    class CardFirestoreRepository
-    CardController --> CardRepository
-    CardFirestoreRepository .up.|> CardRepository
-    package mappers {
+package datastores {
+            abstract FirestoreDataStore<T extends Model>
+            class CrudFirestoreDataStore<T extends Model>
+            class CardFirestoreDataStore
+            class UserFirestoreDataStore
+            class SubscriptionFirestoreDataStore
+            class AuthFirestoreDataStore
+            CardFirestoreDataStore --|> FirestoreDataStore
+            UserFirestoreDataStore --|> FirestoreDataStore
+            SubscriptionFirestoreDataStore --|> FirestoreDataStore
+            FirestoreDataStore *-- CrudFirestoreDataStore
+        }
+  package mappers {
         interface ModelMapper
         ModelMapper --> Model
         CardMapper ..|> ModelMapper
-        CardMapper --> Card
-    }
-    package datastores {
-        interface DataStoreListener
-        interface DataStore<T>
-        CardView ..|> DataStoreListener
-        class FirestoreDataStore<T>
-        CardFirestoreRepository --> DataStore
-        FirestoreDataStore .up.|> DataStore
-        FirestoreDataStore *-- DataStoreListener
+        UserMapper ..|> ModelMapper
+        SubscriptionMapper ..|> ModelMapper
         FirestoreDataStore *-- ModelMapper
     }
+
+package repositories{
+    interface ModelRepository
+    interface CardRepository
+    interface UserRepository
+    interface SubscriptionRepository
+    interface AuthRepository
+    class CardFirestoreRepository
+    class UserFirestoreRepository
+    class SubscriptionFirestoreRepository
+    class AuthFirestoreRepository
+    CardRepository ..|> ModelRepository
+    UserRepository ..|> ModelRepository
+    SubscriptionRepository ..|> ModelRepository
+    CardFirestoreRepository ..|> CardRepository
+    UserFirestoreRepository ..|> UserRepository
+    SubscriptionFirestoreRepository ..|> SubscriptionRepository
+    AuthFirestoreRepository ..|> AuthRepository
+
+
+
+
+    CardFirestoreRepository -down-> CardFirestoreDataStore
+    UserFirestoreRepository -down-> UserFirestoreDataStore
+    SubscriptionFirestoreRepository -down-> SubscriptionFirestoreDataStore
+    AuthFirestoreRepository -down-> AuthFirestoreDataStore
+    CardFirestoreDataStore --> Search
+
+
+
+
+
 }
+package listeners {
+        interface DataStoreListener
+        interface CrudDataStoreListener
+        interface CardDataStoreListener
+        interface UserDataStoreListener
+        interface SubscriptionDataStoreListener
+        CardDataStoreListener -u-|> DataStoreListener
+        SubscriptionDataStoreListener --|> DataStoreListener
+        UserDataStoreListener -up-|> DataStoreListener
+
+    }
+    DataStoreActivity -down-> ModelRepository
+    DataStoreActivity --|> DataStoreListener
+    UserRepository --> AuthRepository
 
 @enduml

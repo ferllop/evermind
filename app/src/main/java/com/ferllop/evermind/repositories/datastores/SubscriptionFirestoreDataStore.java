@@ -4,11 +4,12 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.ferllop.evermind.models.DataStoreError;
+import com.ferllop.evermind.repositories.fields.DataStoreError;
 import com.ferllop.evermind.models.Level;
 import com.ferllop.evermind.models.Subscription;
 import com.ferllop.evermind.repositories.fields.SubscriptionField;
 import com.ferllop.evermind.repositories.listeners.CrudDataStoreListener;
+import com.ferllop.evermind.repositories.listeners.DataStoreMessage;
 import com.ferllop.evermind.repositories.listeners.SubscriptionDataStoreListener;
 import com.ferllop.evermind.repositories.mappers.ModelMapper;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -80,12 +81,15 @@ public class SubscriptionFirestoreDataStore extends FirestoreDataStore<Subscript
     }
 
     @Override
-    public void onNotFound() {
-        listener.onNotFound();
+    public void onLoadAll(List<Subscription> subs) {
+        listener.onLoadAll(subs);
     }
 
     @Override
-    public void onLoadAll(List<Subscription> subs) {
-        listener.onLoadAll(subs);
+    public void onUserDataStoreResult(DataStoreMessage message) {
+        switch(message){
+            case NOT_FOUND:
+                break;
+        }
     }
 }

@@ -16,6 +16,7 @@ import com.ferllop.evermind.R;
 import com.ferllop.evermind.models.Card;
 import com.ferllop.evermind.models.Level;
 import com.ferllop.evermind.models.Subscription;
+import com.ferllop.evermind.repositories.GlobalUser;
 import com.ferllop.evermind.repositories.SubscriptionRepository;
 import com.ferllop.evermind.repositories.SubscriptionsGlobal;
 import com.ferllop.evermind.repositories.fields.CardField;
@@ -101,8 +102,8 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
             answer.setText(card.getAnswer());
 //            Log.d(TAG, AndroidApplication.getUserID(author.getContext()));
 //            Log.d(TAG, card.getAuthorID());
-            if (!AndroidApplication.getUserID(author.getContext()).equals(card.getAuthorID())){
-                String userID = AndroidApplication.getUserID(author.getContext());
+            if (!GlobalUser.getInstance().getUser().getId().equals(card.getAuthorID())){
+                String userID = GlobalUser.getInstance().getUser().getId();
                 String cardID = card.getId();
                 String subscriptionID = SubscriptionsGlobal.getInstance().getSubscriptionID(userID, cardID);
                 if (subscriptionID != null) {

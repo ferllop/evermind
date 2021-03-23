@@ -1,25 +1,40 @@
 package com.ferllop.evermind.repositories;
 
+import android.util.Log;
+
 import com.ferllop.evermind.models.User;
+import com.ferllop.evermind.models.UserStatus;
 import com.ferllop.evermind.repositories.datastores.UserFirestoreDataStore;
+import com.ferllop.evermind.repositories.fields.AuthError;
+import com.ferllop.evermind.repositories.fields.DataStoreError;
 import com.ferllop.evermind.repositories.fields.FirestoreCollectionsLabels;
-import com.ferllop.evermind.repositories.listeners.CrudDataStoreListener;
+import com.ferllop.evermind.repositories.fields.UserField;
+import com.ferllop.evermind.repositories.listeners.AuthListener;
+import com.ferllop.evermind.repositories.listeners.AuthMessage;
+import com.ferllop.evermind.repositories.listeners.UserDataStoreListener;
 import com.ferllop.evermind.repositories.mappers.UserMapper;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 
-public class UserRepository {
+public class UserRepository implements AuthListener {
     final String TAG = "MYAPP-UserRepo";
 
     UserFirestoreDataStore dataStore;
+    AuthRepository authRepository;
+    RegisteringUser registeringUser;
+    UserDataStoreListener listener;
 
-    public UserRepository(CrudDataStoreListener<User> listener) {
+    public UserRepository(UserDataStoreListener listener) {
         this.dataStore = new UserFirestoreDataStore(
                 FirebaseFirestore.getInstance(),
                 FirestoreCollectionsLabels.USER.getValue(),
                 new UserMapper(),
                 listener
         );
+        this.authRepository = new AuthRepository(this);
+        this.listener = listener;
+
     }
 
     public void insert(User user) {
@@ -27,7 +42,7 @@ public class UserRepository {
     }
 
     public void load(String id) {
-        dataStore.load( id);
+        dataStore.load(id);
     }
 
     public void getAll() {
@@ -44,5 +59,122 @@ public class UserRepository {
 
     public void getFromUniqueField(String field, String value){
         dataStore.getFromUniqueField(field, value);
+    }
+
+    public void getLoggedUserExtraData(){
+        dataStore.getFromUniqueField(UserField.AUTH_ID.getValue(), authRepository.getUserUID());
+    }
+
+    public void registerUser(String name, String username, String email, String password, boolean validated){
+        if (validated){
+            authRepository.register(email, password);
+            registeringUser = new RegisteringUser().setName(name).setUsername(username).setEmail(email);
+        } else {
+            dataStore.existUsername(username);
+            dataStore.existEmail(email);
+        }
+    }
+
+    public void login(String email, String password){
+        authRepository.login(email, password);
+    }
+
+    public static boolean isValidPassword(String password){
+        return password.matches(".{8,32}")
+                && password.matches(".*[a-z]+.*")
+                && password.matches(".*[A-Z]+.*")
+                && password.matches(".*[-_:,;:<.>+@#|$%&/()=?¿¡!]+.*");
+    }
+
+    public boolean isUserVerified(){
+        return authRepository.isUserVerified();
+    }
+    public boolean isUserLoggedIn(){
+        return authRepository.isLoggedIn();
+    }
+
+    @Override
+    public void onRegister(String uid) {
+        authRepository.sendVerificationEmailToCurrentUser();
+        User user = registeringUser.build(uid, UserStatus.VERIFICATION_EMAIL, Timestamp.now());
+        insert(user);
+    }
+
+    @Override
+    public void onLogin(String uid) {
+        getFromUniqueField(UserField.AUTH_ID.getValue(), uid);
+        Log.d(TAG, "onLogin: " + uid);
+    }
+
+
+    @Override
+    public void onError(AuthError error) {
+        listener.onError(DataStoreError.ON_LOAD);
+    }
+
+
+    @Override
+    public void onAuthActionResult(AuthMessage message) {
+        switch(message){
+            case RESET_PASSWORD_EMAIL_SENT:
+            case RESET_PASSWORD_EMAIL_NOT_SENT:
+                listener.onAuthActionResult(message);
+                break;
+        }
+    }
+
+    public void signOut() {
+        if(GlobalUser.getInstance().getUser() != null){
+            updateUserStatus(GlobalUser.getInstance().getUser().getId(), UserStatus.LOGGED_OUT);
+            GlobalUser.getInstance().clear();
+        }
+        authRepository.signOut();
+    }
+
+    public void loginStatusUser(String userID){
+        updateUserStatus(userID, UserStatus.LOGGED_IN);
+        updateUserLastLogin(userID, Timestamp.now());
+    }
+
+    public void updateUserStatus(String userID, UserStatus newStatus){
+        dataStore.updateUserStatus(userID, newStatus);
+    }
+
+    public void updateUserLastConnection(String userID, Timestamp timestamp){
+        dataStore.updateUserLastConnection(userID, timestamp);
+    }
+
+    public void updateUserLastLogin(String userID, Timestamp timestamp){
+        dataStore.updateUserLastLogin(userID, timestamp);
+    }
+
+    public void sendResetPasswordEmail(String email) {
+        authRepository.sendResetPasswordEmail(email);
+    }
+
+
+    public class RegisteringUser {
+        String name;
+        String username;
+        String email;
+
+        public RegisteringUser setName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public RegisteringUser setUsername(String username) {
+            this.username = username;
+            return this;
+        }
+
+        public RegisteringUser setEmail(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public User build(String id, UserStatus status, Timestamp signIn){
+            return new User(id, name, username, email, status, null, null, signIn);
+        }
     }
 }

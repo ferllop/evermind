@@ -5,7 +5,7 @@ skinparam nodesep 100
 
 ' uncomment the line below if you're using computer with a retina display
 ' skinparam dpi 300
-!define Table(name,desc) class name as "desc" << (T,#FFAAAA) >>
+!define Table(name,desc) class name as "desc" << (E,#FFAAAA) >>
 ' we use bold for primary key
 ' green color for unique
 ' and underscore for not_null
@@ -23,6 +23,15 @@ hide stereotypes
 
 ' entities
 
+note as N1
+    Font meaning:
+      bold is primary key
+      underlined is not null
+      italic is foreign key
+endNote
+
+user .. N1
+N1 .. card
 Table(user, "user\n(User in our system)") {
     primary_key(id) INTEGER
     not_null(unique(username)) VARCHAR[16]
@@ -35,18 +44,14 @@ Table(card, "card\n(An answer/question set)") {
     question VARCHAR
     answer VARCHAR
     foreign_key(user_id) INTEGER
+    labelling MULTIVALUATED VARCHAR
     created TIMESTAMP
     lastUpdated TIMESTAMP
-}
-
-Table(label, "label\n(Word that describe a card)") {
-    primary_key(id) INTEGER
-    name VARCHAR
 }
 
 
 user "1" -right- "0..*" card : create
 user "1..*" -right- "0..*" card : is subcribed to
-card "0..*" -down- "1..*" label : has
+
 
 @enduml

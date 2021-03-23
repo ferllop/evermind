@@ -1,7 +1,6 @@
 package com.ferllop.evermind.activities;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -10,12 +9,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.ferllop.evermind.R;
 import com.ferllop.evermind.models.Card;
-import com.ferllop.evermind.models.DataStoreError;
+import com.ferllop.evermind.repositories.fields.DataStoreError;
 import com.ferllop.evermind.models.SubscribedCard;
 import com.ferllop.evermind.models.Subscription;
 import com.ferllop.evermind.repositories.CardRepository;
 import com.ferllop.evermind.repositories.listeners.CardDataStoreListener;
-import com.ferllop.evermind.repositories.listeners.CrudDataStoreListener;
 import com.ferllop.evermind.repositories.SubscriptionRepository;
 import com.ferllop.evermind.repositories.SubscriptionsGlobal;
 
@@ -130,11 +128,6 @@ public class ReviewActivity extends AppCompatActivity implements CardDataStoreLi
 
     @Override
     public void onSave(Card item) {
-
-    }
-
-    @Override
-    public void onNotFound() {
 
     }
 

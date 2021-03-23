@@ -1,14 +1,14 @@
 package com.ferllop.evermind.repositories.fields;
 
 public enum UserField {
+    AUTH_ID("authID"),
     NAME("name"),
     USERNAME("username"),
     EMAIL("email"),
-    PASSWORD("password"),
     STATUS("status"),
+    LAST_LOGIN("lastLogin"),
     LAST_CONNECTION("lastConnection"),
-    SIGN_IN("signIn"),
-    SUBSCRIPTIONS("subscriptions");
+    SIGN_IN("signIn");
 
     private final String value;
 
