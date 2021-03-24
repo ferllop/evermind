@@ -1,6 +1,7 @@
 package com.ferllop.evermind.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
@@ -9,6 +10,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.ferllop.evermind.R;
+import com.ferllop.evermind.activities.fragments.SearchInfoDialog;
+import com.ferllop.evermind.activities.fragments.VerifyEmailDialog;
 import com.ferllop.evermind.models.Card;
 import com.ferllop.evermind.repositories.fields.DataStoreError;
 import com.ferllop.evermind.models.Subscription;
@@ -39,6 +42,14 @@ public class SearchCardsActivity extends AppCompatActivity implements CardDataSt
             @Override
             public void onClick(View v) {
                 executeSearch();
+            }
+        });
+
+        findViewById(R.id.search_info_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment dialog = new SearchInfoDialog();
+                dialog.show(getSupportFragmentManager(), "SearchInfoDialog");
             }
         });
     }

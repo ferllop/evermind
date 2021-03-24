@@ -19,4 +19,18 @@
     <color name="button_border">#000000</color>
     <color name="button_text_color">#000000</color>
     <color name="button_ripple">#777777</color>
+
+    <color name="primary">#FFC107</color>
+    <color name="primary_dark">#FFA000</color>
+    <color name="primary_light">#FFECB3</color>
+    <color name="accent">#9E9E9E</color>
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#757575</color>
+    <color name="icons">#212121</color>
+    <color name="divider">#BDBDBD</color>
+
+    <color name="right">#118811</color>
+    <color name="wrong">#aa1111</color>
+    <color name="preview_card_borders">@color/primary_text</color>
+    <color name="preview_card_subscribe">@color/primary</color>
 </resources>

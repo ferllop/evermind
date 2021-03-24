@@ -11,7 +11,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.ferllop.evermind.AndroidApplication;
 import com.ferllop.evermind.R;
 import com.ferllop.evermind.models.Card;
 import com.ferllop.evermind.models.Level;
@@ -91,7 +90,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
             labels = itemView.findViewById(R.id.labels_textView);
             question = itemView.findViewById(R.id.question_textView);
             answer = itemView.findViewById(R.id.answer_textView);
-            action = itemView.findViewById(R.id.suscribe_item_button);
+            action = itemView.findViewById(R.id.subscribe_item_button);
         }
 
         public void bind(Card card) {

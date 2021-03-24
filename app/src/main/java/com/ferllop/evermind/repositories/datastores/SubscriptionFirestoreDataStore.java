@@ -12,11 +12,16 @@ import com.ferllop.evermind.repositories.listeners.CrudDataStoreListener;
 import com.ferllop.evermind.repositories.listeners.DataStoreMessage;
 import com.ferllop.evermind.repositories.listeners.SubscriptionDataStoreListener;
 import com.ferllop.evermind.repositories.mappers.ModelMapper;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SubscriptionFirestoreDataStore extends FirestoreDataStore<Subscription> implements CrudDataStoreListener<Subscription>{
@@ -53,6 +58,24 @@ public class SubscriptionFirestoreDataStore extends FirestoreDataStore<Subscript
                         //listener.onError(DataStoreError.ON_UPDATE);
                     }
                 });
+    }
+
+    public void deleteAllWithCardID(String cardID) {
+        firestore.collection(collection).whereEqualTo(SubscriptionField.CARD_ID.getValue(), cardID)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    Log.d(TAG, "deleteAll: " + task.getResult().size());
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        document.getReference().delete();
+                    }
+                } else {
+                    Log.d(TAG, "Error deletingall documents: ", task.getException());
+                    listener.onError(DataStoreError.ON_DELETE);
+                }
+            }
+        });
     }
 
     @Override

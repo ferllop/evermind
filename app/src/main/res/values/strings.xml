@@ -43,7 +43,7 @@
     <string name="unsubscribe_to_card">Unsubscribe</string>
     <string name="unsubscribed_from_card">Unsubscribed from card</string>
     <string name="delete_dialog_confirm_title">Delete card</string>
-    <string name="delete_dialog_confirm_message">Are you sure that you want to delete this card?</string>
+    <string name="delete_dialog_confirm_message">Are you sure that you want to delete this card?\nIt will also disappear for all the users subscribed to.</string>
     <string name="ok">Ok</string>
     <string name="cancel">Cancel</string>
     <string name="register_button">create account</string>
@@ -67,6 +67,7 @@
     <string name="all_fields_mandatory">All fields are required</string>
     <string name="register_remember_verify_email_sent">This email is pending to be verified.\nYou should have received a verification email.</string>
     <string name="reset_password_sent">If this email is registered in our system, you should receive an email with a link to be able to reset your password</string>
+    <string name="search_info_message">"You can search cards: - labeled with a specific  tag, for example, if in the search field you type \"culture-general\" you will find all the cards  with the tag \"culture-general\". - tagged with all the tags in a list  tags in a comma-separated  separated by commas.  For example, if you write  \"chemistry, biology\" you will find all the cards labeled with both tags.  - by author, preceding the  author's name with an at sign. For example, if you search for @jota34 you will find all the cards  of the user jota34 - by author and tags.  For example, if you type.  \"chemistry, @jota34, biology\" you will find all the cards  of user jota34 that are tagged with biology  and with chemistry. "</string>
 
 
 </resources>

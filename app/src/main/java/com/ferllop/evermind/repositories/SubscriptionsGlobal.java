@@ -121,9 +121,9 @@ public class SubscriptionsGlobal {
     }
 
     public String getSubscriptionIDContainingCardID(String cardID){
-        Log.d(TAG, "getSubscriptionIDContainingCardID: " + allSubscriptions.size());
+        Log.d(TAG, "getSubscription size: " + allSubscriptions.size());
         for(Subscription sub : allSubscriptions){
-            Log.d(TAG, "getSubscriptionIDContainingCardID: " + sub.getId() + " -- " + cardID);
+            Log.d(TAG, "getSubscriptionIDContainingCardID: " + cardID + " -- " + sub.getId());
             if (sub.getCardID().equals(cardID)){
                 return sub.getId();
             }

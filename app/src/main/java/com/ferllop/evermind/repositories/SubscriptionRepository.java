@@ -59,10 +59,7 @@ public class SubscriptionRepository{
     }
 
     public void deleteSubscriptionsWithCardID(String id) {
-        String subID = SubscriptionsGlobal.getInstance().getSubscriptionIDContainingCardID(id);
-        Log.d(TAG, "deleteSubscriptionsWithCardID: " + id + " -- " + subID);
-        if(subID != null) {
-            dataStore.delete(subID);
-        }
+        dataStore.deleteAllWithCardID(id);
+        Log.d(TAG, "deleteSubscriptionsWithCardID: " + id);
     }
 }

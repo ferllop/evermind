@@ -22,7 +22,6 @@
         <activity android:name=".activities.SearchCardsActivity" />
         <activity android:name=".activities.ReviewActivity" />
         <activity android:name=".activities.CardDataActivity" />
-        <activity android:name=".activities.MainActivity" />
     </application>
 
 </manifest>

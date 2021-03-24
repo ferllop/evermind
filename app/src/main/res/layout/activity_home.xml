@@ -38,15 +38,11 @@
         android:id="@+id/review_cards_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:background="@drawable/border"
         android:text="@string/start_button"
-        app:cornerRadius="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/review_cards_textView"
-        app:rippleColor="@color/button_ripple"
-        app:strokeColor="@color/button_border"
-        app:strokeWidth="2dp" />
+        app:layout_constraintTop_toBottomOf="@+id/review_cards_textView" />
 
     <TextView
         android:id="@+id/create_card_textView"
@@ -71,10 +67,7 @@
         app:layout_constraintBottom_toTopOf="@+id/search_cards_textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:rippleColor="@color/button_ripple"
-        app:strokeColor="@color/button_border"
-        app:strokeWidth="2dp"  />
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
         android:id="@+id/search_cards_textView"
@@ -98,11 +91,8 @@
         android:text="@string/search_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:rippleColor="@color/button_ripple"
-        app:strokeColor="@color/button_border"
-        app:strokeWidth="2dp"
+
         />
 
     <TextView

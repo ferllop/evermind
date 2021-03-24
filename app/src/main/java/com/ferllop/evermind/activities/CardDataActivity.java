@@ -5,7 +5,9 @@ import androidx.fragment.app.DialogFragment;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -28,27 +30,50 @@ import java.util.Map;
 
 public class CardDataActivity extends AppCompatActivity implements
         CardDataStoreListener, SubscriptionDataStoreListener, DeleteCardDialogFragment.DeleteDialogListener {
-    final private String TAG = "CardDataActivityClass";
+    final private String TAG = "MYAPP-CardDataActivity";
 
     boolean isNew = false;
+    EditText question;
+    EditText answer;
+    EditText labels;
+    Button save;
+    Button delete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_data);
 
+        question = findViewById(R.id.questionTextMultiLine);
+        answer = findViewById(R.id.answerTextMultiLine);
+        labels = findViewById(R.id.labelsText);
+        save = findViewById(R.id.saveButton);
+        delete = findViewById(R.id.deleteButton);
+        delete.setEnabled(false);
+
         String id = this.getIntent().getStringExtra(CardField.ID.getValue());
         if(id != null){
             new CardController(this).load(id);
         } else {
             isNew = true;
-            findViewById(R.id.saveButton).setOnClickListener(new View.OnClickListener() {
+            save.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String question = ((EditText) findViewById(R.id.questionTextMultiLine)).getText().toString();
-                    String answer = ((EditText) findViewById(R.id.answerTextMultiLine)).getText().toString();
-                    String labels = ((EditText) findViewById(R.id.labelsText)).getText().toString();
-                    new CardController(CardDataActivity.this).insert(GlobalUser.getInstance().getUser().getId(), GlobalUser.getInstance().getUser().getUsername(), question, answer, labels);
+
+                    if(question.getText().toString().isEmpty() ||
+                            answer.getText().toString().isEmpty() ||
+                            labels.getText().toString().isEmpty()
+                    ){
+                        showToast("All fields are required");
+                    } else {
+                        new CardController(CardDataActivity.this).insert(
+                                GlobalUser.getInstance().getUser().getId(),
+                                GlobalUser.getInstance().getUser().getUsername(),
+                                question.getText().toString(),
+                                answer.getText().toString(),
+                                labels.getText().toString()
+                        );
+                    }
                 }
             });
         }
@@ -56,22 +81,25 @@ public class CardDataActivity extends AppCompatActivity implements
 
     @Override
     public void onLoad(Card card) {
-        CardController cardController = new CardController(this);
-        ((EditText) findViewById(R.id.questionTextMultiLine)).setText(card.getQuestion());
-        ((EditText) findViewById(R.id.answerTextMultiLine)).setText(card.getAnswer());
-        ((EditText) findViewById(R.id.labelsText)).setText(card.getLabelling().toString());
-        findViewById(R.id.saveButton).setOnClickListener(new View.OnClickListener() {
+        question.setText(card.getQuestion());
+        answer.setText(card.getAnswer());
+        labels.setText(card.getLabelling().toString());
+        save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String question = ((EditText) findViewById(R.id.questionTextMultiLine)).getText().toString();
-                String answer = ((EditText) findViewById(R.id.answerTextMultiLine)).getText().toString();
-                String labels = ((EditText) findViewById(R.id.labelsText)).getText().toString();
-                cardController.update(card.getId(), card.getAuthorID(), card.getAuthorUsername(), question, answer, labels);
+                new CardController(CardDataActivity.this).update(
+                        card.getId(), card.getAuthorID(), card.getAuthorUsername(),
+                        question.getText().toString(),
+                        answer.getText().toString(),
+                        labels.getText().toString()
+                );
             }
         });
-        findViewById(R.id.deleteButton).setOnClickListener(new View.OnClickListener() {
+        delete.setEnabled(true);
+        delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, "onDeleteClick: cardId -> " + card.getId());
                 openDeleteConfirmDialog(card.getId());
             }
         });

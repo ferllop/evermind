@@ -50,9 +50,6 @@ public class HomeActivity extends AppCompatActivity implements SubscriptionDataS
             }
         });
 
-        ((TextView) findViewById(R.id.register_logo_textView))
-                .setText(GlobalUser.getInstance().getUser().getUsername());
-
         findViewById(R.id.home_signOut_textView).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
