@@ -62,7 +62,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:indeterminate="true"
-        android:indeterminateTint="#000000"
+        android:indeterminateTint="@color/accent"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
