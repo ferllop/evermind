@@ -101,7 +101,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
             answer.setText(card.getAnswer());
 //            Log.d(TAG, AndroidApplication.getUserID(author.getContext()));
 //            Log.d(TAG, card.getAuthorID());
-            if (!GlobalUser.getInstance().getUser().getId().equals(card.getAuthorID())){
+
                 String userID = GlobalUser.getInstance().getUser().getId();
                 String cardID = card.getId();
                 String subscriptionID = SubscriptionsGlobal.getInstance().getSubscriptionID(userID, cardID);
@@ -132,9 +132,9 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
                         }
                     });
                 }
-            } else {
-                action.setText(R.string.edit_button);
-                action.setOnClickListener(new View.OnClickListener() {
+            if (GlobalUser.getInstance().getUser().getId().equals(card.getAuthorID())){
+                author.setText(R.string.edit_button);
+                author.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(v.getContext(), CardDataActivity.class);

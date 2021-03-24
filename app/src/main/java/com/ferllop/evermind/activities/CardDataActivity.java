@@ -150,8 +150,8 @@ public class CardDataActivity extends AppCompatActivity implements
         if (isNew){
             new SubscriptionRepository((SubscriptionDataStoreListener) this)
                     .subscribeUserToCard(GlobalUser.getInstance().getUser().getId(), card.getId());
-            finish();
         }
+        finish();
     }
 
     @Override
