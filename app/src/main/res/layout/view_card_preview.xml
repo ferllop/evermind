@@ -86,10 +86,15 @@
                 android:id="@+id/subscribe_item_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/border"
-                android:backgroundTint="@color/preview_card_subscribe"
                 android:text="@string/edit_button"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:textColor="@color/primary_text"
+                android:backgroundTint="@color/primary_light"
+                style="?android:attr/borderlessButtonStyle"
+                android:background="?android:attr/selectableItemBackground"
+                />
+
+
 
         </LinearLayout>
 
