@@ -19,6 +19,8 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="SubscribeButton" parent="Widget.MaterialComponents.Button.OutlinedButton"></style>
+
     <style name="Theme.Evermind.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Evermind.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
