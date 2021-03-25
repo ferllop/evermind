@@ -130,4 +130,8 @@ public class SubscriptionsGlobal {
         }
         return null;
     }
+
+    public double getProgress(int done, int toDo) {
+        return ((double) toDo - done - 1) / toDo * 100;
+    }
 }

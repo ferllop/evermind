@@ -1,8 +1,11 @@
 package com.ferllop.evermind.activities;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,9 +30,10 @@ public class ReviewActivity extends AppCompatActivity implements CardDataStoreLi
     List<Subscription> cardsToLoad;
     TextView question;
     TextView answer;
-    Button resolve;
-    Button right;
-    Button wrong;
+    ImageButton resolve;
+    ImageButton right;
+    ImageButton wrong;
+    ProgressBar progress;
     int loadedCards;
     int cardsToReviewCount;
 
@@ -43,6 +47,7 @@ public class ReviewActivity extends AppCompatActivity implements CardDataStoreLi
         resolve = findViewById(R.id.review_resolve_button);
         right = findViewById(R.id.review_right_button);
         wrong = findViewById(R.id.review_wrong_button);
+        progress = findViewById(R.id.review_progressBar);
 
         question.setVisibility(View.INVISIBLE);
         resolve.setVisibility(View.INVISIBLE);
@@ -92,6 +97,8 @@ public class ReviewActivity extends AppCompatActivity implements CardDataStoreLi
         wrong.setVisibility(View.INVISIBLE);
 
         SubscribedCard subCard = cardsToReview.get(--cardsToReviewCount);
+        progress.setProgress((int) SubscriptionsGlobal.getInstance().getProgress(cardsToReviewCount, cardsToReview.size()));
+
         right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,6 +127,8 @@ public class ReviewActivity extends AppCompatActivity implements CardDataStoreLi
             }
         });
     }
+
+
 
     @Override
     public void onError(DataStoreError error) {

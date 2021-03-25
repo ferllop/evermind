@@ -26,8 +26,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/review_question_textview" />
 
-    <Button
+    <ImageButton
         android:id="@+id/review_resolve_button"
+        app:srcCompat="@drawable/ic_flip"
+        android:backgroundTint="@android:color/transparent"
+        android:elevation="2dp"
+        android:translationZ="2dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginStart="50dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
@@ -36,25 +42,41 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
+
+    <ImageButton
         android:id="@+id/review_wrong_button"
+        app:srcCompat="@drawable/ic_wrong"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/transparent"
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="50dp"
-        android:text="@string/wrong"
-        android:backgroundTint="@color/wrong"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <Button
+    <ImageButton
         android:id="@+id/review_right_button"
+        app:srcCompat="@drawable/ic_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginBottom="50dp"
-        android:text="@string/right"
-        android:backgroundTint="@color/right"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:backgroundTint="@android:color/transparent" />
+
+    <ProgressBar
+        android:id="@+id/review_progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="40dp"
+        android:progress="50"
+        android:scaleY="2"
+        android:progressTint="@color/primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
