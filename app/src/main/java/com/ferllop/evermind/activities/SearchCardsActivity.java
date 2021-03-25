@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -29,11 +31,15 @@ public class SearchCardsActivity extends AppCompatActivity implements CardDataSt
     final String TAG = "SearchCardsActivity";
     CardsAdapter adapter;
     CardController cardController;
+    EditText searchField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_cards);
+
+        searchField = findViewById(R.id.searchBar_textInput);
+
         cardController = new CardController(this);
         RecyclerView recycler = findViewById(R.id.card_frame_recycler);
         adapter = new CardsAdapter();
@@ -56,8 +62,7 @@ public class SearchCardsActivity extends AppCompatActivity implements CardDataSt
 
     private void executeSearch(){
         adapter.clear();
-
-        String searchText = ((EditText) findViewById(R.id.searchBar_textInput)).getText().toString();
+        String searchText = searchField.getText().toString();
         if (searchText.equals("all")) {
             cardController.getAll();
         } else {
@@ -89,6 +94,12 @@ public class SearchCardsActivity extends AppCompatActivity implements CardDataSt
 
     public void onLoad(Card card) {
         adapter.addCard(card);
+        hideKeyboard(searchField);
+    }
+
+    private void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     @Override

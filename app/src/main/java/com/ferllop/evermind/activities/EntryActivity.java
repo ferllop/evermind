@@ -100,6 +100,8 @@ public class EntryActivity extends AppCompatActivity implements UserDataStoreLis
         userRepo.updateUserStatus(user.getId(), UserStatus.LOGGED_IN);
         userRepo.updateUserLastConnection(user.getId(), Timestamp.now());
         GlobalUser.getInstance().setUser(user);
+        Log.d(TAG, "onLoadAll: user" + GlobalUser.getInstance().getUser());
+        Log.d(TAG, "onLoadAll: user" + GlobalUser.getInstance().getUser().getName());
         startActivity(new Intent(this, HomeActivity.class));
     }
 

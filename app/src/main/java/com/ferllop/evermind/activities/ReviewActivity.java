@@ -1,5 +1,6 @@
 package com.ferllop.evermind.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -36,6 +37,7 @@ public class ReviewActivity extends AppCompatActivity implements CardDataStoreLi
     ProgressBar progress;
     int loadedCards;
     int cardsToReviewCount;
+    int totalRight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,7 @@ public class ReviewActivity extends AppCompatActivity implements CardDataStoreLi
         right = findViewById(R.id.review_right_button);
         wrong = findViewById(R.id.review_wrong_button);
         progress = findViewById(R.id.review_progressBar);
+        totalRight = 0;
 
         question.setVisibility(View.INVISIBLE);
         resolve.setVisibility(View.INVISIBLE);
@@ -88,7 +91,11 @@ public class ReviewActivity extends AppCompatActivity implements CardDataStoreLi
 
     private void reviewSubscriptions() {
         if (cardsToReviewCount < 1){
-            finish();
+            startActivity(
+                    new Intent(getApplicationContext(), ReviewResultActivity.class)
+                        .putExtra("total", cardsToReview.size())
+                        .putExtra("right", totalRight)
+            );
             return;
         }
 
@@ -102,6 +109,7 @@ public class ReviewActivity extends AppCompatActivity implements CardDataStoreLi
         right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                totalRight++;
                 new SubscriptionRepository(null).upgradeLevel(subCard.getSubscription());
                 ReviewActivity.this.reviewSubscriptions();
             }
