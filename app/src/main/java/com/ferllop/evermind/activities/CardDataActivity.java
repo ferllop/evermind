@@ -3,7 +3,6 @@ package com.ferllop.evermind.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.ferllop.evermind.AndroidApplication;
 import com.ferllop.evermind.R;
 import com.ferllop.evermind.activities.fragments.DeleteCardDialogFragment;
 import com.ferllop.evermind.models.Card;
@@ -28,7 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CardDataActivity extends AppCompatActivity implements
+public class CardDataActivity extends MainNavigationActivity implements
         CardDataStoreListener, SubscriptionDataStoreListener, DeleteCardDialogFragment.DeleteDialogListener {
     final private String TAG = "MYAPP-CardDataActivity";
 

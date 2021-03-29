@@ -9,8 +9,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Evermind.NoActionBar">
-        <activity android:name=".activities.ReviewResultActivity"></activity>
+        android:theme="@style/Theme.Evermind">
+        <activity android:name=".activities.MainNavigationActivity"></activity>
         <activity android:name=".activities.EntryActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,6 +23,7 @@
         <activity android:name=".activities.HomeActivity" />
         <activity android:name=".activities.SearchCardsActivity" />
         <activity android:name=".activities.ReviewActivity" />
+        <activity android:name=".activities.ReviewResultActivity" />
         <activity android:name=".activities.CardDataActivity" />
     </application>
 

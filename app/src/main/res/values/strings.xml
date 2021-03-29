@@ -13,9 +13,9 @@
     <string name="edit_button">Edit card</string>
     <string name="brand">evermind</string>
     <string name="start_button">start</string>
-    <string name="create_new_card">Create a new card</string>
+    <string name="create_new_card">Create card</string>
     <string name="create_button">create</string>
-    <string name="search_existing_cards">Search for existing cards</string>
+    <string name="search_existing_cards">Search cards</string>
     <string name="search_button">search</string>
     <string name="cards_to_review">Today you have #qty card#s to review</string>
     <string name="error_empty_query_search">You must provide a not empty search</string>
@@ -70,6 +70,12 @@
     <string name="search_info_message">"You can search cards: - labeled with a specific  tag, for example, if in the search field you type \"culture-general\" you will find all the cards  with the tag \"culture-general\". - tagged with all the tags in a list  tags in a comma-separated  separated by commas.  For example, if you write  \"chemistry, biology\" you will find all the cards labeled with both tags.  - by author, preceding the  author's name with an at sign. For example, if you search for @jota34 you will find all the cards  of the user jota34 - by author and tags.  For example, if you type.  \"chemistry, @jota34, biology\" you will find all the cards  of user jota34 that are tagged with biology  and with chemistry. "</string>
     <string name="continue_button">continue</string>
     <string name="right_answers">Right answers</string>
+    <string name="profile">Profile</string>
+    <string name="my_cards">My cards</string>
+    <string name="my_subscriptions">My subscriptions</string>
+    <string name="logout">Logout</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>
