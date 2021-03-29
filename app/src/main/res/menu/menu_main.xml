@@ -1,10 +1,33 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.ferllop.evermind.activities.HomeActivity">
+
+    <item
+        android:id="@+id/action_create_card"
+        android:title="@string/create_new_card" />
+
+    <item
+        android:id="@+id/action_search"
+        android:title="@string/search_existing_cards" />
+
+    <item
+        android:id="@+id/action_profile"
+        android:title="@string/profile"/>
+
+    <item
+        android:id="@+id/action_my_cards"
+        android:title="@string/my_cards" />
+
+    <item
+        android:id="@+id/action_my_subscriptions"
+        android:title="@string/my_subscriptions" />
+
     <item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:title="@string/action_settings" />
+
+    <item
+        android:id="@+id/action_logout"
+        android:title="@string/logout" />
+
 </menu>

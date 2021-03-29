@@ -1,30 +1,22 @@
 package com.ferllop.evermind.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.ferllop.evermind.AndroidApplication;
 import com.ferllop.evermind.R;
-import com.ferllop.evermind.models.User;
 import com.ferllop.evermind.repositories.GlobalUser;
-import com.ferllop.evermind.repositories.UserRepository;
 import com.ferllop.evermind.repositories.fields.DataStoreError;
 import com.ferllop.evermind.models.Subscription;
 import com.ferllop.evermind.repositories.SubscriptionRepository;
 import com.ferllop.evermind.repositories.SubscriptionsGlobal;
 import com.ferllop.evermind.repositories.listeners.SubscriptionDataStoreListener;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity implements SubscriptionDataStoreListener {
+public class HomeActivity extends MainNavigationActivity implements SubscriptionDataStoreListener {
     final String TAG = "MYAPP-Home";
 
     @Override
@@ -50,15 +42,6 @@ public class HomeActivity extends AppCompatActivity implements SubscriptionDataS
                 startActivity(new Intent(HomeActivity.this, CardDataActivity.class));
             }
         });
-
-        findViewById(R.id.home_signOut_textView).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new UserRepository(null).signOut();
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-            }
-        });
-        Log.d(TAG, "onCreate: " + GlobalUser.getInstance().getUser().getName());
     }
 
     private void getAllSubsFromUser() {

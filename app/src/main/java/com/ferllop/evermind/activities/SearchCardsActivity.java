@@ -1,6 +1,5 @@
 package com.ferllop.evermind.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,7 +12,6 @@ import android.widget.Toast;
 
 import com.ferllop.evermind.R;
 import com.ferllop.evermind.activities.fragments.SearchInfoDialog;
-import com.ferllop.evermind.activities.fragments.VerifyEmailDialog;
 import com.ferllop.evermind.models.Card;
 import com.ferllop.evermind.repositories.fields.DataStoreError;
 import com.ferllop.evermind.models.Subscription;
@@ -26,7 +24,7 @@ import com.ferllop.evermind.repositories.listeners.SubscriptionDataStoreListener
 import java.util.List;
 
 
-public class SearchCardsActivity extends AppCompatActivity implements CardDataStoreListener, SubscriptionDataStoreListener {
+public class SearchCardsActivity extends MainNavigationActivity implements CardDataStoreListener, SubscriptionDataStoreListener {
 
     final String TAG = "SearchCardsActivity";
     CardsAdapter adapter;
