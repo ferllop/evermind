@@ -1,5 +1,7 @@
 package com.ferllop.evermind.repositories;
 
+import android.util.Log;
+
 import com.ferllop.evermind.models.Card;
 import com.ferllop.evermind.repositories.datastores.CardFirestoreDataStore;
 import com.ferllop.evermind.repositories.fields.FirestoreCollectionsLabels;
@@ -30,6 +32,7 @@ public class CardRepository {
     }
 
     public void getAll() {
+        Log.d(TAG, "getAll: ");
         dataStore.getAll();
     }
 
