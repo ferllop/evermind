@@ -1,10 +1,13 @@
 package com.ferllop.evermind.activities;
 
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -12,6 +15,7 @@ import android.widget.Toast;
 
 import com.ferllop.evermind.R;
 import com.ferllop.evermind.activities.fragments.SearchInfoDialog;
+import com.ferllop.evermind.activities.fragments.SearchResultsFragment;
 import com.ferllop.evermind.models.Card;
 import com.ferllop.evermind.repositories.fields.DataStoreError;
 import com.ferllop.evermind.models.Subscription;
@@ -24,11 +28,10 @@ import com.ferllop.evermind.repositories.listeners.SubscriptionDataStoreListener
 import java.util.List;
 
 
-public class SearchCardsActivity extends MainNavigationActivity implements CardDataStoreListener, SubscriptionDataStoreListener {
+public class SearchCardsActivity extends MainNavigationActivity {
 
-    final String TAG = "SearchCardsActivity";
-    CardsAdapter adapter;
-    CardController cardController;
+    final String TAG = "MYAPP-SearchCardsActi";
+
     EditText searchField;
 
     @Override
@@ -38,10 +41,6 @@ public class SearchCardsActivity extends MainNavigationActivity implements CardD
 
         searchField = findViewById(R.id.searchBar_textInput);
 
-        cardController = new CardController(this);
-        RecyclerView recycler = findViewById(R.id.card_frame_recycler);
-        adapter = new CardsAdapter();
-        recycler.setAdapter(adapter);
         findViewById(R.id.search_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,71 +58,15 @@ public class SearchCardsActivity extends MainNavigationActivity implements CardD
     }
 
     private void executeSearch(){
-        adapter.clear();
-        String searchText = searchField.getText().toString();
-        if (searchText.equals("all")) {
-            cardController.getAll();
-        } else {
-            try {
-                cardController.getFromSearch(searchText);
-            } catch (IllegalArgumentException ex) {
-                Toast.makeText(SearchCardsActivity.this, R.string.error_empty_query_search, Toast.LENGTH_LONG).show();
-            }
-        }
+        SearchResultsFragment searchResultsFragment = SearchResultsFragment.newInstance(searchField.getText().toString());
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, searchResultsFragment);
+        fragmentTransaction.commit();
     }
 
     @Override
     public void onRestart(){
         super.onRestart();
         executeSearch();
-    }
-
-    @Override
-    public void onSave(Subscription subscription) {
-        adapter.updateCard(subscription.getCardID());
-        SubscriptionsGlobal.getInstance().addSubscription(subscription);
-        Toast.makeText(this, R.string.subscribed, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onLoadAll(List<Subscription> subscriptions) {
-
-    }
-
-    public void onLoad(Card card) {
-        adapter.addCard(card);
-        hideKeyboard(searchField);
-    }
-
-    private void hideKeyboard(View view) {
-        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
-
-    @Override
-    public void onDelete(String subscriptionID) {
-        adapter.updateCard(SubscriptionsGlobal.getInstance().getCardIdFrom(subscriptionID));
-        SubscriptionsGlobal.getInstance().deleteSubscription(subscriptionID);
-        Toast.makeText(this, R.string.unsubscribed_from_card, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onLoad(Subscription subscription) {
-
-    }
-
-    @Override
-    public void onLoadAllCards(List<Card> items) {
-
-    }
-
-    @Override
-    public void onError(DataStoreError error) {
-        Toast.makeText(this, R.string.error_searching_card, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onSave(Card item) {
-
     }
 }

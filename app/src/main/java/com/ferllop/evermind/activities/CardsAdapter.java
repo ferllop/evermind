@@ -30,9 +30,11 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
 
     final String TAG = "MYAPP:CardAdapter";
     List<Card> cards;
+    SubscriptionDataStoreListener listener;
 
-    public CardsAdapter() {
+    public CardsAdapter(SubscriptionDataStoreListener listener) {
         this.cards = new ArrayList<>();
+        this.listener = listener;
     }
 
     public void addCard(Card card){
@@ -111,7 +113,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
                         @Override
                         public void onClick(View v) {
                             Log.d(TAG, "onClick: " + subscriptionID);
-                            new SubscriptionRepository((SubscriptionDataStoreListener) author.getContext()).delete(subscriptionID);
+                            new SubscriptionRepository(listener).delete(subscriptionID);
 
                             Log.d(TAG, "onClick: unsuscribe");
                         }
@@ -126,7 +128,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
                                 Timestamp now = Timestamp.now();
                                 Timestamp next = new Timestamp(level.getValue() * 86400 + Timestamp.now().getSeconds(), 0);
                                 Subscription sub = new Subscription(userID, cardID, level, now, next);
-                                new SubscriptionRepository((SubscriptionDataStoreListener) author.getContext()).insert(sub);
+                                new SubscriptionRepository(listener).insert(sub);
                                 Log.d(TAG, "onClick: suscribe");
                             }
                         }
