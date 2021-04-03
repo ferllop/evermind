@@ -92,14 +92,14 @@ public class SearchResultsFragment extends Fragment implements CardDataStoreList
         RecyclerView recycler = getView().findViewById(R.id.card_frame_recycler);
         adapter = new CardsAdapter(this);
         recycler.setAdapter(adapter);
-        //execute();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
         execute();
     }
+
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        execute();
+//    }
 
     private void execute(){
         if (searchQuery != null){
@@ -111,6 +111,7 @@ public class SearchResultsFragment extends Fragment implements CardDataStoreList
 
 
     private void executeSearch(String searchText){
+        Log.d(TAG, "executeSearch: " + searchText);
         adapter.clear();
         if (searchText.equals("all")) {
             cardController.getAll();
@@ -145,7 +146,7 @@ public class SearchResultsFragment extends Fragment implements CardDataStoreList
 
     public void onLoad(Card card) {
         adapter.addCard(card);
-        //hideKeyboard(getView());
+        hideKeyboard(getView());
     }
 
     private void hideKeyboard(View view) {

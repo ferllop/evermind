@@ -7,6 +7,10 @@
         android:title="@string/profile"/>
 
     <item
+        android:id="@+id/action_home"
+        android:title="@string/home"/>
+
+    <item
         android:id="@+id/action_create_card"
         android:title="@string/create_new_card" />
 

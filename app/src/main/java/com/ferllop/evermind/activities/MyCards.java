@@ -1,8 +1,8 @@
 package com.ferllop.evermind.activities;
 
-import androidx.fragment.app.FragmentTransaction;
-
 import android.os.Bundle;
+
+import androidx.fragment.app.FragmentTransaction;
 
 import com.ferllop.evermind.R;
 import com.ferllop.evermind.activities.fragments.SearchResultsFragment;
@@ -18,11 +18,22 @@ public class MyCards extends MainNavigationActivity {
         load();
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        load();
+    }
+
+    @Override
+    protected String getNavBarTitle() {
+        return getString(R.string.my_cards_screen_title);
+    }
+
     private void load(){
         SearchResultsFragment searchResultsFragment = SearchResultsFragment.newInstance(
                 "@" + new UserLocalDataStore(this).getUsername());
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.my_cards_container, searchResultsFragment);
-        fragmentTransaction.commit();
+        fragmentTransaction.commitAllowingStateLoss();
     }
 }

@@ -171,4 +171,12 @@ public class CardDataActivity extends MainNavigationActivity implements
     public void onDialogCancelClick(DialogFragment dialog) {
 
     }
+
+    @Override
+    protected String getNavBarTitle() {
+        if(this.getIntent().getStringExtra(CardField.ID.getValue()) == null) {
+            return getString(R.string.create_card_screen_title);
+        }
+        return getString(R.string.edit_card_screen_title);
+    }
 }

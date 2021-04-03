@@ -44,6 +44,11 @@ public class HomeActivity extends MainNavigationActivity implements Subscription
         });
     }
 
+    @Override
+    protected String getNavBarTitle() {
+        return getString(R.string.home_screen_title);
+    }
+
     private void getAllSubsFromUser() {
         ((Button) findViewById(R.id.review_cards_button)).setEnabled(false);
         findViewById(R.id.review_cards_textView).setVisibility(View.INVISIBLE);

@@ -1,6 +1,7 @@
 package com.ferllop.evermind.activities;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.fragment.app.FragmentTransaction;
 
@@ -19,6 +20,16 @@ public class MySubscriptions extends MainNavigationActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_subscriptions);
 
+        load();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        load();
+    }
+
+    private void load() {
         List<String> cardsToLoad = new ArrayList<>();
         for(Subscription sub : SubscriptionsGlobal.getInstance().getSubscriptions()){
             cardsToLoad.add(sub.getCardID());
@@ -27,6 +38,11 @@ public class MySubscriptions extends MainNavigationActivity{
         SearchResultsFragment searchResultsFragment = SearchResultsFragment.newInstance((String[]) cardsToLoad.toArray(new String[0]));
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.my_subscriptions_container, searchResultsFragment);
-        fragmentTransaction.commit();
+        fragmentTransaction.commitAllowingStateLoss();
+    }
+
+    @Override
+    protected String getNavBarTitle() {
+        return getString(R.string.my_subscriptions_screen_title);
     }
 }
