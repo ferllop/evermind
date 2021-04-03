@@ -1,17 +1,11 @@
 <resources>
-    <string name="app_name">evermind</string>
+    <string name="app_name" translatable="false">evermind</string>
+    <string name="general_preferences_id" translatable="false">com.ferllop.evermind.GENERAL_PREFERENCES</string>
+    <string name="logged_user_data" translatable="false">com.ferllop.evermind.LOGGED_USER_DATA</string>
+    <string name="USER_PREFIX" translatable="false">\@</string>
     <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="searchBarHint">search...</string>
     <string name="edit_button">Edit card</string>
-    <string name="brand">evermind</string>
     <string name="start_button">start</string>
     <string name="create_new_card">Create card</string>
     <string name="create_button">create</string>
@@ -33,9 +27,7 @@
     <string name="error_deleting_card">Error deleting the card</string>
     <string name="card_deleted">Card deleted</string>
     <string name="card_saved">Card saved successfully</string>
-    <string name="general_preferences_id">com.ferllop.evermind.GENERAL_PREFERENCES</string>
     <string name="subscribe_to_card">subscribe</string>
-    <string name="USER_PREFIX">\@</string>
     <string name="subscribed">Subscribed to card</string>
     <string name="right">right</string>
     <string name="resolve">resolve</string>
@@ -67,17 +59,32 @@
     <string name="all_fields_mandatory">All fields are required</string>
     <string name="register_remember_verify_email_sent">This email is pending to be verified.\nYou should have received a verification email.</string>
     <string name="reset_password_sent">If this email is registered in our system, you should receive an email with a link to be able to reset your password</string>
-    <string name="search_info_message">"You can search cards: - labeled with a specific  tag, for example, if in the search field you type \"culture-general\" you will find all the cards  with the tag \"culture-general\". - tagged with all the tags in a list  tags in a comma-separated  separated by commas.  For example, if you write  \"chemistry, biology\" you will find all the cards labeled with both tags.  - by author, preceding the  author's name with an at sign. For example, if you search for @jota34 you will find all the cards  of the user jota34 - by author and tags.  For example, if you type.  \"chemistry, @jota34, biology\" you will find all the cards  of user jota34 that are tagged with biology  and with chemistry. "</string>
+    <string name="search_info_message">"
+        You can search cards: \n
+        - labeled with a specific tag: \n
+        if in the search field you type \"culture-general\" you will find all the cards with the tag \"culture-general\".\n
+        - tagged with all the tags in a list  tags in a comma-separated  separated by commas:\n
+        if you write \"chemistry, biology\" you will find all the cards labeled with both tags.\n
+        - by author, preceding the  author's name with an at sign \"@\":\n
+        if you search for @super34 you will find all the cards  of the user super34.\n
+        - by author and tags:\n
+        if you type \"chemistry, @super34, biology\" you will find all the cards of user \"super34\" that are tagged with both \"biology\" and \"chemistry\"."</string>
     <string name="continue_button">continue</string>
     <string name="right_answers">Right answers</string>
     <string name="profile">Profile</string>
     <string name="my_cards">My cards</string>
     <string name="my_subscriptions">My subscriptions</string>
     <string name="logout">Logout</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="MyCards">My cards</string>
-    <string name="logged_user_data">com.ferllop.evermind.LOGGED_USER_DATA</string>
+    <string name="search_screen_title">Search</string>
+    <string name="my_cards_screen_title">My cards</string>
+    <string name="my_subscriptions_screen_title">My subscriptions</string>
+    <string name="home_screen_title">Home</string>
+    <string name="create_card_screen_title">Create card</string>
+    <string name="edit_card_screen_title">Edit card</string>
+    <string name="search_help_icon_description">Explanation about the search system</string>
+    <string name="search_button_description">Execute search</string>
+    <string name="home">Home</string>
 
 
 </resources>
