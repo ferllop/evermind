@@ -14,15 +14,21 @@ import android.view.MenuItem;
 import com.ferllop.evermind.R;
 import com.ferllop.evermind.repositories.UserRepository;
 
-public class MainNavigationActivity extends AppCompatActivity {
+public abstract class MainNavigationActivity extends AppCompatActivity {
 
     final String TAG = "MYAPP-mainNav";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_navigation);
         ActionBar toolbar = getSupportActionBar();
+        if (toolbar != null) {
+            toolbar.setTitle(getNavBarTitle());
+        }
     }
+
+    abstract protected String getNavBarTitle();
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -38,15 +44,18 @@ public class MainNavigationActivity extends AppCompatActivity {
             case R.id.action_create_card:
                 startActivity(new Intent(getApplicationContext(), CardDataActivity.class));
                 return true;
+            case R.id.action_home:
+                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                return true;
             case R.id.action_search:
                 startActivity(new Intent(getApplicationContext(), SearchCardsActivity.class));
                 return true;
-            case R.id.action_profile:
             case R.id.action_my_cards:
                 startActivity(new Intent(getApplicationContext(), MyCards.class));
                 return true;
             case R.id.action_my_subscriptions:
                 startActivity(new Intent(getApplicationContext(), MySubscriptions.class));
+            case R.id.action_profile:
             case R.id.action_settings:
                 return true;
             case R.id.action_logout:

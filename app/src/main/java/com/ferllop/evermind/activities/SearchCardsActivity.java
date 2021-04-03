@@ -41,6 +41,11 @@ public class SearchCardsActivity extends MainNavigationActivity {
         });
     }
 
+    @Override
+    protected String getNavBarTitle() {
+        return getString(R.string.search_screen_title);
+    }
+
     private void executeSearch(){
         SearchResultsFragment searchResultsFragment = SearchResultsFragment.newInstance(searchField.getText().toString());
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();

@@ -6,16 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".activities.MyCards">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/MyCards"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
         android:id="@+id/my_cards_container"
@@ -23,7 +13,6 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
-
+        app:layout_constraintTop_toTopOf="parent">
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
