@@ -1,6 +1,7 @@
 package com.ferllop.evermind.repositories.fields;
 
 public enum UserField {
+    USER_ID("userID"),
     AUTH_ID("authID"),
     NAME("name"),
     USERNAME("username"),

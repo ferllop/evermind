@@ -21,6 +21,8 @@ import com.ferllop.evermind.activities.SearchCardsActivity;
 import com.ferllop.evermind.controllers.CardController;
 import com.ferllop.evermind.models.Card;
 import com.ferllop.evermind.models.Subscription;
+import com.ferllop.evermind.repositories.CardRepository;
+import com.ferllop.evermind.repositories.SubscriptionRepository;
 import com.ferllop.evermind.repositories.SubscriptionsGlobal;
 import com.ferllop.evermind.repositories.fields.DataStoreError;
 import com.ferllop.evermind.repositories.listeners.CardDataStoreListener;
@@ -28,12 +30,15 @@ import com.ferllop.evermind.repositories.listeners.SubscriptionDataStoreListener
 
 import java.util.List;
 
-public class SearchResultsFragment extends Fragment  implements CardDataStoreListener, SubscriptionDataStoreListener {
+public class SearchResultsFragment extends Fragment implements CardDataStoreListener, SubscriptionDataStoreListener {
 
     private static final String SEARCH_QUERY = "searchQuery";
+    private static final String CARDS_ID = "cardsID";
     private static final String TAG = "MYAPP-SearchFrag";
 
+
     private String searchQuery;
+    private String[] cardsID;
     CardsAdapter adapter;
     CardController cardController;
 
@@ -45,15 +50,31 @@ public class SearchResultsFragment extends Fragment  implements CardDataStoreLis
         SearchResultsFragment fragment = new SearchResultsFragment();
         Bundle args = new Bundle();
         args.putString(SEARCH_QUERY, searchQuery);
+        args.putStringArray(CARDS_ID, null);
         fragment.setArguments(args);
         return fragment;
     }
+
+    public static SearchResultsFragment newInstance(String[] cardsID) {
+        SearchResultsFragment fragment = new SearchResultsFragment();
+        Bundle args = new Bundle();
+        args.putString(SEARCH_QUERY, null);
+        args.putStringArray(CARDS_ID, cardsID);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            searchQuery = getArguments().getString(SEARCH_QUERY);
+            if (getArguments().getString(SEARCH_QUERY) != null){
+                searchQuery = getArguments().getString(SEARCH_QUERY);
+            } else {
+                cardsID =  getArguments().getStringArray(CARDS_ID);
+            }
         }
     }
 
@@ -71,21 +92,42 @@ public class SearchResultsFragment extends Fragment  implements CardDataStoreLis
         RecyclerView recycler = getView().findViewById(R.id.card_frame_recycler);
         adapter = new CardsAdapter(this);
         recycler.setAdapter(adapter);
-        Log.d(TAG, "onViewCreated: " + searchQuery);
-        executeSearch(searchQuery);
+        //execute();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        execute();
+    }
+
+    private void execute(){
+        if (searchQuery != null){
+            executeSearch(searchQuery);
+        } else {
+            loadCards(cardsID);
+        }
+    }
+
+
     private void executeSearch(String searchText){
-        Log.d(TAG, "executeSearch() called with: searchText = [" + searchText + "]");
         adapter.clear();
         if (searchText.equals("all")) {
             cardController.getAll();
+        } else if (searchText.equals("ownSubscriptions")) {
+            SubscriptionsGlobal.getInstance().getSubscriptions();
         } else {
             try {
                 cardController.getFromSearch(searchText);
             } catch (IllegalArgumentException ex) {
                 Toast.makeText(getActivity(), R.string.error_empty_query_search, Toast.LENGTH_LONG).show();
             }
+        }
+    }
+
+    private void loadCards(String[] cardsID){
+        for(String cardID : cardsID){
+            new CardRepository(this).load(cardID);
         }
     }
 
@@ -103,8 +145,7 @@ public class SearchResultsFragment extends Fragment  implements CardDataStoreLis
 
     public void onLoad(Card card) {
         adapter.addCard(card);
-        hideKeyboard(getView());
-        Log.d(TAG, "onLoad: " + card);
+        //hideKeyboard(getView());
     }
 
     private void hideKeyboard(View view) {

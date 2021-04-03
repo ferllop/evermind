@@ -1,8 +1,5 @@
 package com.ferllop.evermind.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,16 +7,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.fragment.app.DialogFragment;
+
 import com.ferllop.evermind.R;
 import com.ferllop.evermind.activities.fragments.DeleteCardDialogFragment;
+import com.ferllop.evermind.controllers.CardController;
 import com.ferllop.evermind.models.Card;
-import com.ferllop.evermind.repositories.GlobalUser;
-import com.ferllop.evermind.repositories.fields.DataStoreError;
 import com.ferllop.evermind.models.Subscription;
 import com.ferllop.evermind.repositories.SubscriptionRepository;
-import com.ferllop.evermind.repositories.listeners.CardDataStoreListener;
-import com.ferllop.evermind.controllers.CardController;
+import com.ferllop.evermind.repositories.datastores.UserLocalDataStore;
 import com.ferllop.evermind.repositories.fields.CardField;
+import com.ferllop.evermind.repositories.fields.DataStoreError;
+import com.ferllop.evermind.repositories.listeners.CardDataStoreListener;
 import com.ferllop.evermind.repositories.listeners.SubscriptionDataStoreListener;
 
 import java.util.HashMap;
@@ -36,6 +35,7 @@ public class CardDataActivity extends MainNavigationActivity implements
     EditText labels;
     Button save;
     Button delete;
+    UserLocalDataStore userLocal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +48,7 @@ public class CardDataActivity extends MainNavigationActivity implements
         save = findViewById(R.id.saveButton);
         delete = findViewById(R.id.deleteButton);
         delete.setEnabled(false);
+        userLocal = new UserLocalDataStore(question.getContext());
 
         String id = this.getIntent().getStringExtra(CardField.ID.getValue());
         if(id != null){
@@ -65,8 +66,8 @@ public class CardDataActivity extends MainNavigationActivity implements
                         showToast("All fields are required");
                     } else {
                         new CardController(CardDataActivity.this).insert(
-                                GlobalUser.getInstance().getUser().getId(),
-                                GlobalUser.getInstance().getUser().getUsername(),
+                                userLocal.getID(),
+                                userLocal.getUsername(),
                                 question.getText().toString(),
                                 answer.getText().toString(),
                                 labels.getText().toString()
@@ -147,7 +148,7 @@ public class CardDataActivity extends MainNavigationActivity implements
         this.showToast(getString(R.string.card_saved));
         if (isNew){
             new SubscriptionRepository((SubscriptionDataStoreListener) this)
-                    .subscribeUserToCard(GlobalUser.getInstance().getUser().getId(), card.getId());
+                    .subscribeUserToCard(userLocal.getID(), card.getId());
         }
         finish();
     }

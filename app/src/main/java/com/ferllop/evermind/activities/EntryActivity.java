@@ -1,20 +1,15 @@
 package com.ferllop.evermind.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.MutableLiveData;
-
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.ferllop.evermind.R;
 import com.ferllop.evermind.models.User;
 import com.ferllop.evermind.models.UserStatus;
-import com.ferllop.evermind.repositories.GlobalUser;
 import com.ferllop.evermind.repositories.UserRepository;
+import com.ferllop.evermind.repositories.datastores.UserLocalDataStore;
 import com.ferllop.evermind.repositories.fields.DataStoreError;
 import com.ferllop.evermind.repositories.listeners.AuthMessage;
 import com.ferllop.evermind.repositories.listeners.DataStoreMessage;
@@ -47,25 +42,10 @@ public class EntryActivity extends AppCompatActivity implements UserDataStoreLis
                 }
         } else {
             Log.d(TAG, "onCreate: clear");
-            GlobalUser.getInstance().clear();
+            new UserLocalDataStore(this).clear();
             startActivity(new Intent(this, LoginActivity.class));
         }
 
-    }
-
-    private void setFixedUser(User user){
-        SharedPreferences.Editor prefs = getSharedPreferences(getString(R.string.general_preferences_id), Context.MODE_PRIVATE).edit();
-        prefs.putString("username", user.getUsername()).putString("userID", "Q8tMRaXVhVm0GGvCGiuc").apply();
-    }
-
-    public static String getUser(Context activity){
-        return activity.getSharedPreferences(activity.getString(R.string.general_preferences_id), Context.MODE_PRIVATE)
-                .getString("user", "anonymous");
-    }
-
-    public static String getUserID(Context activity){
-        return activity.getSharedPreferences(activity.getString(R.string.general_preferences_id), Context.MODE_PRIVATE)
-                .getString("userID", "none");
     }
 
     @Override
@@ -91,7 +71,7 @@ public class EntryActivity extends AppCompatActivity implements UserDataStoreLis
     public void onLoadAll(List<User> users) {
         if(users.size() == 0) {
             Log.d(TAG, "onLoadAll: no users");
-            userRepo.signOut();
+            userRepo.signOut(this);
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             return;
         }
@@ -99,9 +79,7 @@ public class EntryActivity extends AppCompatActivity implements UserDataStoreLis
         User user = users.get(0);
         userRepo.updateUserStatus(user.getId(), UserStatus.LOGGED_IN);
         userRepo.updateUserLastConnection(user.getId(), Timestamp.now());
-        GlobalUser.getInstance().setUser(user);
-        Log.d(TAG, "onLoadAll: user" + GlobalUser.getInstance().getUser());
-        Log.d(TAG, "onLoadAll: user" + GlobalUser.getInstance().getUser().getName());
+        userRepo.setCache(user);
         startActivity(new Intent(this, HomeActivity.class));
     }
 

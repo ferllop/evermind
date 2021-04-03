@@ -1,10 +1,13 @@
 package com.ferllop.evermind.repositories;
 
+import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 
 import com.ferllop.evermind.models.User;
 import com.ferllop.evermind.models.UserStatus;
 import com.ferllop.evermind.repositories.datastores.UserFirestoreDataStore;
+import com.ferllop.evermind.repositories.datastores.UserLocalDataStore;
 import com.ferllop.evermind.repositories.fields.AuthError;
 import com.ferllop.evermind.repositories.fields.DataStoreError;
 import com.ferllop.evermind.repositories.fields.FirestoreCollectionsLabels;
@@ -16,10 +19,13 @@ import com.ferllop.evermind.repositories.mappers.UserMapper;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Map;
+
 
 public class UserRepository implements AuthListener {
     final String TAG = "MYAPP-UserRepo";
 
+    UserLocalDataStore localDataStore;
     UserFirestoreDataStore dataStore;
     AuthRepository authRepository;
     RegisteringUser registeringUser;
@@ -34,6 +40,7 @@ public class UserRepository implements AuthListener {
         );
         this.authRepository = new AuthRepository(this);
         this.listener = listener;
+        this.localDataStore = new UserLocalDataStore((Activity) listener);
 
     }
 
@@ -73,6 +80,14 @@ public class UserRepository implements AuthListener {
             dataStore.existUsername(username);
             dataStore.existEmail(email);
         }
+    }
+
+    public void clearCache(){
+        localDataStore.clear();
+    }
+
+    public void setCache(User user){
+        localDataStore.setUser(user);
     }
 
     public void login(String email, String password){
@@ -123,15 +138,17 @@ public class UserRepository implements AuthListener {
         }
     }
 
-    public void signOut() {
-        if(GlobalUser.getInstance().getUser() != null){
-            updateUserStatus(GlobalUser.getInstance().getUser().getId(), UserStatus.LOGGED_OUT);
-            GlobalUser.getInstance().clear();
+    public void signOut(Context context) {
+        UserLocalDataStore localDataStore = new UserLocalDataStore(context);
+        if(localDataStore.getID() != null){
+            updateUserStatus(localDataStore.getID(), UserStatus.LOGGED_OUT);
+            localDataStore.clear();
         }
         authRepository.signOut();
     }
 
-    public void loginStatusUser(String userID){
+    public void loginStatusUser(){
+        String userID = localDataStore.getID();
         updateUserStatus(userID, UserStatus.LOGGED_IN);
         updateUserLastLogin(userID, Timestamp.now());
     }

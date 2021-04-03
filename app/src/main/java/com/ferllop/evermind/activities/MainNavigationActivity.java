@@ -2,8 +2,8 @@ package com.ferllop.evermind.activities;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,7 +22,6 @@ public class MainNavigationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_navigation);
         ActionBar toolbar = getSupportActionBar();
-        Log.d(TAG, "onCreateOptionsMenu() called with: menu = [" +  "]");
     }
 
     @Override
@@ -35,20 +34,23 @@ public class MainNavigationActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        Log.d(TAG, "onOptionsItemSelected: " + id);
         switch (id) {
             case R.id.action_create_card:
                 startActivity(new Intent(getApplicationContext(), CardDataActivity.class));
                 return true;
             case R.id.action_search:
                 startActivity(new Intent(getApplicationContext(), SearchCardsActivity.class));
+                return true;
             case R.id.action_profile:
             case R.id.action_my_cards:
+                startActivity(new Intent(getApplicationContext(), MyCards.class));
+                return true;
             case R.id.action_my_subscriptions:
+                startActivity(new Intent(getApplicationContext(), MySubscriptions.class));
             case R.id.action_settings:
                 return true;
             case R.id.action_logout:
-                new UserRepository(null).signOut();
+                new UserRepository(null).signOut(this);
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 return true;
             default:

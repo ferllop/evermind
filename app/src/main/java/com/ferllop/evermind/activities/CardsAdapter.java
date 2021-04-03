@@ -15,9 +15,9 @@ import com.ferllop.evermind.R;
 import com.ferllop.evermind.models.Card;
 import com.ferllop.evermind.models.Level;
 import com.ferllop.evermind.models.Subscription;
-import com.ferllop.evermind.repositories.GlobalUser;
 import com.ferllop.evermind.repositories.SubscriptionRepository;
 import com.ferllop.evermind.repositories.SubscriptionsGlobal;
+import com.ferllop.evermind.repositories.datastores.UserLocalDataStore;
 import com.ferllop.evermind.repositories.fields.CardField;
 import com.ferllop.evermind.repositories.listeners.SubscriptionDataStoreListener;
 import com.google.firebase.Timestamp;
@@ -37,12 +37,12 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
         this.listener = listener;
     }
 
-    public void addCard(Card card){
+    public void addCard(Card card) {
         cards.add(card);
         notifyDataSetChanged();
     }
 
-    public void clear(){
+    public void clear() {
         cards.clear();
         notifyDataSetChanged();
     }
@@ -69,16 +69,16 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
     }
 
     public void updateCard(String cardID) {
-        for(int i = 0; i < cards.size(); i++){
+        for (int i = 0; i < cards.size(); i++) {
             Log.d(TAG, "updateCard: " + cards.get(i).getId() + " -- " + cardID);
-            if (cards.get(i).getId().equals(cardID)){
+            if (cards.get(i).getId().equals(cardID)) {
                 notifyItemChanged(i);
                 Log.d(TAG, "updateCard: posicion " + i);
             }
         }
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder {
         final String TAG = "MYAPP";
         TextView author;
         TextView labels;
@@ -97,44 +97,43 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
 
         public void bind(Card card) {
             Log.d(TAG, "bind: ");
+            UserLocalDataStore userLocal = new UserLocalDataStore(author.getContext());
             author.setText(card.getAuthorUsername());
             labels.setText(card.getLabelling().toString());
             question.setText(card.getQuestion());
             answer.setText(card.getAnswer());
-//            Log.d(TAG, AndroidApplication.getUserID(author.getContext()));
-//            Log.d(TAG, card.getAuthorID());
 
-                String userID = GlobalUser.getInstance().getUser().getId();
-                String cardID = card.getId();
-                String subscriptionID = SubscriptionsGlobal.getInstance().getSubscriptionID(userID, cardID);
-                if (subscriptionID != null) {
-                    action.setText(R.string.unsubscribe_to_card);
-                    action.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Log.d(TAG, "onClick: " + subscriptionID);
-                            new SubscriptionRepository(listener).delete(subscriptionID);
+            String userID = userLocal.getID();
+            String cardID = card.getId();
+            String subscriptionID = SubscriptionsGlobal.getInstance().getSubscriptionID(userID, cardID);
+            if (subscriptionID != null) {
+                action.setText(R.string.unsubscribe_to_card);
+                action.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.d(TAG, "onClick: " + subscriptionID);
+                        new SubscriptionRepository(listener).delete(subscriptionID);
 
-                            Log.d(TAG, "onClick: unsuscribe");
+                        Log.d(TAG, "onClick: unsuscribe");
+                    }
+                });
+            } else {
+                action.setText(R.string.subscribe_to_card);
+                action.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (!SubscriptionsGlobal.getInstance().isUserSubscribedTo(userID, cardID)) {
+                            Level level = Level.LEVEL_0;
+                            Timestamp now = Timestamp.now();
+                            Timestamp next = new Timestamp(level.getValue() * 86400 + Timestamp.now().getSeconds(), 0);
+                            Subscription sub = new Subscription(userID, cardID, level, now, next);
+                            new SubscriptionRepository(listener).insert(sub);
+                            Log.d(TAG, "onClick: suscribe");
                         }
-                    });
-                } else {
-                    action.setText(R.string.subscribe_to_card);
-                    action.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if(!SubscriptionsGlobal.getInstance().isUserSubscribedTo(userID, cardID)) {
-                                Level level = Level.LEVEL_0;
-                                Timestamp now = Timestamp.now();
-                                Timestamp next = new Timestamp(level.getValue() * 86400 + Timestamp.now().getSeconds(), 0);
-                                Subscription sub = new Subscription(userID, cardID, level, now, next);
-                                new SubscriptionRepository(listener).insert(sub);
-                                Log.d(TAG, "onClick: suscribe");
-                            }
-                        }
-                    });
-                }
-            if (GlobalUser.getInstance().getUser().getId().equals(card.getAuthorID())){
+                    }
+                });
+            }
+            if (userLocal.getID().equals(card.getAuthorID())) {
                 author.setText(R.string.edit_button);
                 author.setOnClickListener(new View.OnClickListener() {
                     @Override

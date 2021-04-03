@@ -4,13 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.ferllop.evermind.R;
-import com.ferllop.evermind.repositories.GlobalUser;
+import com.ferllop.evermind.repositories.UserRepository;
+import com.ferllop.evermind.repositories.datastores.UserLocalDataStore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +47,7 @@ public class ReviewResultActivity extends AppCompatActivity {
     }
 
     private String getMessage(){
-        String name = GlobalUser.getInstance().getUser().getName();
+        String name = new UserLocalDataStore(this).getName();
         List<String> messages = new ArrayList<>();
         messages.add("Keep on");
         messages.add("Don't defeat");
