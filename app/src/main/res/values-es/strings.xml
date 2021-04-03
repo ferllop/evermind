@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">Ajustes</string>
+    <string name="searchBarHint">buscar...</string>
+    <string name="edit_button">Editar tarjeta</string>
+    <string name="start_button">Empezar</string>
+    <string name="create_new_card">Crear tarjeta</string>
+    <string name="create_button">Crear</string>
+    <string name="search_existing_cards">Buscar tarjetas</string>
+    <string name="search_button">buscar</string>
+    <string name="cards_to_review">Hoy tienes #qty tarjeta#s para revisar</string>
+    <string name="error_empty_query_search">El campo de búsqueda no debe estar vacío</string>
+    <string name="delete_button">borrar</string>
+    <string name="save_button">guardar</string>
+    <string name="labels_editTextHint">etiquetas...</string>
+    <string name="answer_editText_hint">Y aquí va la respuesta</string>
+    <string name="quesstion_editText_hint">Escribe aquí la pregunta</string>
+    <string name="error_searching_card">Errar en la búsqueda</string>
+    <string name="error_inserting_card">Error creando la tarjeta</string>
+    <string name="error_loading_card">Error cargando la tarjeta</string>
+    <string name="error_loading_all_cards">Error cargando las tarjetas</string>
+    <string name="error_searching_cards">Error buscando las tarjetas</string>
+    <string name="error_updateing_card">Error actualizando la tarjeta</string>
+    <string name="error_deleting_card">Error borrando la tarjeta</string>
+    <string name="card_deleted">Tarjeta borrada</string>
+    <string name="card_saved">Tarjeta guardada satisfactóriamente</string>
+    <string name="subscribe_to_card">suscribir</string>
+    <string name="subscribed">Suscrito a la tarjeta</string>
+    <string name="right">Correcto</string>
+    <string name="resolve">resolver</string>
+    <string name="wrong">Equivocado</string>
+    <string name="unsubscribe_to_card">Desuscribir</string>
+    <string name="unsubscribed_from_card">Desuscrito de la tarjeta</string>
+    <string name="delete_dialog_confirm_title">Borrar tarjeta</string>
+    <string name="delete_dialog_confirm_message">Vas a borrar esta tarjeta\nTambién dejará de existir para el resto de usuarios suscritos a ella.</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancelar</string>
+    <string name="register_button">Crear cuenta</string>
+    <string name="register_name">nombre</string>
+    <string name="register_username">nombre de ususario</string>
+    <string name="register_email">email</string>
+    <string name="register_password">contraseña</string>
+    <string name="login_button">login</string>
+    <string name="forgot_password">¿Olvidaste tu contraseña?</string>
+    <string name="or">o</string>
+    <string name="register">registrar</string>
+    <string name="weak_password">*contrseña débil</string>
+    <string name="must_verify_message">Debes verificar tu email haciendo click en el link que te hemos enviado al email que proporcionaste</string>
+    <string name="username_must_unique">El nombre de usuario ya existe. Prueba con otro</string>
+    <string name="email_must_unique">"El email introducido ya existe. Prueba con otro"</string>
+    <string name="password_not_valid">La contraseña es demasiado débil.\nDebe contener minúsculas, mayúsculas y un símbolo</string>
+    <string name="register_verify_email_sent">Te hemos enviado un email de verificacion a la dirección que has introducido al registrarte</string>
+    <string name="invalid_credentials">Credenciales inválidas</string>
+    <string name="register_repeat_password">Repite la contrseña</string>
+    <string name="passwords_not_equals">Las contraseñas deben ser iguales</string>
+    <string name="all_fields_mandatory">Debes rellenar todos los campos</string>
+    <string name="register_remember_verify_email_sent">Este email está pendiente de verificación.\nDeberías haber recibido un email. Quizás esté en la carpeta de spam.</string>
+    <string name="reset_password_sent">Si este email está registrado en nuestro sistema, deberías recibir un email con un link para poder cambiaar la contraseña</string>
+    <string name="search_info_message">"
+        Puedes buscar tarjetas: \n
+        - etiquetadas con una etiqueta:\n
+        si buscas \"cultura-general\" encontrarás todas las tarjetas etiquetadas con \"cultura-general\".\n
+        - etiquetadas con todas las tarjetas de una lista separada por comas:\n
+        Por ejemplo, si escribes \"química, biología\", encontrarás todas las tarjetas etiquetadas con ambas etiquetas.\n
+        - por autor, prefijando el nombre de usuario con el símbolo de arroba \"@\":\n
+        Por ejemplo, si buscas \"@super34\" encontrarás todas las tarjetas del usuario \"super34\".\n
+        - por autor y etiquetas:\n
+        Si buscas \"química, @super34, biología\" te aparecerán todas las tarjetas del usuario \"super34\" etiquetadas con química y con biología a la vez."</string>
+    <string name="continue_button">continuar</string>
+    <string name="right_answers">Respuestas correctas</string>
+    <string name="profile">Perfil</string>
+    <string name="my_cards">Mis tarjetas</string>
+    <string name="my_subscriptions">Mis suscripciones</string>
+    <string name="logout">Desconectar</string>
+    <string name="MyCards">Mis tarjetas</string>
+    <string name="search_screen_title">Buscar</string>
+    <string name="my_cards_screen_title">Mis tarjetas</string>
+    <string name="my_subscriptions_screen_title">Mis suscripciones</string>
+    <string name="home_screen_title">Incio</string>
+    <string name="create_card_screen_title">Crear tarjeta</string>
+    <string name="edit_card_screen_title">Editar tarjeta</string>
+    <string name="search_help_icon_description">Explicación sobre el sistema de búsqueda</string>
+    <string name="search_button_description">Ejecutar búsqueda</string>
+    <string name="home">Inicio</string>
+
+
+</resources>
