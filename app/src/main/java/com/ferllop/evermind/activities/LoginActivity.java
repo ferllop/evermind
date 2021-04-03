@@ -14,8 +14,8 @@ import android.widget.Toast;
 
 import com.ferllop.evermind.R;
 import com.ferllop.evermind.models.User;
-import com.ferllop.evermind.repositories.GlobalUser;
 import com.ferllop.evermind.repositories.UserRepository;
+import com.ferllop.evermind.repositories.datastores.UserLocalDataStore;
 import com.ferllop.evermind.repositories.fields.DataStoreError;
 import com.ferllop.evermind.repositories.listeners.AuthMessage;
 import com.ferllop.evermind.repositories.listeners.DataStoreMessage;
@@ -29,6 +29,7 @@ public class LoginActivity extends AppCompatActivity implements UserDataStoreLis
 
     private final String TAG = "MYAPP-LoginActivity";
     UserRepository userRepository;
+    UserLocalDataStore userLocal;
     TextView forgotPassword;
     Button loginButton;
     ProgressBar loginProgress;
@@ -45,6 +46,8 @@ public class LoginActivity extends AppCompatActivity implements UserDataStoreLis
         forgotPassword = findViewById(R.id.login_forgot_password_link);
         loginButton = findViewById(R.id.login_login_Button);
         loginProgress = findViewById(R.id.login_progress_loader);
+
+        userLocal = new UserLocalDataStore(emailField.getContext());
 
         findViewById(R.id.login_login_Button).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,8 +147,8 @@ public class LoginActivity extends AppCompatActivity implements UserDataStoreLis
 
     @Override
     public void onLoadAll(List<User> user) {
-        GlobalUser.getInstance().setUser(user.get(0));
-        userRepository.loginStatusUser(GlobalUser.getInstance().getUser().getId());
+        userRepository.setCache(user.get(0));
+        userRepository.loginStatusUser();
         hideLoginProgress();
         startActivity(new Intent(this, EntryActivity.class));
     }

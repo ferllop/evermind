@@ -1,31 +1,15 @@
 package com.ferllop.evermind.activities;
 
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.ferllop.evermind.R;
 import com.ferllop.evermind.activities.fragments.SearchInfoDialog;
 import com.ferllop.evermind.activities.fragments.SearchResultsFragment;
-import com.ferllop.evermind.models.Card;
-import com.ferllop.evermind.repositories.fields.DataStoreError;
-import com.ferllop.evermind.models.Subscription;
-import com.ferllop.evermind.controllers.CardController;
-
-import com.ferllop.evermind.repositories.SubscriptionsGlobal;
-import com.ferllop.evermind.repositories.listeners.CardDataStoreListener;
-import com.ferllop.evermind.repositories.listeners.SubscriptionDataStoreListener;
-
-import java.util.List;
 
 
 public class SearchCardsActivity extends MainNavigationActivity {
@@ -60,7 +44,7 @@ public class SearchCardsActivity extends MainNavigationActivity {
     private void executeSearch(){
         SearchResultsFragment searchResultsFragment = SearchResultsFragment.newInstance(searchField.getText().toString());
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, searchResultsFragment);
+        fragmentTransaction.replace(R.id.search_cards_container, searchResultsFragment);
         fragmentTransaction.commit();
     }
 

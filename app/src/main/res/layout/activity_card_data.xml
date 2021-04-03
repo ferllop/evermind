@@ -10,7 +10,7 @@
         android:id="@+id/questionTextMultiLine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:ems="10"
         android:gravity="start|top"
         android:hint="@string/quesstion_editText_hint"
@@ -24,25 +24,25 @@
         android:id="@+id/answerTextMultiLine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="112dp"
+        android:layout_marginBottom="50dp"
         android:ems="10"
         android:gravity="start|top"
         android:hint="@string/answer_editText_hint"
         android:inputType="textMultiLine"
+        app:layout_constraintBottom_toTopOf="@+id/labelsText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/questionTextMultiLine" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/labelsText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="204dp"
+        android:layout_marginBottom="50dp"
         android:ems="10"
         android:hint="@string/labels_editTextHint"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/saveButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
@@ -52,7 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="50dp"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="50dp"
         android:text="@string/save_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/deleteButton"
@@ -62,10 +62,10 @@
         android:id="@+id/deleteButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="50dp"
         android:text="@string/delete_button"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/saveButton"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/saveButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

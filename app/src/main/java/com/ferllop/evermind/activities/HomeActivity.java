@@ -7,7 +7,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.ferllop.evermind.R;
-import com.ferllop.evermind.repositories.GlobalUser;
+import com.ferllop.evermind.models.User;
+import com.ferllop.evermind.repositories.datastores.UserLocalDataStore;
 import com.ferllop.evermind.repositories.fields.DataStoreError;
 import com.ferllop.evermind.models.Subscription;
 import com.ferllop.evermind.repositories.SubscriptionRepository;
@@ -34,7 +35,6 @@ public class HomeActivity extends MainNavigationActivity implements Subscription
             }
         });
 
-
         Button createButton = findViewById(R.id.create_card_button);
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,7 +47,7 @@ public class HomeActivity extends MainNavigationActivity implements Subscription
     private void getAllSubsFromUser() {
         ((Button) findViewById(R.id.review_cards_button)).setEnabled(false);
         findViewById(R.id.review_cards_textView).setVisibility(View.INVISIBLE);
-        new SubscriptionRepository((SubscriptionDataStoreListener) this).getAllFromUser(GlobalUser.getInstance().getUser().getId());
+        new SubscriptionRepository(this).getAllFromUser(new UserLocalDataStore(this).getID());
     }
 
     @Override
