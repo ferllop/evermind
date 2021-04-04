@@ -3,10 +3,8 @@ package com.ferllop.evermind.activities;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -55,8 +53,9 @@ public abstract class MainNavigationActivity extends AppCompatActivity {
                 return true;
             case R.id.action_my_subscriptions:
                 startActivity(new Intent(getApplicationContext(), MySubscriptions.class));
-            case R.id.action_profile:
+                return true;
             case R.id.action_settings:
+                startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
                 return true;
             case R.id.action_logout:
                 new UserRepository(null).signOut(this);
