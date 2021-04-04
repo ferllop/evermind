@@ -3,10 +3,6 @@
     tools:context="com.ferllop.evermind.activities.HomeActivity">
 
     <item
-        android:id="@+id/action_profile"
-        android:title="@string/profile"/>
-
-    <item
         android:id="@+id/action_home"
         android:title="@string/home"/>
 

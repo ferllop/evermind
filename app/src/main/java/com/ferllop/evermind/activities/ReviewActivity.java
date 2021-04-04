@@ -2,9 +2,7 @@ package com.ferllop.evermind.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -13,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.ferllop.evermind.R;
 import com.ferllop.evermind.models.Card;
+import com.ferllop.evermind.repositories.datastores.UserLocalDataStore;
 import com.ferllop.evermind.repositories.fields.DataStoreError;
 import com.ferllop.evermind.models.SubscribedCard;
 import com.ferllop.evermind.models.Subscription;
@@ -61,7 +60,8 @@ public class ReviewActivity extends AppCompatActivity implements CardDataStoreLi
         CardRepository cardRepo = new CardRepository(this);
         cardsToReview = new ArrayList<>();
         loadedCards = 0;
-        cardsToLoad = SubscriptionsGlobal.getInstance().getTenOrRemainingForToday();
+        int dayStartTime = Integer.parseInt(new UserLocalDataStore(this).getDayStartTime());
+        cardsToLoad = SubscriptionsGlobal.getInstance().getTenOrRemainingForToday(dayStartTime);
         for(Subscription sub : cardsToLoad){
             cardRepo.load(sub.getCardID());
             cardsToReview.add(new SubscribedCard(sub.getCardID(), sub));
@@ -135,8 +135,6 @@ public class ReviewActivity extends AppCompatActivity implements CardDataStoreLi
             }
         });
     }
-
-
 
     @Override
     public void onError(DataStoreError error) {

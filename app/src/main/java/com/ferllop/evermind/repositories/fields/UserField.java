@@ -9,7 +9,8 @@ public enum UserField {
     STATUS("status"),
     LAST_LOGIN("lastLogin"),
     LAST_CONNECTION("lastConnection"),
-    SIGN_IN("signIn");
+    SIGN_IN("signIn"),
+    DAY_START_TIME("dayStartTime");
 
     private final String value;
 

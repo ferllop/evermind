@@ -7,7 +7,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.ferllop.evermind.R;
-import com.ferllop.evermind.models.User;
 import com.ferllop.evermind.repositories.datastores.UserLocalDataStore;
 import com.ferllop.evermind.repositories.fields.DataStoreError;
 import com.ferllop.evermind.models.Subscription;
@@ -90,7 +89,8 @@ public class HomeActivity extends MainNavigationActivity implements Subscription
     @Override
     public void onLoadAll(List<Subscription> subs) {
         SubscriptionsGlobal.getInstance().setAllSubscriptions(subs);
-        List<Subscription> subsForToday = SubscriptionsGlobal.getInstance().getSubscriptionsForToday();
+        int dayStartTime = Integer.parseInt(new UserLocalDataStore(this).getDayStartTime());
+        List<Subscription> subsForToday = SubscriptionsGlobal.getInstance().getSubscriptionsForToday(dayStartTime);
         setCount(subsForToday.size());
     }
 

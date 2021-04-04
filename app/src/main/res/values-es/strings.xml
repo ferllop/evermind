@@ -36,7 +36,7 @@
     <string name="ok">Ok</string>
     <string name="cancel">Cancelar</string>
     <string name="register_button">Crear cuenta</string>
-    <string name="register_name">nombre</string>
+    <string name="register_name">Nombre</string>
     <string name="register_username">nombre de ususario</string>
     <string name="register_email">email</string>
     <string name="register_password">contraseña</string>
@@ -76,12 +76,15 @@
     <string name="search_screen_title">Buscar</string>
     <string name="my_cards_screen_title">Mis tarjetas</string>
     <string name="my_subscriptions_screen_title">Mis suscripciones</string>
-    <string name="home_screen_title">Incio</string>
+    <string name="home_screen_title">Inicio</string>
     <string name="create_card_screen_title">Crear tarjeta</string>
     <string name="edit_card_screen_title">Editar tarjeta</string>
     <string name="search_help_icon_description">Explicación sobre el sistema de búsqueda</string>
     <string name="search_button_description">Ejecutar búsqueda</string>
     <string name="home">Inicio</string>
-
-
+    <string name="profile_screen_title">Perfil</string>
+    <string name="time_day_start">Hora en la que comenzar el día</string>
+    <string name="settings_saved_properly">Ajustes guardados correctamente</string>
+    <string name="time_restriction">La hora de comienzo del día debe ser un número entre el 0 y el 23</string>
+    <string name="name_restriction">Debes introducir un nombre</string>
 </resources>

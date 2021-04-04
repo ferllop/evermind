@@ -2,7 +2,6 @@ package com.ferllop.evermind.repositories;
 
 import android.util.Log;
 
-import com.ferllop.evermind.models.Card;
 import com.ferllop.evermind.models.Subscription;
 
 import java.util.ArrayList;
@@ -12,7 +11,6 @@ public class SubscriptionsGlobal {
     final String TAG = "MYAPP";
 
     List<Subscription> allSubscriptions;
-    List<Subscription> subscriptionsForToday;
     int pointer;
 
     private static SubscriptionsGlobal subscriptionsGlobal;
@@ -34,20 +32,11 @@ public class SubscriptionsGlobal {
 
     public void setAllSubscriptions(List<Subscription> allSubscriptions) {
         this.allSubscriptions = allSubscriptions;
-        this.subscriptionsForToday = extractSubscriptionsForToday();
         pointer = 0;
     }
 
-    public boolean hasNext(){
-        return pointer < allSubscriptions.size();
-    }
-
-    public void next(){
-        pointer++;
-    }
-
-    public List<Subscription> getTenOrRemainingForToday(){
-        List<Subscription> subsForToday = this.extractSubscriptionsForToday();
+    public List<Subscription> getTenOrRemainingForToday(int todayStartTime){
+        List<Subscription> subsForToday = getSubscriptionsForToday(todayStartTime);
         List<Subscription> result;
         if(subsForToday.size() > 10){
             result = subsForToday.subList(pointer, pointer + 10);
@@ -58,18 +47,18 @@ public class SubscriptionsGlobal {
         return result;
     }
 
-    private List<Subscription> extractSubscriptionsForToday(){
+    private List<Subscription> extractSubscriptionsForToday(int todayStartTime){
         List<Subscription> result = new ArrayList<>();
         for (Subscription sub : allSubscriptions) {
-            if (sub.isToReviewToday()){
+            if (sub.isToReviewToday(todayStartTime)){
                 result.add(sub);
             }
         }
         return result;
     }
 
-    public List<Subscription> getSubscriptionsForToday(){
-        return subscriptionsForToday;
+    public List<Subscription> getSubscriptionsForToday(int todayStartTime){
+        return extractSubscriptionsForToday(todayStartTime);
     }
 
     public String getSubscriptionID(String userID, String cardID){
@@ -79,10 +68,6 @@ public class SubscriptionsGlobal {
             }
         }
         return null;
-    }
-
-    public int getPosition(){
-        return pointer;
     }
 
     public void addSubscription(Subscription subscription) {
@@ -115,17 +100,6 @@ public class SubscriptionsGlobal {
             Log.d(TAG, "getCardIdFrom: " + subscriptionID + " -- "+ sub.getId());
             if (sub.getId().equals(subscriptionID)){
                 return sub.getCardID();
-            }
-        }
-        return null;
-    }
-
-    public String getSubscriptionIDContainingCardID(String cardID){
-        Log.d(TAG, "getSubscription size: " + allSubscriptions.size());
-        for(Subscription sub : allSubscriptions){
-            Log.d(TAG, "getSubscriptionIDContainingCardID: " + cardID + " -- " + sub.getId());
-            if (sub.getCardID().equals(cardID)){
-                return sub.getId();
             }
         }
         return null;

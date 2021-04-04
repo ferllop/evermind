@@ -159,17 +159,49 @@ public class UserFirestoreDataStore extends FirestoreDataStore<User> implements 
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d(TAG, "DocumentSnapshot successfully updated!");
-
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.w(TAG, "Error updating document", e);
-
                     }
                 });
     }
 
+    public void updateUserName(String userID, String newName){
+        firestore.collection(collection).document(userID)
+                .update(UserField.NAME.getValue(), newName)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "Name successfully updated!");
+                        listener.onSave(null);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error updating the name of the document", e);
+                    }
+                });
+    }
 
+    public void updateDayStartTime(String userID, int newTime){
+        firestore.collection(collection).document(userID)
+                .update(UserField.DAY_START_TIME.getValue(), newTime)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "Day start time successfully updated!");
+                        listener.onSave(null);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error updating the name of the document", e);
+                    }
+                });
+    }
 }

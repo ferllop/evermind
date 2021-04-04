@@ -6,8 +6,8 @@ import com.ferllop.evermind.repositories.fields.UserField;
 import com.google.firebase.Timestamp;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class UserMapper implements ModelMapper<User> {
     @Override
@@ -20,7 +20,8 @@ public class UserMapper implements ModelMapper<User> {
         Timestamp lastLogin = (Timestamp) map.get(UserField.LAST_LOGIN.getValue());
         Timestamp lastConnection = (Timestamp) map.get(UserField.LAST_CONNECTION.getValue());
         Timestamp signIn = (Timestamp) map.get(UserField.SIGN_IN.getValue());
-        return new User(id, authID, name, username, email, UserStatus.valueOf(status), lastLogin, lastConnection, signIn);
+        int dayStartTime = ((Long) Objects.requireNonNull(map.get(UserField.DAY_START_TIME.getValue()))).intValue();
+        return new User(id, authID, name, username, email, UserStatus.valueOf(status), lastLogin, lastConnection, signIn, dayStartTime);
     }
 
     @Override
@@ -34,6 +35,7 @@ public class UserMapper implements ModelMapper<User> {
         result.put(UserField.LAST_LOGIN.getValue(), user.getLastLogin());
         result.put(UserField.LAST_CONNECTION.getValue(), user.getLastConnection());
         result.put(UserField.SIGN_IN.getValue(), user.getSignIn());
+        result.put(UserField.DAY_START_TIME.getValue(), user.getDayStartTime());
         return result;
     }
 }

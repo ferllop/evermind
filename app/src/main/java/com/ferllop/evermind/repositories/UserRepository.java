@@ -165,8 +165,20 @@ public class UserRepository implements AuthListener {
         dataStore.updateUserLastLogin(userID, timestamp);
     }
 
+    public void updateLoggedUserName(String newName){
+        dataStore.updateUserName(localDataStore.getID(), newName);
+    }
+
     public void sendResetPasswordEmail(String email) {
         authRepository.sendResetPasswordEmail(email);
+    }
+
+    public void setLocalUserName(String newName){
+        localDataStore.setName(newName);
+    }
+
+    public void updateLoggedUserDayStartTime(int newTime){
+        dataStore.updateDayStartTime(localDataStore.getID(), newTime);
     }
 
 
@@ -191,7 +203,7 @@ public class UserRepository implements AuthListener {
         }
 
         public User build(String id, UserStatus status, Timestamp signIn){
-            return new User(id, name, username, email, status, null, null, signIn);
+            return new User(id, name, username, email, status, null, null, signIn, 0);
         }
     }
 }

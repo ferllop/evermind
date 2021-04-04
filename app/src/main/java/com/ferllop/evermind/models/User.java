@@ -15,9 +15,10 @@ public class User extends Model{
     Timestamp lastLogin;
     Timestamp lastConnection;
     Timestamp signIn;
+    int dayStartTime;
 
     public User(String authID, String name, String username, String email,
-                UserStatus status, Timestamp lastLogin, Timestamp lastConnection, Timestamp signIn) {
+                UserStatus status, Timestamp lastLogin, Timestamp lastConnection, Timestamp signIn, int dayStartTime) {
         this.authID = authID;
         this.name = name;
         this.username = username;
@@ -26,11 +27,12 @@ public class User extends Model{
         this.lastLogin = lastLogin;
         this.lastConnection = lastConnection;
         this.signIn = signIn;
+        this.dayStartTime = dayStartTime;
     }
 
     public User(String id, String authID, String name, String username, String email,
-                UserStatus status, Timestamp lastLogin, Timestamp lastConnection, Timestamp signIn) {
-        this(authID, name, username, email, status, lastLogin, lastConnection, signIn);
+                UserStatus status, Timestamp lastLogin, Timestamp lastConnection, Timestamp signIn, int dayStartTime) {
+        this(authID, name, username, email, status, lastLogin, lastConnection, signIn, dayStartTime);
         this.setId(id);
     }
 
@@ -64,6 +66,10 @@ public class User extends Model{
 
     public Timestamp getSignIn() {
         return signIn;
+    }
+
+    public int getDayStartTime() {
+        return dayStartTime;
     }
 
     public String encrypt(String text) throws NoSuchAlgorithmException {

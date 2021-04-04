@@ -23,6 +23,7 @@ public class UserLocalDataStore {
         setID(user.getId());
         setUsername(user.getUsername());
         setName(user.getName());
+        setDayStartTime(user.getDayStartTime());
     }
 
     public String getName(){
@@ -31,6 +32,14 @@ public class UserLocalDataStore {
 
     public void setName(String name) {
         setStringFromShared(UserField.NAME.getValue(), name);
+    }
+
+    public String getDayStartTime(){
+        return getStringFromShared(UserField.DAY_START_TIME.getValue());
+    }
+
+    public void setDayStartTime(int time) {
+        setStringFromShared(UserField.DAY_START_TIME.getValue(), String.valueOf(time));
     }
 
     public String getID(){

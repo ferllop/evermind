@@ -2,6 +2,9 @@ package com.ferllop.evermind.models;
 
 import com.google.firebase.Timestamp;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Subscription extends Model{
     String userID;
     String cardID;
@@ -46,10 +49,14 @@ public class Subscription extends Model{
         return nextReview;
     }
 
-    public boolean isToReviewToday(){
-        return this.nextReview.getSeconds() <= Timestamp.now().getSeconds();
+    public boolean isToReviewToday(int dayStartTime){
+        return reclockDate(this.nextReview.toDate(), dayStartTime) <= new Date().getTime();
     }
 
-
-
+    private long reclockDate(Date date, int dayStartTime){
+        SimpleDateFormat formatter = new SimpleDateFormat("HH");
+        int dateHour = Integer.parseInt(formatter.format(date));
+        int diffMilli = (dateHour - dayStartTime) * 60 * 60 * 1000;
+        return new Date(date.getTime() - diffMilli).getTime();
+    }
 }

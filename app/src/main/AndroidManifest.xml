@@ -10,13 +10,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Evermind">
-        <activity android:name=".activities.EntryActivity">
+        <activity android:name=".activities.SettingsActivity"></activity>
+        <activity android:name=".activities.EntryActivity"
+            android:theme="@style/Theme.Evermind.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.RegisterActivity" />
         <activity android:name=".activities.MainNavigationActivity" />
@@ -27,6 +29,6 @@
         <activity android:name=".activities.ReviewActivity" />
         <activity android:name=".activities.ReviewResultActivity" />
         <activity android:name=".activities.CardDataActivity" />
-
     </application>
+
 </manifest>
