@@ -32,7 +32,7 @@ public class Labelling {
         List<String> result = new ArrayList<>();
         for(String label : labels.toLowerCase().split(CardField.LABEL_LIST_SEPARATOR.getValue())){
             if(!label.trim().isEmpty()) {
-                result.add(label.trim());
+                result.add(label.trim().replace(' ', '-'));
             }
         }
         return result;
