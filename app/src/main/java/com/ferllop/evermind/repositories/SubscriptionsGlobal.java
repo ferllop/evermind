@@ -97,7 +97,6 @@ public class SubscriptionsGlobal {
 
     public String getCardIdFrom(String subscriptionID) {
         for(Subscription sub : allSubscriptions){
-            Log.d(TAG, "getCardIdFrom: " + subscriptionID + " -- "+ sub.getId());
             if (sub.getId().equals(subscriptionID)){
                 return sub.getCardID();
             }
@@ -107,5 +106,9 @@ public class SubscriptionsGlobal {
 
     public double getProgress(int done, int toDo) {
         return ((double) toDo - done - 1) / toDo * 100;
+    }
+
+    public int getSubscriptionsCount(){
+        return allSubscriptions.size();
     }
 }

@@ -1,13 +1,8 @@
 package com.ferllop.evermind.activities.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,14 +10,17 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.ferllop.evermind.R;
 import com.ferllop.evermind.activities.CardsAdapter;
-import com.ferllop.evermind.activities.SearchCardsActivity;
 import com.ferllop.evermind.controllers.CardController;
 import com.ferllop.evermind.models.Card;
 import com.ferllop.evermind.models.Subscription;
 import com.ferllop.evermind.repositories.CardRepository;
-import com.ferllop.evermind.repositories.SubscriptionRepository;
 import com.ferllop.evermind.repositories.SubscriptionsGlobal;
 import com.ferllop.evermind.repositories.fields.DataStoreError;
 import com.ferllop.evermind.repositories.listeners.CardDataStoreListener;
@@ -36,11 +34,11 @@ public class SearchResultsFragment extends Fragment implements CardDataStoreList
     private static final String CARDS_ID = "cardsID";
     private static final String TAG = "MYAPP-SearchFrag";
 
-
+    private OnSearchHaveResults listener;
     private String searchQuery;
     private String[] cardsID;
-    CardsAdapter adapter;
-    CardController cardController;
+    private CardsAdapter adapter;
+    private CardController cardController;
 
     public SearchResultsFragment() {
         // Required empty public constructor
@@ -63,8 +61,6 @@ public class SearchResultsFragment extends Fragment implements CardDataStoreList
         fragment.setArguments(args);
         return fragment;
     }
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -95,11 +91,11 @@ public class SearchResultsFragment extends Fragment implements CardDataStoreList
         execute();
     }
 
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        execute();
-//    }
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.listener = (OnSearchHaveResults) context;
+    }
 
     private void execute(){
         if (searchQuery != null){
@@ -107,12 +103,12 @@ public class SearchResultsFragment extends Fragment implements CardDataStoreList
         } else {
             loadCards(cardsID);
         }
+        listener.cardsCount(adapter.getItemCount());
     }
 
-
     private void executeSearch(String searchText){
-        Log.d(TAG, "executeSearch: " + searchText);
         adapter.clear();
+
         if (searchText.equals("all")) {
             cardController.getAll();
         } else if (searchText.equals("ownSubscriptions")) {
@@ -132,11 +128,16 @@ public class SearchResultsFragment extends Fragment implements CardDataStoreList
         }
     }
 
+    public void subscribeToAll(Context context){
+        adapter.subscribeToAll(context);
+        Toast.makeText(getActivity(), R.string.subscribed_to_all, Toast.LENGTH_SHORT).show();
+    }
+
     @Override
     public void onSave(Subscription subscription) {
         adapter.updateCard(subscription.getCardID());
         SubscriptionsGlobal.getInstance().addSubscription(subscription);
-        Toast.makeText(getActivity(), R.string.subscribed, Toast.LENGTH_SHORT).show();
+        listener.onSubscriptionUpdate(SubscriptionsGlobal.getInstance().getSubscriptionsCount());
     }
 
     @Override
@@ -146,6 +147,7 @@ public class SearchResultsFragment extends Fragment implements CardDataStoreList
 
     public void onLoad(Card card) {
         adapter.addCard(card);
+        listener.cardsCount(adapter.getItemCount());
         hideKeyboard(getView());
     }
 
@@ -158,7 +160,7 @@ public class SearchResultsFragment extends Fragment implements CardDataStoreList
     public void onDelete(String subscriptionID) {
         adapter.updateCard(SubscriptionsGlobal.getInstance().getCardIdFrom(subscriptionID));
         SubscriptionsGlobal.getInstance().deleteSubscription(subscriptionID);
-        Toast.makeText(getActivity(), R.string.unsubscribed_from_card, Toast.LENGTH_SHORT).show();
+        listener.onSubscriptionUpdate(SubscriptionsGlobal.getInstance().getSubscriptionsCount());
     }
 
     @Override
@@ -180,4 +182,10 @@ public class SearchResultsFragment extends Fragment implements CardDataStoreList
     public void onSave(Card item) {
 
     }
+
+    public interface OnSearchHaveResults{
+        void cardsCount(int count);
+        void onSubscriptionUpdate(int count);
+    }
+
 }

@@ -90,6 +90,14 @@
     <string name="settings_saved_properly">Setting saved properly</string>
     <string name="time_restriction">The day start time must be a number between 0 and 23</string>
     <string name="name_restriction">You must provide a name</string>
+    <string name="subscribe_all">Subscribe to all</string>
+    <string name="cards_found_quantity">#qty card#s found</string>
+    <string name="no_cards_found">No cards found</string>
+    <string name="subscribed_count_message">You are subscribed to #qty card#s</string>
+    <string name="no_subscriptions_found">You aren\'t subscribed to any card.\nSearch by your interests!</string>
+    <string name="created_cards_count_message">You\'ve created #qty card#s</string>
+    <string name="no_created_cards_found">You have not created any card\nCreate you\'re first one!</string>
+    <string name="subscribed_to_all">Subscribed to all cards</string>
 
 
 </resources>

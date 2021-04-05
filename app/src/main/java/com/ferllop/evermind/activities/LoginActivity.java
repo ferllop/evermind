@@ -57,14 +57,12 @@ public class LoginActivity extends AppCompatActivity implements UserDataStoreLis
                     return;
                 }
                 if (userRepository.isUserLoggedIn() && !userRepository.isUserVerified()){
-                    Log.d(TAG, "aquiiiionCreate: " + userRepository.isUserLoggedIn() + " " + userRepository.isUserVerified());
                     Toast.makeText(LoginActivity.this, R.string.must_verify_message, Toast.LENGTH_LONG).show();
                 } else {
                     String email = emailField.getText().toString();
                     String password = passwordField.getText().toString();
                     showLoginProgress();
                     userRepository.login(email, password);
-                    Log.d(TAG, "onClick: ");
                 }
             }
         });
@@ -99,27 +97,13 @@ public class LoginActivity extends AppCompatActivity implements UserDataStoreLis
     }
 
     private void showLoginProgress(){
-        Log.d(TAG, "showLoginProgress: ");
         loginButton.setVisibility(View.INVISIBLE);
         loginProgress.setVisibility(View.VISIBLE);
     }
 
     private void hideLoginProgress(){
-        Log.d(TAG, "hideLoginProgress: ");
         loginButton.setVisibility(View.VISIBLE);
         loginProgress.setVisibility(View.INVISIBLE);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser != null){
-            Log.d(TAG, "onStart: " + currentUser.getEmail());
-        }
-        //updateUI(currentUser);
     }
 
     @Override

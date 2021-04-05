@@ -44,7 +44,7 @@
     <string name="forgot_password">¿Olvidaste tu contraseña?</string>
     <string name="or">o</string>
     <string name="register">registrar</string>
-    <string name="weak_password">*contrseña débil</string>
+    <string name="weak_password">*contraseña débil</string>
     <string name="must_verify_message">Debes verificar tu email haciendo click en el link que te hemos enviado al email que proporcionaste</string>
     <string name="username_must_unique">El nombre de usuario ya existe. Prueba con otro</string>
     <string name="email_must_unique">"El email introducido ya existe. Prueba con otro"</string>
@@ -87,4 +87,12 @@
     <string name="settings_saved_properly">Ajustes guardados correctamente</string>
     <string name="time_restriction">La hora de comienzo del día debe ser un número entre el 0 y el 23</string>
     <string name="name_restriction">Debes introducir un nombre</string>
+    <string name="subscribe_all">Suscribir a todas</string>
+    <string name="cards_found_quantity">#qty tarjeta#s encontrada#s</string>
+    <string name="no_cards_found">No se encontraron tarjetas</string>
+    <string name="subscribed_count_message">Estás suscrita/o a #qty tarjeta#s</string>
+    <string name="no_subscriptions_found">No estás suscrita/o a ninguna trajeta.\n¡Encuentra las primeras!</string>
+    <string name="created_cards_count_message">Has creado #qty tarjeta#s</string>
+    <string name="no_created_cards_found">No has creado ninguna tarjeta.\n¡Crea la primera!</string>
+    <string name="subscribed_to_all">Suscrito a todas las tarjetas</string>
 </resources>

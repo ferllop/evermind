@@ -32,16 +32,13 @@ public class EntryActivity extends AppCompatActivity implements UserDataStoreLis
         userRepo = new UserRepository(this);
 
         if (userRepo.isUserLoggedIn()){
-                 Log.d(TAG, "onCreate: extradata");
                 if(!userRepo.isUserVerified()){
-                    Log.d(TAG, "onCreate: no verified");
                     FirebaseAuth.getInstance().signOut();
                     startActivity(new Intent(this, LoginActivity.class));
                 } else {
                     userRepo.getLoggedUserExtraData();
                 }
         } else {
-            Log.d(TAG, "onCreate: clear");
             new UserLocalDataStore(this).clear();
             startActivity(new Intent(this, LoginActivity.class));
         }
@@ -50,7 +47,6 @@ public class EntryActivity extends AppCompatActivity implements UserDataStoreLis
 
     @Override
     public void onLoad(User user) {
-        Log.d(TAG, "onLoad: " + user);
     }
 
     @Override
@@ -70,12 +66,10 @@ public class EntryActivity extends AppCompatActivity implements UserDataStoreLis
     @Override
     public void onLoadAll(List<User> users) {
         if(users.size() == 0) {
-            Log.d(TAG, "onLoadAll: no users");
             userRepo.signOut(this);
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             return;
         }
-        Log.d(TAG, "onLoadAll: " + users);
         User user = users.get(0);
         userRepo.updateUserStatus(user.getId(), UserStatus.LOGGED_IN);
         userRepo.updateUserLastConnection(user.getId(), Timestamp.now());

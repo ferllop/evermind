@@ -20,7 +20,6 @@ public class GlobalUser {
 
     public static GlobalUser getInstance(){
         if (globalUser == null){
-            Log.d(TAG, "new instance: ");
             globalUser = new GlobalUser();
         }
         return globalUser;

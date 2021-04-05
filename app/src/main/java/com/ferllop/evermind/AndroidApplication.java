@@ -44,16 +44,5 @@ public class AndroidApplication extends Application {
             @Override public void onActivityDestroyed(@NonNull Activity activity) {}
 
         });
-
-
-
-        //Log.d(TAG, "onCreate: " + new AuthRepository(null).isLoggedIn());
-        // FirebaseAuth.getInstance().signOut();
-
-        //setFixedAuthor();
-
     }
-
-
-
 }

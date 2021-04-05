@@ -1,5 +1,6 @@
 package com.ferllop.evermind.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -46,6 +47,21 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
         cards.clear();
         notifyDataSetChanged();
     }
+    
+    public void subscribeToAll(Context context){
+        for(Card card : cards){
+            UserLocalDataStore userLocal = new UserLocalDataStore(context);
+            String userID = userLocal.getID();
+            String cardID = card.getId();
+            if(null == SubscriptionsGlobal.getInstance().getSubscriptionID(userID, cardID)){
+                Level level = Level.LEVEL_0;
+                Timestamp now = Timestamp.now();
+                Timestamp next = new Timestamp(level.getValue() * 86400 + Timestamp.now().getSeconds(), 0);
+                Subscription sub = new Subscription(userID, cardID, level, now, next);
+                new SubscriptionRepository(listener).insert(sub);
+            }
+        }
+    }
 
     @NonNull
     @Override
@@ -70,10 +86,8 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
 
     public void updateCard(String cardID) {
         for (int i = 0; i < cards.size(); i++) {
-            Log.d(TAG, "updateCard: " + cards.get(i).getId() + " -- " + cardID);
             if (cards.get(i).getId().equals(cardID)) {
                 notifyItemChanged(i);
-                Log.d(TAG, "updateCard: posicion " + i);
             }
         }
     }
@@ -96,13 +110,12 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
         }
 
         public void bind(Card card) {
-            Log.d(TAG, "bind: ");
-            UserLocalDataStore userLocal = new UserLocalDataStore(author.getContext());
             author.setText(card.getAuthorUsername());
             labels.setText(card.getLabelling().toString());
             question.setText(card.getQuestion());
             answer.setText(card.getAnswer());
 
+            UserLocalDataStore userLocal = new UserLocalDataStore(author.getContext());
             String userID = userLocal.getID();
             String cardID = card.getId();
             String subscriptionID = SubscriptionsGlobal.getInstance().getSubscriptionID(userID, cardID);
@@ -111,10 +124,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
                 action.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Log.d(TAG, "onClick: " + subscriptionID);
                         new SubscriptionRepository(listener).delete(subscriptionID);
-
-                        Log.d(TAG, "onClick: unsuscribe");
                     }
                 });
             } else {
@@ -128,7 +138,6 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
                             Timestamp next = new Timestamp(level.getValue() * 86400 + Timestamp.now().getSeconds(), 0);
                             Subscription sub = new Subscription(userID, cardID, level, now, next);
                             new SubscriptionRepository(listener).insert(sub);
-                            Log.d(TAG, "onClick: suscribe");
                         }
                     }
                 });
