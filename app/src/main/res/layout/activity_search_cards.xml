@@ -38,11 +38,10 @@
         android:id="@+id/search_cards_container"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchBar_textInput" />
+        app:layout_constraintTop_toBottomOf="@+id/search_subscribe_all_button" />
 
     <ImageButton
         android:id="@+id/search_info_button"
@@ -55,4 +54,23 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_info"
         android:contentDescription="@string/search_help_icon_description" />
+
+    <TextView
+        android:id="@+id/search_cards_found_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/cards_found_quantity"
+        app:layout_constraintEnd_toEndOf="@+id/search_subscribe_all_button"
+        app:layout_constraintStart_toStartOf="@+id/search_subscribe_all_button"
+        app:layout_constraintTop_toBottomOf="@+id/searchBar_textInput" />
+
+    <Button
+        android:id="@+id/search_subscribe_all_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/subscribe_all"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_cards_found_txt" />
 </androidx.constraintlayout.widget.ConstraintLayout>

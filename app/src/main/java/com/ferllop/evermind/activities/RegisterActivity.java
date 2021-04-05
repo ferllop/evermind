@@ -139,7 +139,6 @@ public class RegisterActivity extends AppCompatActivity implements UserDataStore
 
     @Override
     public void usernameExists(boolean exist) {
-        Log.d(TAG, "usernameExists: " + exist);
         usernameExists = exist;
         if(usernameExists){
             hideRegisterInProgress();
@@ -158,8 +157,6 @@ public class RegisterActivity extends AppCompatActivity implements UserDataStore
 
     @Override
     public void emailExists(boolean exist) {
-        Log.d(TAG, "emailExists: " + exist);
-
         emailExists = exist;
         if(emailExists){
             hideRegisterInProgress();

@@ -118,7 +118,6 @@ public class UserRepository implements AuthListener {
     @Override
     public void onLogin(String uid) {
         getFromUniqueField(UserField.AUTH_ID.getValue(), uid);
-        Log.d(TAG, "onLogin: " + uid);
     }
 
 

@@ -32,7 +32,6 @@ public class CardRepository {
     }
 
     public void getAll() {
-        Log.d(TAG, "getAll: ");
         dataStore.getAll();
     }
 

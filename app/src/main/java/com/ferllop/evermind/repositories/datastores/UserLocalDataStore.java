@@ -59,7 +59,6 @@ public class UserLocalDataStore {
     }
 
     public void clear(){
-        Log.d(TAG, "clear: ");
         getPrefs().edit().clear().apply();
     }
 

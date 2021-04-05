@@ -60,6 +60,5 @@ public class SubscriptionRepository{
 
     public void deleteSubscriptionsWithCardID(String id) {
         dataStore.deleteAllWithCardID(id);
-        Log.d(TAG, "deleteSubscriptionsWithCardID: " + id);
     }
 }
