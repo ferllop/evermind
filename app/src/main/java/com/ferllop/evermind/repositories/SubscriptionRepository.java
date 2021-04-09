@@ -1,7 +1,5 @@
 package com.ferllop.evermind.repositories;
 
-import android.util.Log;
-
 import com.ferllop.evermind.models.Level;
 import com.ferllop.evermind.models.Subscription;
 import com.ferllop.evermind.repositories.datastores.SubscriptionFirestoreDataStore;
