@@ -87,7 +87,7 @@ public class HomeActivity extends MainNavigationActivity implements Subscription
     }
 
     @Override
-    public void onLoadAll(List<Subscription> subs) {
+    public void onLoadAllSubscriptions(List<Subscription> subs) {
         SubscriptionsGlobal.getInstance().setAllSubscriptions(subs);
         int dayStartTime = Integer.parseInt(new UserLocalDataStore(this).getDayStartTime());
         List<Subscription> subsForToday = SubscriptionsGlobal.getInstance().getSubscriptionsForToday(dayStartTime);

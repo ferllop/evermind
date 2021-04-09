@@ -141,7 +141,7 @@ public class SearchResultsFragment extends Fragment implements CardDataStoreList
     }
 
     @Override
-    public void onLoadAll(List<Subscription> subscriptions) {
+    public void onLoadAllSubscriptions(List<Subscription> subscriptions) {
 
     }
 

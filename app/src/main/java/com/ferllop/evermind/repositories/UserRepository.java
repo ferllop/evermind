@@ -180,6 +180,10 @@ public class UserRepository implements AuthListener {
         dataStore.updateDayStartTime(localDataStore.getID(), newTime);
     }
 
+    public boolean isLoggedUserAdmin(){
+        return localDataStore.getUsername().equals("evermind");
+    }
+
 
     public class RegisteringUser {
         String name;
