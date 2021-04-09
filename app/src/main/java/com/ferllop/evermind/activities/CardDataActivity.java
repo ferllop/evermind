@@ -13,6 +13,7 @@ import com.ferllop.evermind.R;
 import com.ferllop.evermind.activities.fragments.DeleteCardDialogFragment;
 import com.ferllop.evermind.controllers.CardController;
 import com.ferllop.evermind.models.Card;
+import com.ferllop.evermind.models.Labelling;
 import com.ferllop.evermind.models.Subscription;
 import com.ferllop.evermind.repositories.SubscriptionRepository;
 import com.ferllop.evermind.repositories.datastores.UserLocalDataStore;
@@ -21,6 +22,7 @@ import com.ferllop.evermind.repositories.fields.DataStoreError;
 import com.ferllop.evermind.repositories.listeners.CardDataStoreListener;
 import com.ferllop.evermind.repositories.listeners.SubscriptionDataStoreListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,23 +61,51 @@ public class CardDataActivity extends MainNavigationActivity implements
                 @Override
                 public void onClick(View v) {
 
-                    if(question.getText().toString().isEmpty() ||
-                            answer.getText().toString().isEmpty() ||
-                            labels.getText().toString().isEmpty()
-                    ){
-                        showToast("All fields are required");
-                    } else {
-                        new CardController(CardDataActivity.this).insert(
-                                userLocal.getID(),
-                                userLocal.getUsername(),
-                                question.getText().toString(),
-                                answer.getText().toString(),
-                                labels.getText().toString()
-                        );
-                    }
+                    if (!isDataValid()) return;
+
+                    new CardController(CardDataActivity.this).insert(
+                            userLocal.getID(),
+                            userLocal.getUsername(),
+                            question.getText().toString(),
+                            answer.getText().toString(),
+                            labels.getText().toString()
+                    );
                 }
             });
         }
+    }
+
+    private boolean isDataValid() {
+        List<String> result = new ArrayList<>();
+
+        if(question.getText().toString().isEmpty() ||
+                answer.getText().toString().isEmpty() ||
+                labels.getText().toString().isEmpty()
+        ){
+            result.add("All fields are required");
+        }
+
+        if(!Labelling.isValid(labels.getText().toString())){
+            result.add("Labels must have only letters, numbers, dashes or underscores");
+        }
+
+        if(result.size() > 0){
+            showToast(toLines(result));
+            return false;
+        }
+        return true;
+    }
+
+    private String toLines(List<String> messages){
+        String result = "";
+        int i = 0;
+        for(String message : messages){
+            result += message;
+            if(i < messages.size() - 1 ) {
+                result += "\n";
+            }
+        }
+        return result;
     }
 
     @Override
@@ -114,7 +144,7 @@ public class CardDataActivity extends MainNavigationActivity implements
     }
 
     @Override
-    public void onLoadAll(List<Subscription> subscriptions) {
+    public void onLoadAllSubscriptions(List<Subscription> subscriptions) {
 
     }
 
@@ -159,6 +189,7 @@ public class CardDataActivity extends MainNavigationActivity implements
 
     private void showToast(String message){
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        Log.d(TAG, "showToast: " + message);
     }
 
     @Override
