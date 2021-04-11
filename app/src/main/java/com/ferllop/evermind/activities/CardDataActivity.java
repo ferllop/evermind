@@ -114,7 +114,7 @@ public class CardDataActivity extends MainNavigationActivity implements
     }
 
     @Override
-    public void onLoadAll(List<Subscription> subscriptions) {
+    public void onLoadAllSubscriptions(List<Subscription> subscriptions) {
 
     }
 

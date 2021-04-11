@@ -1,26 +1,59 @@
 @startuml
 'https://plantuml.com/use-case-diagram
 left to right direction
+'rectangle LoginUseCases {
+'    usecase "Register"
+'    usecase "Login"
+'    usecase "Logout"
+'}
+'
+'rectangle SettingsUseCases{
+'    usecase "Change starting day hour"
+'    usecase "Change his own name"
+'}
+'
+'User -up-> (Register)
+'User -up-> (Login)
+'User -up-> (Logout)
+'User -down-> (Change starting day hour)
+'User -down-> (Change his own name)
 
-rectangle Evermind {
-    usecase "Register"
-    usecase "Login"
-    usecase "Logout"
-    usecase "Create card"
-    usecase "Edit card"
-    usecase "Delete card"
-    usecase "Search"
-    usecase "Subscribe to card"
-    usecase "Review card"
+
+'rectangle ApplicationUseCases_partA{
+'    usecase "Create card"
+'    usecase "Edit own card"
+'    usecase "Delete own card"
+'    usecase "Review card"
+'}
+'
+'rectangle ApplicationUseCases_partB{
+'    usecase "Search"
+'    usecase "List cards"
+'    usecase "List own subscriptions"
+'    usecase "List created cards"
+'    usecase "Subscribe to card"
+'    usecase "Unsubscribe to card"
+'}
+'
+'User -up-> (Create card)
+'User -up-> (Edit own card)
+'User -up-> (Delete own card)
+'User -up-> (Review card)
+'User -down-> (Search)
+'(Search) -down-> (List cards) : <<Include>>
+'User -down-> (List own subscriptions)
+'(List own subscriptions) -down-> (List cards) : <<Include>>
+'User -down-> (List created cards)
+'(List created cards) -down-> (List cards) : <<Include>>
+'User -down-> (Subscribe to card)
+'User -down-> (Unsubscribe to card)
+
+
+rectangle AdminUseCases{
+    usecase "Import cards in batch"
 }
 
-User --> (Register)
-User --> (Login)
-User --> (Logout)
-User --> (Delete card)
-User --> (Edit card)
-User --> (Create card)
-User --> (Search)
-User --> (Subscribe to card)
-User --> (Review card)
+Admin -up-|> User
+Admin --> (Import cards in batch)
+
 @enduml

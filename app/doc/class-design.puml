@@ -1,16 +1,44 @@
 @startuml
 left to right direction
 package activities{
-    abstract DataStoreActivity
-    CardDataActivity -up-|> DataStoreActivity
-    SearchCardsActivity -up-|> DataStoreActivity
-    HomeActivity -up-|> DataStoreActivity
-    LoginActivity --|> DataStoreActivity
-    RegisterActivity --|> DataStoreActivity
-    ReviewActivity --|> DataStoreActivity
-    class MainActivity
-    class CardsAdpater
-    SearchCardsActivity *-- CardsAdpater
+    interface ActivityConnector
+    note bottom of ActivityConnector: Exists only to reduce line clutter
+
+    CardDataActivity .up.|> ActivityConnector
+    SearchCardsActivity .up.|> ActivityConnector
+    HomeActivity .up.|> ActivityConnector
+    LoginActivity ..|> ActivityConnector
+    RegisterActivity ..|> ActivityConnector
+    ReviewActivity ..|> ActivityConnector
+
+
+    abstract MainNavigationActivity
+    HomeActivity --|> MainNavigationActivity
+    MyCardsActivity --|> MainNavigationActivity
+    MySubscriptionsActivity --|> MainNavigationActivity
+    SearchCardsActivity -right-|> MainNavigationActivity
+    CardDataActivity -right-|> MainNavigationActivity
+    SettingsActivity -right-|> MainNavigationActivity
+
+    MySubscriptionsActivity .up.|> ActivityConnector
+    MyCardsActivity ..|> ActivityConnector
+
+    package fragments {
+        class DeleteCardDialog
+        class SearchInfoDialog
+        class SearchResults
+        class VerifyEmailDialog
+        class CardsAdpater
+        SearchResults *-- CardsAdpater
+        CardDataActivity --> DeleteCardDialog
+        SearchCardsActivity --> SearchInfoDialog
+        RegisterActivity --> VerifyEmailDialog
+        SearchCardsActivity --> SearchResults
+        MySubscriptionsActivity --> SearchResults
+        MyCardsActivity --> SearchResults
+
+
+    }
 }
 
 package models {
@@ -19,6 +47,7 @@ package models {
     class Subscription
     class Labelling
     class Search
+    enum Level
     abstract class Model
     Card -right-|> Model
     User --|> Model
@@ -40,7 +69,7 @@ package datastores {
         }
   package mappers {
         interface ModelMapper
-        ModelMapper --> Model
+        ModelMapper -up-> Model
         CardMapper ..|> ModelMapper
         UserMapper ..|> ModelMapper
         SubscriptionMapper ..|> ModelMapper
@@ -48,7 +77,9 @@ package datastores {
     }
 
 package repositories{
-    interface ModelRepository
+    interface ModelRepositoryConnector
+    note top of ModelRepositoryConnector: Exists only to reduce line clutter
+
     interface CardRepository
     interface UserRepository
     interface SubscriptionRepository
@@ -57,9 +88,9 @@ package repositories{
     class UserFirestoreRepository
     class SubscriptionFirestoreRepository
     class AuthFirestoreRepository
-    CardRepository ..|> ModelRepository
-    UserRepository ..|> ModelRepository
-    SubscriptionRepository ..|> ModelRepository
+    CardRepository ..|> ModelRepositoryConnector
+    UserRepository ..|> ModelRepositoryConnector
+    SubscriptionRepository ..|> ModelRepositoryConnector
     CardFirestoreRepository ..|> CardRepository
     UserFirestoreRepository ..|> UserRepository
     SubscriptionFirestoreRepository ..|> SubscriptionRepository
@@ -79,19 +110,21 @@ package repositories{
 
 
 }
-package listeners {
-        interface DataStoreListener
+    package listeners {
+        interface DataStoreListenerConnector
         interface CrudDataStoreListener
         interface CardDataStoreListener
         interface UserDataStoreListener
         interface SubscriptionDataStoreListener
-        CardDataStoreListener -u-|> DataStoreListener
-        SubscriptionDataStoreListener --|> DataStoreListener
-        UserDataStoreListener -up-|> DataStoreListener
+        CardDataStoreListener -u-|> DataStoreListenerConnector
+        SubscriptionDataStoreListener --|> DataStoreListenerConnector
+        UserDataStoreListener -up-|> DataStoreListenerConnector
+        note top of DataStoreListenerConnector: Exists only to reduce line clutter
 
     }
-    DataStoreActivity -down-> ModelRepository
-    DataStoreActivity --|> DataStoreListener
+    ActivityConnector -down-> ModelRepositoryConnector
+    ActivityConnector ..|> DataStoreListenerConnector
     UserRepository --> AuthRepository
+
 
 @enduml

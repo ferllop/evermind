@@ -1,0 +1,19 @@
+@startuml
+'skinparam nodesep 200
+'left to right direction
+title Evermind - Multiple Card Review Rounds State
+
+state choice <<choice>>
+state choice2 <<choice>>
+
+[*] -down-> ReviewRoundOfUpTo10Cards : startReviewRound
+ReviewRoundOfUpTo10Cards -up-> choice : finishReviewRound
+choice --> [*] : [no more cards to review]
+choice --> MoreReviewsUserDecision : [more cards to review]
+MoreReviewsUserDecision --> choice2 : user chose
+choice2 -up-> ReviewRoundOfUpTo10Cards : [yes]
+choice2 --> RemainingCardsStayToReview : [no]
+RemainingCardsStayToReview --> [*]
+
+
+@enduml

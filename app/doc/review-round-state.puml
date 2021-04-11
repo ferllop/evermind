@@ -1,17 +1,17 @@
 @startuml
-skinparam nodesep 100
-
+skinparam nodesep 200
+left to right direction
 title Evermind - Review Round State
 
-state "Question(num)" as ViewQuestion
+state "ViewQuestion(num)" as ViewQuestion
 state choice <<choice>>
 
 [*] --> ViewQuestion
 ViewQuestion : initially num = 1
 ViewQuestion : in next iterations num = num + 1
 ViewQuestion --> ViewAnswer : Flip
-ViewAnswer --> choice : Evaluate
-choice --> ViewQuestion : [num<=10]
-choice --> [*] : [num>10]
+ViewAnswer --> choice : wrongOrRight
+choice --> ViewQuestion : [num<=10] and\n[there are\nmore questions]
+choice --> [*] : [num>10] or\n[There aren't\nmore questions]
 
 @enduml

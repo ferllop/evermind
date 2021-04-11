@@ -1,0 +1,43 @@
+@startuml
+skinparam nodesep 100
+'left to right direction
+title Spaced repetition system\n
+
+
+state "Level(num)" as LevelX
+state choiceAnswer <<choice>>
+state choiceLevel0 <<choice>>
+state choiceLevel7 <<choice>>
+
+note as nada
+When the level increments
+the user has to wait more
+to see the card again:
+  Level 0: waits 0 days
+  Level 1: waits 1 day
+  Level 2: waits 3 days
+  Level 3: waits 7 days
+  Level 4: waits 15 days
+  Level 5: waits 30 days
+  Level 6: waits 60 days
+  Level 7: waits 120 days
+end note
+
+[*] --> LevelX : num = 0
+LevelX --> choiceAnswer : userEvaluatesHisAnswer
+
+choiceAnswer --> choiceLevel7 : Answer is right
+choiceAnswer --> choiceLevel0 : Answer is wrong
+
+
+choiceLevel7 --> LevelX : [num < 7]\nnum = num + 1
+choiceLevel7 --> LevelX : [num = 7]
+
+
+choiceLevel0 --> LevelX : [num > 0]\nnum = num - 1
+choiceLevel0 --> LevelX : [num = 0]
+
+
+
+
+@enduml

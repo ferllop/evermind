@@ -5,10 +5,10 @@ hide methods
 hide attributes
 hide stereotypes
 
-title Evermind - Domain model
+title Evermind - Domain model\n
 
 class User
-class Creator
+class Author
 class Subscription
 class Card
 class Question
@@ -21,16 +21,16 @@ class Level
 
 User ..> Search
 User o--> "0..*" Subscription
-Creator --|> User
+Author --|> User
 Subscription *--> Card
 User ..> ReviewRound
 Subscription *--> Level
 Card *--> "1..*" Label
-Card *--> Creator
+Card *--> Author
 Card *--> Question
 Card *--> Answer
 Search *--> "1..*" Keyword
-Keyword -left-> "0..1" Creator
+Keyword -left-> "0..1" Author
 Keyword --> "0..*" Label
 ReviewRound *--> "1..10" Subscription
 
