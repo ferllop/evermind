@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface SubscriptionDataStoreListener{
     void onSave(Subscription subscription);
-    void onLoadAll(List<Subscription> subscriptions);
+    void onLoadAllSubscriptions(List<Subscription> subscriptions);
     void onLoad(Subscription item);
     void onDelete(String id);
     void onError(DataStoreError error);

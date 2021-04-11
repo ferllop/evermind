@@ -21,7 +21,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SubscriptionFirestoreDataStore extends FirestoreDataStore<Subscription> implements CrudDataStoreListener<Subscription>{
@@ -105,7 +104,7 @@ public class SubscriptionFirestoreDataStore extends FirestoreDataStore<Subscript
 
     @Override
     public void onLoadAll(List<Subscription> subs) {
-        listener.onLoadAll(subs);
+        listener.onLoadAllSubscriptions(subs);
     }
 
     @Override
