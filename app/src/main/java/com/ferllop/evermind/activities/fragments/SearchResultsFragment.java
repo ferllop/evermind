@@ -3,7 +3,6 @@ package com.ferllop.evermind.activities.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ferllop.evermind.R;
 import com.ferllop.evermind.activities.CardsAdapter;
-import com.ferllop.evermind.controllers.CardController;
 import com.ferllop.evermind.models.Card;
 import com.ferllop.evermind.models.Subscription;
 import com.ferllop.evermind.repositories.CardRepository;
@@ -38,7 +36,7 @@ public class SearchResultsFragment extends Fragment implements CardDataStoreList
     private String searchQuery;
     private String[] cardsID;
     private CardsAdapter adapter;
-    private CardController cardController;
+    private CardRepository cardRepository;
 
     public SearchResultsFragment() {
         // Required empty public constructor
@@ -84,7 +82,7 @@ public class SearchResultsFragment extends Fragment implements CardDataStoreList
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        cardController = new CardController(this);
+        cardRepository = new CardRepository(this);
         RecyclerView recycler = getView().findViewById(R.id.card_frame_recycler);
         adapter = new CardsAdapter(this);
         recycler.setAdapter(adapter);
@@ -110,12 +108,12 @@ public class SearchResultsFragment extends Fragment implements CardDataStoreList
         adapter.clear();
 
         if (searchText.equals("all")) {
-            cardController.getAll();
+            cardRepository.getAll();
         } else if (searchText.equals("ownSubscriptions")) {
             SubscriptionsGlobal.getInstance().getSubscriptions();
         } else {
             try {
-                cardController.getFromSearch(searchText);
+                cardRepository.getFromSearch(searchText);
             } catch (IllegalArgumentException ex) {
                 Toast.makeText(getActivity(), R.string.error_empty_query_search, Toast.LENGTH_LONG).show();
             }

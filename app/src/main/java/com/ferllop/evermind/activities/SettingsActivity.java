@@ -9,10 +9,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.ferllop.evermind.R;
-import com.ferllop.evermind.controllers.CardController;
 import com.ferllop.evermind.models.Card;
 import com.ferllop.evermind.models.Subscription;
 import com.ferllop.evermind.models.User;
+import com.ferllop.evermind.repositories.CardRepository;
 import com.ferllop.evermind.repositories.SubscriptionRepository;
 import com.ferllop.evermind.repositories.SubscriptionsGlobal;
 import com.ferllop.evermind.repositories.UserRepository;
@@ -111,12 +111,8 @@ public class SettingsActivity extends MainNavigationActivity implements UserData
                     }
                     String labels = TextUtils.join(",", labelsList);
                     Log.d(TAG, "importData: before -> " + labels);
-                    new CardController(SettingsActivity.this).insert(
-                            userLocal.getID(),
-                            userLocal.getUsername(),
-                            question,
-                            answer,
-                            labels
+                    new CardRepository(SettingsActivity.this).insert(
+                            new Card(userLocal.getID(), userLocal.getUsername(), question, answer, labels)
                     );
                 }
             }
