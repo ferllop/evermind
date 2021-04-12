@@ -11,10 +11,10 @@ import androidx.fragment.app.DialogFragment;
 
 import com.ferllop.evermind.R;
 import com.ferllop.evermind.activities.fragments.DeleteCardDialogFragment;
-import com.ferllop.evermind.controllers.CardController;
 import com.ferllop.evermind.models.Card;
 import com.ferllop.evermind.models.Labelling;
 import com.ferllop.evermind.models.Subscription;
+import com.ferllop.evermind.repositories.CardRepository;
 import com.ferllop.evermind.repositories.SubscriptionRepository;
 import com.ferllop.evermind.repositories.datastores.UserLocalDataStore;
 import com.ferllop.evermind.repositories.fields.CardField;
@@ -54,7 +54,7 @@ public class CardDataActivity extends MainNavigationActivity implements
 
         String id = this.getIntent().getStringExtra(CardField.ID.getValue());
         if(id != null){
-            new CardController(this).load(id);
+            new CardRepository(this).load(id);
         } else {
             isNew = true;
             save.setOnClickListener(new View.OnClickListener() {
@@ -63,12 +63,11 @@ public class CardDataActivity extends MainNavigationActivity implements
 
                     if (!isDataValid()) return;
 
-                    new CardController(CardDataActivity.this).insert(
-                            userLocal.getID(),
-                            userLocal.getUsername(),
-                            question.getText().toString(),
-                            answer.getText().toString(),
-                            labels.getText().toString()
+                    new CardRepository(CardDataActivity.this).insert(
+                            new Card(userLocal.getID(), userLocal.getUsername(),
+                                    question.getText().toString(), answer.getText().toString(),
+                                    labels.getText().toString()
+                            )
                     );
                 }
             });
@@ -116,11 +115,13 @@ public class CardDataActivity extends MainNavigationActivity implements
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new CardController(CardDataActivity.this).update(
-                        card.getId(), card.getAuthorID(), card.getAuthorUsername(),
-                        question.getText().toString(),
-                        answer.getText().toString(),
-                        labels.getText().toString()
+                new CardRepository(CardDataActivity.this).update(
+                        card.getId(),
+                        new Card(card.getAuthorID(), card.getAuthorUsername(),
+                            question.getText().toString(),
+                            answer.getText().toString(),
+                            labels.getText().toString()
+                        )
                 );
             }
         });
@@ -194,7 +195,7 @@ public class CardDataActivity extends MainNavigationActivity implements
 
     @Override
     public void onDeleteDialogConfirmClick(DialogFragment dialog, String cardID) {
-        new CardController(CardDataActivity.this).delete(cardID);
+        new CardRepository(CardDataActivity.this).delete(cardID);
     }
 
     @Override
