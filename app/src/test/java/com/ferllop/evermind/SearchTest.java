@@ -88,8 +88,7 @@ public class SearchTest {
     @Test
     public void author_tokens_should_be_case_insensitive_(){
         Search lowerCaseSearch = new Search("@author");
-        Search mixedCaseSearch = new Search("@AUthor");
-
+        Search mixedCaseSearch = new Search("@AUTHOR");
         assertEquals(lowerCaseSearch.getAuthorUsername(), mixedCaseSearch.getAuthorUsername());
     }
 

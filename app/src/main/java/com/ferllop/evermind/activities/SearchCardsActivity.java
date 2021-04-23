@@ -14,7 +14,8 @@ import com.ferllop.evermind.activities.fragments.SearchInfoDialog;
 import com.ferllop.evermind.activities.fragments.SearchResultsFragment;
 
 
-public class SearchCardsActivity extends MainNavigationActivity implements SearchResultsFragment.OnSearchHaveResults {
+public class SearchCardsActivity extends MainNavigationActivity
+        implements SearchResultsFragment.OnSearchHaveResults {
 
     final String TAG = "MYAPP-SearchCardsActi";
 

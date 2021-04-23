@@ -1,0 +1,356 @@
+@startuml
+
+title __ACTIVITIES's Class Diagram__\n
+
+  namespace com.ferllop.evermind {
+    namespace activities {
+      class com.ferllop.evermind.activities.CardDataActivity {
+          ~ answer : EditText
+          ~ delete : Button
+          ~ isNew : boolean
+          ~ labels : EditText
+          ~ question : EditText
+          ~ save : Button
+          - TAG : String
+          + onDelete()
+          + onDeleteDialogConfirmClick()
+          + onDialogCancelClick()
+          + onError()
+          + onLoad()
+          + onLoad()
+          + onLoadAllCards()
+          + onLoadAllSubscriptions()
+          + onSave()
+          + onSave()
+          + openDeleteConfirmDialog()
+          # getNavBarTitle()
+          # onCreate()
+          - isDataValid()
+          - showToast()
+          - toLines()
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace activities {
+      class com.ferllop.evermind.activities.CardsAdapter {
+          ~ TAG : String
+          ~ cards : List<Card>
+          + CardsAdapter()
+          + addCard()
+          + clear()
+          + getItemCount()
+          + onBindViewHolder()
+          + onCreateViewHolder()
+          + subscribeToAll()
+          + updateCard()
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace activities {
+      class com.ferllop.evermind.activities.CardsAdapter.ViewHolder {
+          ~ TAG : String
+          ~ action : Button
+          ~ answer : TextView
+          ~ author : TextView
+          ~ labels : TextView
+          ~ question : TextView
+          + ViewHolder()
+          + bind()
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace activities {
+      class com.ferllop.evermind.activities.EntryActivity {
+          ~ TAG : String
+          + emailExists()
+          + onAuthActionResult()
+          + onDelete()
+          + onError()
+          + onLoad()
+          + onLoadAll()
+          + onSave()
+          + onUserDataStoreResult()
+          + usernameExists()
+          # onCreate()
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace activities {
+      class com.ferllop.evermind.activities.HomeActivity {
+          ~ TAG : String
+          + onDelete()
+          + onError()
+          + onLoad()
+          + onLoadAllSubscriptions()
+          + onRestart()
+          + onSave()
+          # getNavBarTitle()
+          # onCreate()
+          - getAllSubsFromUser()
+          - setCount()
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace activities {
+      class com.ferllop.evermind.activities.LoginActivity {
+          ~ forgotPassword : TextView
+          ~ loginButton : Button
+          ~ loginProgress : ProgressBar
+          - TAG : String
+          + emailExists()
+          + onAuthActionResult()
+          + onDelete()
+          + onError()
+          + onLoad()
+          + onLoadAll()
+          + onSave()
+          + onUserDataStoreResult()
+          + usernameExists()
+          # onCreate()
+          - hideLoginProgress()
+          - showLoginProgress()
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace activities {
+      abstract class com.ferllop.evermind.activities.MainNavigationActivity {
+          ~ TAG : String
+          + onCreateOptionsMenu()
+          + onOptionsItemSelected()
+          {abstract} # getNavBarTitle()
+          # onCreate()
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace activities {
+      class com.ferllop.evermind.activities.MyCards {
+          ~ countMessage : TextView
+          ~ createButton : Button
+          + cardsCount()
+          + onSubscriptionUpdate()
+          # getNavBarTitle()
+          # onCreate()
+          # onRestart()
+          - load()
+          - setCountIntoTextView()
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace activities {
+      class com.ferllop.evermind.activities.MySubscriptions {
+          ~ countMessage : TextView
+          ~ searchButton : Button
+          + cardsCount()
+          + onSubscriptionUpdate()
+          # getNavBarTitle()
+          # onCreate()
+          # onRestart()
+          - load()
+          - setCountIntoTextView()
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace activities {
+      class com.ferllop.evermind.activities.RegisterActivity {
+          ~ TAG : String
+          ~ email : EditText
+          ~ emailExists : boolean
+          ~ name : EditText
+          ~ password : EditText
+          ~ registerButton : Button
+          ~ registerInProgress : ProgressBar
+          ~ repeatPassword : EditText
+          ~ username : EditText
+          ~ usernameExists : boolean
+          + emailExists()
+          + onAuthActionResult()
+          + onDelete()
+          + onError()
+          + onLoad()
+          + onLoadAll()
+          + onOk()
+          + onSave()
+          + onUserDataStoreResult()
+          + usernameExists()
+          # onCreate()
+          - hideRegisterInProgress()
+          - notValidPasswordToast()
+          - registerUser()
+          - showRegisterInProgress()
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace activities {
+      class com.ferllop.evermind.activities.ReviewActivity {
+          ~ TAG : String
+          ~ answer : TextView
+          ~ cardsToLoad : List<Subscription>
+          ~ cardsToReview : List<SubscribedCard>
+          ~ cardsToReviewCount : int
+          ~ loadedCards : int
+          ~ progress : ProgressBar
+          ~ question : TextView
+          ~ resolve : ImageButton
+          ~ right : ImageButton
+          ~ totalRight : int
+          ~ wrong : ImageButton
+          + onDelete()
+          + onError()
+          + onLoad()
+          + onLoadAllCards()
+          + onSave()
+          # onCreate()
+          - reviewSubscriptions()
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace activities {
+      class com.ferllop.evermind.activities.ReviewResultActivity {
+          ~ TAG : String
+          ~ continue_button : Button
+          ~ reaction : TextView
+          ~ result : TextView
+          # onCreate()
+          - getMessage()
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace activities {
+      class com.ferllop.evermind.activities.SearchCardsActivity {
+          ~ TAG : String
+          ~ cardsCount : TextView
+          ~ searchField : EditText
+          ~ subscribeAll : Button
+          + cardsCount()
+          + onRestart()
+          + onSubscriptionUpdate()
+          # getNavBarTitle()
+          # onCreate()
+          - executeSearch()
+          - setCountIntoTextView()
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace activities {
+      class com.ferllop.evermind.activities.SettingsActivity {
+          ~ importButton : Button
+          ~ name : EditText
+          ~ newName : String
+          ~ newTime : String
+          ~ oldName : String
+          ~ oldTime : String
+          ~ save : Button
+          ~ time : EditText
+          + emailExists()
+          + onAuthActionResult()
+          + onDelete()
+          + onError()
+          + onLoad()
+          + onLoad()
+          + onLoad()
+          + onLoadAll()
+          + onLoadAllCards()
+          + onLoadAllSubscriptions()
+          + onSave()
+          + onSave()
+          + onSave()
+          + onUserDataStoreResult()
+          + usernameExists()
+          # getNavBarTitle()
+          # onCreate()
+          - importData()
+          - saveNewName()
+          - saveNewTime()
+      }
+    }
+  }
+  
+
+  com.ferllop.evermind.activities.CardDataActivity .up.|> com.ferllop.evermind.activities.fragments.DeleteCardDialogFragment.DeleteDialogListener
+  com.ferllop.evermind.activities.CardDataActivity .up.|> com.ferllop.evermind.repositories.listeners.CardDataStoreListener
+  com.ferllop.evermind.activities.CardDataActivity .up.|> com.ferllop.evermind.repositories.listeners.SubscriptionDataStoreListener
+  com.ferllop.evermind.activities.CardDataActivity -up-|> com.ferllop.evermind.activities.MainNavigationActivity
+  com.ferllop.evermind.activities.CardDataActivity o-- com.ferllop.evermind.repositories.datastores.UserLocalDataStore : userLocal
+  com.ferllop.evermind.activities.CardsAdapter -up-|> androidx.recyclerview.widget.RecyclerView.Adapter
+  com.ferllop.evermind.activities.CardsAdapter o-- com.ferllop.evermind.repositories.listeners.SubscriptionDataStoreListener : listener
+  com.ferllop.evermind.activities.CardsAdapter +-down- com.ferllop.evermind.activities.CardsAdapter.ViewHolder
+  com.ferllop.evermind.activities.CardsAdapter.ViewHolder -up-|> androidx.recyclerview.widget.RecyclerView.ViewHolder
+  com.ferllop.evermind.activities.EntryActivity .up.|> com.ferllop.evermind.repositories.listeners.UserDataStoreListener
+  com.ferllop.evermind.activities.EntryActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.ferllop.evermind.activities.EntryActivity o-- com.ferllop.evermind.repositories.UserRepository : userRepo
+  com.ferllop.evermind.activities.HomeActivity .up.|> com.ferllop.evermind.repositories.listeners.SubscriptionDataStoreListener
+  com.ferllop.evermind.activities.HomeActivity -up-|> com.ferllop.evermind.activities.MainNavigationActivity
+  com.ferllop.evermind.activities.LoginActivity .up.|> com.ferllop.evermind.repositories.listeners.UserDataStoreListener
+  com.ferllop.evermind.activities.LoginActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.ferllop.evermind.activities.LoginActivity o-- com.ferllop.evermind.repositories.datastores.UserLocalDataStore : userLocal
+  com.ferllop.evermind.activities.LoginActivity o-- com.ferllop.evermind.repositories.UserRepository : userRepository
+  com.ferllop.evermind.activities.MainNavigationActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.ferllop.evermind.activities.MyCards .up.|> com.ferllop.evermind.activities.fragments.SearchResultsFragment.OnSearchHaveResults
+  com.ferllop.evermind.activities.MyCards -up-|> com.ferllop.evermind.activities.MainNavigationActivity
+  com.ferllop.evermind.activities.MySubscriptions .up.|> com.ferllop.evermind.activities.fragments.SearchResultsFragment.OnSearchHaveResults
+  com.ferllop.evermind.activities.MySubscriptions -up-|> com.ferllop.evermind.activities.MainNavigationActivity
+  com.ferllop.evermind.activities.RegisterActivity .up.|> com.ferllop.evermind.activities.fragments.VerifyEmailDialog.VerifyEmailDialogListener
+  com.ferllop.evermind.activities.RegisterActivity .up.|> com.ferllop.evermind.repositories.listeners.UserDataStoreListener
+  com.ferllop.evermind.activities.RegisterActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.ferllop.evermind.activities.RegisterActivity o-- com.ferllop.evermind.repositories.UserRepository : userRepository
+  com.ferllop.evermind.activities.ReviewActivity .up.|> com.ferllop.evermind.repositories.listeners.CardDataStoreListener
+  com.ferllop.evermind.activities.ReviewActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.ferllop.evermind.activities.ReviewResultActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.ferllop.evermind.activities.SearchCardsActivity .up.|> com.ferllop.evermind.activities.fragments.SearchResultsFragment.OnSearchHaveResults
+  com.ferllop.evermind.activities.SearchCardsActivity -up-|> com.ferllop.evermind.activities.MainNavigationActivity
+  com.ferllop.evermind.activities.SearchCardsActivity o-- com.ferllop.evermind.activities.fragments.SearchResultsFragment : searchResultsFragment
+  com.ferllop.evermind.activities.SettingsActivity .up.|> com.ferllop.evermind.repositories.listeners.CardDataStoreListener
+  com.ferllop.evermind.activities.SettingsActivity .up.|> com.ferllop.evermind.repositories.listeners.SubscriptionDataStoreListener
+  com.ferllop.evermind.activities.SettingsActivity .up.|> com.ferllop.evermind.repositories.listeners.UserDataStoreListener
+  com.ferllop.evermind.activities.SettingsActivity -up-|> com.ferllop.evermind.activities.MainNavigationActivity
+  com.ferllop.evermind.activities.SettingsActivity o-- com.ferllop.evermind.repositories.datastores.UserLocalDataStore : userLocal
+  com.ferllop.evermind.activities.SettingsActivity o-- com.ferllop.evermind.repositories.UserRepository : userRepository
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

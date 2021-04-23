@@ -1,0 +1,612 @@
+@startuml
+
+title __EVERMIND.APP's Class Diagram__\n
+
+  namespace com.ferllop.evermind {
+    class com.ferllop.evermind.AndroidApplication {
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    class com.ferllop.evermind.BuildConfig {
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace activities {
+      class com.ferllop.evermind.activities.CardDataActivity {
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace activities {
+      class com.ferllop.evermind.activities.CardsAdapter {
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace activities {
+      class com.ferllop.evermind.activities.EntryActivity {
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace activities {
+      class com.ferllop.evermind.activities.HomeActivity {
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace activities {
+      class com.ferllop.evermind.activities.LoginActivity {
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace activities {
+      abstract class com.ferllop.evermind.activities.MainNavigationActivity {
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace activities {
+      class com.ferllop.evermind.activities.MyCards {
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace activities {
+      class com.ferllop.evermind.activities.MySubscriptions {
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace activities {
+      class com.ferllop.evermind.activities.RegisterActivity {
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace activities {
+      class com.ferllop.evermind.activities.ReviewActivity {
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace activities {
+      class com.ferllop.evermind.activities.ReviewResultActivity {
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace activities {
+      class com.ferllop.evermind.activities.SearchCardsActivity {
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace activities {
+      class com.ferllop.evermind.activities.SettingsActivity {
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace activities {
+      namespace fragments {
+        class com.ferllop.evermind.activities.fragments.DeleteCardDialogFragment {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace activities {
+      namespace fragments {
+        class com.ferllop.evermind.activities.fragments.SearchInfoDialog {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace activities {
+      namespace fragments {
+        class com.ferllop.evermind.activities.fragments.SearchResultsFragment {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace activities {
+      namespace fragments {
+        class com.ferllop.evermind.activities.fragments.VerifyEmailDialog {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace models {
+      class com.ferllop.evermind.models.Card {
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace models {
+      class com.ferllop.evermind.models.Labelling {
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace models {
+      enum Level {
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace models {
+      abstract class com.ferllop.evermind.models.Model {
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace models {
+      class com.ferllop.evermind.models.Search {
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace models {
+      class com.ferllop.evermind.models.SubscribedCard {
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace models {
+      class com.ferllop.evermind.models.Subscription {
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace models {
+      class com.ferllop.evermind.models.User {
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace models {
+      enum UserStatus {
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace repositories {
+      class com.ferllop.evermind.repositories.AuthRepository {
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace repositories {
+      class com.ferllop.evermind.repositories.CardRepository {
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace repositories {
+      class com.ferllop.evermind.repositories.SubscriptionRepository {
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace repositories {
+      class com.ferllop.evermind.repositories.SubscriptionsGlobal {
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace repositories {
+      class com.ferllop.evermind.repositories.UserRepository {
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace repositories {
+      namespace datastores {
+        interface com.ferllop.evermind.repositories.datastores.AuthDataStore {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace repositories {
+      namespace datastores {
+        class com.ferllop.evermind.repositories.datastores.AuthFirestoreDataStore {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace repositories {
+      namespace datastores {
+        class com.ferllop.evermind.repositories.datastores.CardFirestoreDataStore {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace repositories {
+      namespace datastores {
+        class com.ferllop.evermind.repositories.datastores.CrudFirestoreDataStore {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace repositories {
+      namespace datastores {
+        abstract class com.ferllop.evermind.repositories.datastores.FirestoreDataStore {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace repositories {
+      namespace datastores {
+        class com.ferllop.evermind.repositories.datastores.SubscriptionFirestoreDataStore {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace repositories {
+      namespace datastores {
+        class com.ferllop.evermind.repositories.datastores.UserFirestoreDataStore {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace repositories {
+      namespace datastores {
+        class com.ferllop.evermind.repositories.datastores.UserLocalDataStore {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace repositories {
+      namespace fields {
+        enum AuthError {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace repositories {
+      namespace fields {
+        enum CardField {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace repositories {
+      namespace fields {
+        enum DataStoreError {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace repositories {
+      namespace fields {
+        enum FirestoreCollectionsLabels {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace repositories {
+      namespace fields {
+        enum SubscriptionField {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace repositories {
+      namespace fields {
+        enum UserField {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace repositories {
+      namespace listeners {
+        interface com.ferllop.evermind.repositories.listeners.AuthListener {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace repositories {
+      namespace listeners {
+        enum AuthMessage {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace repositories {
+      namespace listeners {
+        interface com.ferllop.evermind.repositories.listeners.CardDataStoreListener {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace repositories {
+      namespace listeners {
+        interface com.ferllop.evermind.repositories.listeners.CrudDataStoreListener {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace repositories {
+      namespace listeners {
+        enum DataStoreMessage {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace repositories {
+      namespace listeners {
+        interface com.ferllop.evermind.repositories.listeners.SubscriptionDataStoreListener {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace repositories {
+      namespace listeners {
+        interface com.ferllop.evermind.repositories.listeners.UserDataStoreListener {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace repositories {
+      namespace mappers {
+        class com.ferllop.evermind.repositories.mappers.CardMapper {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace repositories {
+      namespace mappers {
+        interface com.ferllop.evermind.repositories.mappers.ModelMapper {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace repositories {
+      namespace mappers {
+        class com.ferllop.evermind.repositories.mappers.SubscriptionMapper {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace repositories {
+      namespace mappers {
+        class com.ferllop.evermind.repositories.mappers.UserMapper {
+        }
+      }
+    }
+  }
+  
+
+  com.ferllop.evermind.AndroidApplication -up-|> android.app.Application
+  com.ferllop.evermind.activities.CardDataActivity .up.|> com.ferllop.evermind.activities.fragments.DeleteCardDialogFragment.DeleteDialogListener
+  com.ferllop.evermind.activities.CardDataActivity .up.|> com.ferllop.evermind.repositories.listeners.CardDataStoreListener
+  com.ferllop.evermind.activities.CardDataActivity .up.|> com.ferllop.evermind.repositories.listeners.SubscriptionDataStoreListener
+  com.ferllop.evermind.activities.CardDataActivity -up-|> com.ferllop.evermind.activities.MainNavigationActivity
+  com.ferllop.evermind.activities.CardDataActivity o-- com.ferllop.evermind.repositories.datastores.UserLocalDataStore : userLocal
+  com.ferllop.evermind.activities.CardsAdapter -up-|> androidx.recyclerview.widget.RecyclerView.Adapter
+  com.ferllop.evermind.activities.CardsAdapter o-- com.ferllop.evermind.repositories.listeners.SubscriptionDataStoreListener : listener
+  com.ferllop.evermind.activities.EntryActivity .up.|> com.ferllop.evermind.repositories.listeners.UserDataStoreListener
+  com.ferllop.evermind.activities.EntryActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.ferllop.evermind.activities.EntryActivity o-- com.ferllop.evermind.repositories.UserRepository : userRepo
+  com.ferllop.evermind.activities.HomeActivity .up.|> com.ferllop.evermind.repositories.listeners.SubscriptionDataStoreListener
+  com.ferllop.evermind.activities.HomeActivity -up-|> com.ferllop.evermind.activities.MainNavigationActivity
+  com.ferllop.evermind.activities.LoginActivity .up.|> com.ferllop.evermind.repositories.listeners.UserDataStoreListener
+  com.ferllop.evermind.activities.LoginActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.ferllop.evermind.activities.LoginActivity o-- com.ferllop.evermind.repositories.datastores.UserLocalDataStore : userLocal
+  com.ferllop.evermind.activities.LoginActivity o-- com.ferllop.evermind.repositories.UserRepository : userRepository
+  com.ferllop.evermind.activities.MainNavigationActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.ferllop.evermind.activities.MyCards .up.|> com.ferllop.evermind.activities.fragments.SearchResultsFragment.OnSearchHaveResults
+  com.ferllop.evermind.activities.MyCards -up-|> com.ferllop.evermind.activities.MainNavigationActivity
+  com.ferllop.evermind.activities.MySubscriptions .up.|> com.ferllop.evermind.activities.fragments.SearchResultsFragment.OnSearchHaveResults
+  com.ferllop.evermind.activities.MySubscriptions -up-|> com.ferllop.evermind.activities.MainNavigationActivity
+  com.ferllop.evermind.activities.RegisterActivity .up.|> com.ferllop.evermind.activities.fragments.VerifyEmailDialog.VerifyEmailDialogListener
+  com.ferllop.evermind.activities.RegisterActivity .up.|> com.ferllop.evermind.repositories.listeners.UserDataStoreListener
+  com.ferllop.evermind.activities.RegisterActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.ferllop.evermind.activities.RegisterActivity o-- com.ferllop.evermind.repositories.UserRepository : userRepository
+  com.ferllop.evermind.activities.ReviewActivity .up.|> com.ferllop.evermind.repositories.listeners.CardDataStoreListener
+  com.ferllop.evermind.activities.ReviewActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.ferllop.evermind.activities.ReviewResultActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  com.ferllop.evermind.activities.SearchCardsActivity .up.|> com.ferllop.evermind.activities.fragments.SearchResultsFragment.OnSearchHaveResults
+  com.ferllop.evermind.activities.SearchCardsActivity -up-|> com.ferllop.evermind.activities.MainNavigationActivity
+  com.ferllop.evermind.activities.SearchCardsActivity o-- com.ferllop.evermind.activities.fragments.SearchResultsFragment : searchResultsFragment
+  com.ferllop.evermind.activities.SettingsActivity .up.|> com.ferllop.evermind.repositories.listeners.CardDataStoreListener
+  com.ferllop.evermind.activities.SettingsActivity .up.|> com.ferllop.evermind.repositories.listeners.SubscriptionDataStoreListener
+  com.ferllop.evermind.activities.SettingsActivity .up.|> com.ferllop.evermind.repositories.listeners.UserDataStoreListener
+  com.ferllop.evermind.activities.SettingsActivity -up-|> com.ferllop.evermind.activities.MainNavigationActivity
+  com.ferllop.evermind.activities.SettingsActivity o-- com.ferllop.evermind.repositories.datastores.UserLocalDataStore : userLocal
+  com.ferllop.evermind.activities.SettingsActivity o-- com.ferllop.evermind.repositories.UserRepository : userRepository
+  com.ferllop.evermind.activities.fragments.DeleteCardDialogFragment -up-|> androidx.fragment.app.DialogFragment
+  com.ferllop.evermind.activities.fragments.DeleteCardDialogFragment o-- com.ferllop.evermind.activities.fragments.DeleteCardDialogFragment.DeleteDialogListener : listener
+  com.ferllop.evermind.activities.fragments.SearchInfoDialog -up-|> androidx.fragment.app.DialogFragment
+  com.ferllop.evermind.activities.fragments.SearchResultsFragment .up.|> com.ferllop.evermind.repositories.listeners.CardDataStoreListener
+  com.ferllop.evermind.activities.fragments.SearchResultsFragment .up.|> com.ferllop.evermind.repositories.listeners.SubscriptionDataStoreListener
+  com.ferllop.evermind.activities.fragments.SearchResultsFragment -up-|> androidx.fragment.app.Fragment
+  com.ferllop.evermind.activities.fragments.SearchResultsFragment o-- com.ferllop.evermind.activities.CardsAdapter : adapter
+  com.ferllop.evermind.activities.fragments.SearchResultsFragment o-- com.ferllop.evermind.repositories.CardRepository : cardRepository
+  com.ferllop.evermind.activities.fragments.SearchResultsFragment o-- com.ferllop.evermind.activities.fragments.SearchResultsFragment.OnSearchHaveResults : listener
+  com.ferllop.evermind.activities.fragments.VerifyEmailDialog -up-|> androidx.fragment.app.DialogFragment
+  com.ferllop.evermind.activities.fragments.VerifyEmailDialog o-- com.ferllop.evermind.activities.fragments.VerifyEmailDialog.VerifyEmailDialogListener : listener
+  com.ferllop.evermind.models.Card -up-|> com.ferllop.evermind.models.Model
+  com.ferllop.evermind.models.Card o-- com.ferllop.evermind.models.Labelling : labelling
+  com.ferllop.evermind.models.SubscribedCard o-- com.ferllop.evermind.models.Card : card
+  com.ferllop.evermind.models.SubscribedCard o-- com.ferllop.evermind.models.Subscription : subscription
+  com.ferllop.evermind.models.Subscription -up-|> com.ferllop.evermind.models.Model
+  com.ferllop.evermind.models.Subscription o-- com.ferllop.evermind.models.Level : level
+  com.ferllop.evermind.models.User -up-|> com.ferllop.evermind.models.Model
+  com.ferllop.evermind.models.User o-- com.ferllop.evermind.models.UserStatus : status
+  com.ferllop.evermind.repositories.AuthRepository o-- com.ferllop.evermind.repositories.datastores.AuthDataStore : auth
+  com.ferllop.evermind.repositories.CardRepository o-- com.ferllop.evermind.repositories.datastores.CardFirestoreDataStore : dataStore
+  com.ferllop.evermind.repositories.SubscriptionRepository o-- com.ferllop.evermind.repositories.datastores.SubscriptionFirestoreDataStore : dataStore
+  com.ferllop.evermind.repositories.UserRepository .up.|> com.ferllop.evermind.repositories.listeners.AuthListener
+  com.ferllop.evermind.repositories.UserRepository o-- com.ferllop.evermind.repositories.AuthRepository : authRepository
+  com.ferllop.evermind.repositories.UserRepository o-- com.ferllop.evermind.repositories.datastores.UserFirestoreDataStore : dataStore
+  com.ferllop.evermind.repositories.UserRepository o-- com.ferllop.evermind.repositories.listeners.UserDataStoreListener : listener
+  com.ferllop.evermind.repositories.UserRepository o-- com.ferllop.evermind.repositories.datastores.UserLocalDataStore : localDataStore
+  com.ferllop.evermind.repositories.UserRepository o-- com.ferllop.evermind.repositories.UserRepository.RegisteringUser : registeringUser
+  com.ferllop.evermind.repositories.datastores.AuthFirestoreDataStore .up.|> com.ferllop.evermind.repositories.datastores.AuthDataStore
+  com.ferllop.evermind.repositories.datastores.AuthFirestoreDataStore o-- com.ferllop.evermind.repositories.listeners.AuthListener : listener
+  com.ferllop.evermind.repositories.datastores.CardFirestoreDataStore .up.|> com.ferllop.evermind.repositories.listeners.CrudDataStoreListener
+  com.ferllop.evermind.repositories.datastores.CardFirestoreDataStore -up-|> com.ferllop.evermind.repositories.datastores.FirestoreDataStore
+  com.ferllop.evermind.repositories.datastores.CardFirestoreDataStore o-- com.ferllop.evermind.repositories.listeners.CardDataStoreListener : listener
+  com.ferllop.evermind.repositories.datastores.SubscriptionFirestoreDataStore .up.|> com.ferllop.evermind.repositories.listeners.CrudDataStoreListener
+  com.ferllop.evermind.repositories.datastores.SubscriptionFirestoreDataStore -up-|> com.ferllop.evermind.repositories.datastores.FirestoreDataStore
+  com.ferllop.evermind.repositories.datastores.SubscriptionFirestoreDataStore o-- com.ferllop.evermind.repositories.listeners.SubscriptionDataStoreListener : listener
+  com.ferllop.evermind.repositories.datastores.UserFirestoreDataStore .up.|> com.ferllop.evermind.repositories.listeners.CrudDataStoreListener
+  com.ferllop.evermind.repositories.datastores.UserFirestoreDataStore -up-|> com.ferllop.evermind.repositories.datastores.FirestoreDataStore
+  com.ferllop.evermind.repositories.datastores.UserFirestoreDataStore o-- com.ferllop.evermind.repositories.listeners.UserDataStoreListener : listener
+  com.ferllop.evermind.repositories.mappers.CardMapper .up.|> com.ferllop.evermind.repositories.mappers.ModelMapper
+  com.ferllop.evermind.repositories.mappers.SubscriptionMapper .up.|> com.ferllop.evermind.repositories.mappers.ModelMapper
+  com.ferllop.evermind.repositories.mappers.UserMapper .up.|> com.ferllop.evermind.repositories.mappers.ModelMapper
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

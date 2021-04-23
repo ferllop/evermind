@@ -2,7 +2,6 @@ package com.ferllop.evermind.repositories;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 
 import com.ferllop.evermind.models.User;
 import com.ferllop.evermind.models.UserStatus;
@@ -10,7 +9,7 @@ import com.ferllop.evermind.repositories.datastores.UserFirestoreDataStore;
 import com.ferllop.evermind.repositories.datastores.UserLocalDataStore;
 import com.ferllop.evermind.repositories.fields.AuthError;
 import com.ferllop.evermind.repositories.fields.DataStoreError;
-import com.ferllop.evermind.repositories.fields.FirestoreCollectionsLabels;
+import com.ferllop.evermind.repositories.fields.CollectionsLabels;
 import com.ferllop.evermind.repositories.fields.UserField;
 import com.ferllop.evermind.repositories.listeners.AuthListener;
 import com.ferllop.evermind.repositories.listeners.AuthMessage;
@@ -18,8 +17,6 @@ import com.ferllop.evermind.repositories.listeners.UserDataStoreListener;
 import com.ferllop.evermind.repositories.mappers.UserMapper;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.Map;
 
 
 public class UserRepository implements AuthListener {
@@ -34,7 +31,7 @@ public class UserRepository implements AuthListener {
     public UserRepository(UserDataStoreListener listener) {
         this.dataStore = new UserFirestoreDataStore(
                 FirebaseFirestore.getInstance(),
-                FirestoreCollectionsLabels.USER.getValue(),
+                CollectionsLabels.USER.getValue(),
                 new UserMapper(),
                 listener
         );
@@ -98,7 +95,7 @@ public class UserRepository implements AuthListener {
         return password.matches(".{8,32}")
                 && password.matches(".*[a-z]+.*")
                 && password.matches(".*[A-Z]+.*")
-                && password.matches(".*[-_:,;:<.>+@#|$%&/()=?¿¡!]+.*");
+                && password.matches(".*[-_:,;:<.>+@#|%&/()=?¿¡!]+.*");
     }
 
     public boolean isUserVerified(){

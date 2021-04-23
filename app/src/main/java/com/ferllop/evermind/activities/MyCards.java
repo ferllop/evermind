@@ -11,7 +11,8 @@ import com.ferllop.evermind.R;
 import com.ferllop.evermind.activities.fragments.SearchResultsFragment;
 import com.ferllop.evermind.repositories.datastores.UserLocalDataStore;
 
-public class MyCards extends MainNavigationActivity implements SearchResultsFragment.OnSearchHaveResults {
+public class MyCards extends MainNavigationActivity
+        implements SearchResultsFragment.OnSearchHaveResults {
 
     TextView countMessage;
     Button createButton;

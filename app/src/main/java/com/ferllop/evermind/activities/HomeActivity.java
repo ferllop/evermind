@@ -16,8 +16,13 @@ import com.ferllop.evermind.repositories.listeners.SubscriptionDataStoreListener
 
 import java.util.List;
 
-public class HomeActivity extends MainNavigationActivity implements SubscriptionDataStoreListener {
+public class HomeActivity extends MainNavigationActivity
+        implements SubscriptionDataStoreListener {
     final String TAG = "MYAPP-Home";
+    Button startButton;
+    Button searchButton;
+    Button createButton;
+    TextView cardsCountText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +31,7 @@ public class HomeActivity extends MainNavigationActivity implements Subscription
 
         getAllSubsFromUser();
 
-        Button searchButton = findViewById(R.id.search_cards_button);
+        searchButton = findViewById(R.id.search_cards_button);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -34,7 +39,7 @@ public class HomeActivity extends MainNavigationActivity implements Subscription
             }
         });
 
-        Button createButton = findViewById(R.id.create_card_button);
+        createButton = findViewById(R.id.create_card_button);
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,8 +66,8 @@ public class HomeActivity extends MainNavigationActivity implements Subscription
     }
 
     private void setCount(int count) {
-        TextView view = findViewById(R.id.review_cards_textView);
-        view.setVisibility(View.INVISIBLE);
+        cardsCountText = findViewById(R.id.review_cards_textView);
+        cardsCountText.setVisibility(View.INVISIBLE);
         String cardsToReview = getString(R.string.cards_to_review);
         cardsToReview = cardsToReview.replace("#qty", String.valueOf(count));
         if(count == 1){
@@ -70,14 +75,14 @@ public class HomeActivity extends MainNavigationActivity implements Subscription
         } else {
             cardsToReview = cardsToReview.replace("#s", "s");
         }
-        view.setText(cardsToReview);
-        view.setVisibility(View.VISIBLE);
+        cardsCountText.setText(cardsToReview);
+        cardsCountText.setVisibility(View.VISIBLE);
 
-        Button start = (Button) findViewById(R.id.review_cards_button);
+        startButton = (Button) findViewById(R.id.review_cards_button);
 
         if(count > 0){
-            start.setEnabled(true);
-            start.setOnClickListener(new View.OnClickListener() {
+            startButton.setEnabled(true);
+            startButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     startActivity(new Intent(HomeActivity.this, ReviewActivity.class));

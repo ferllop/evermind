@@ -1,23 +1,20 @@
 package com.ferllop.evermind.repositories;
 
-import android.util.Log;
-
 import com.ferllop.evermind.models.Card;
 import com.ferllop.evermind.repositories.datastores.CardFirestoreDataStore;
-import com.ferllop.evermind.repositories.fields.FirestoreCollectionsLabels;
+import com.ferllop.evermind.repositories.fields.CollectionsLabels;
 import com.ferllop.evermind.repositories.listeners.CardDataStoreListener;
 import com.ferllop.evermind.repositories.mappers.CardMapper;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class CardRepository {
-    final String TAG = "MYAPP-CardRepo";
 
     CardFirestoreDataStore dataStore;
 
     public CardRepository(CardDataStoreListener listener) {
         this.dataStore = new CardFirestoreDataStore(
                 FirebaseFirestore.getInstance(),
-                FirestoreCollectionsLabels.CARD.getValue(),
+                CollectionsLabels.CARD.getValue(),
                 new CardMapper(),
                 listener
         );

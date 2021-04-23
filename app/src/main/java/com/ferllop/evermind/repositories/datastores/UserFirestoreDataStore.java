@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import com.ferllop.evermind.models.User;
 import com.ferllop.evermind.models.UserStatus;
 import com.ferllop.evermind.repositories.fields.DataStoreError;
-import com.ferllop.evermind.repositories.fields.FirestoreCollectionsLabels;
+import com.ferllop.evermind.repositories.fields.CollectionsLabels;
 import com.ferllop.evermind.repositories.fields.UserField;
 import com.ferllop.evermind.repositories.listeners.DataStoreMessage;
 import com.ferllop.evermind.repositories.listeners.UserDataStoreListener;
@@ -19,10 +19,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserFirestoreDataStore extends FirestoreDataStore<User> implements CrudDataStoreListener<User>{
@@ -67,15 +65,10 @@ public class UserFirestoreDataStore extends FirestoreDataStore<User> implements 
     }
 
     @Override
-    public void onLoadAll(List<User> users) { listener.onLoadAll(users);}
-
-    @Override
-    public void onUserDataStoreResult(DataStoreMessage message) {
-
-    }
+    public void onLoadAll(List<User> users) { listener.onLoadAll(users); }
 
     public void existUsername(String username){
-        firestore.collection(FirestoreCollectionsLabels.USER.getValue())
+        firestore.collection(CollectionsLabels.USER.getValue())
                 .whereEqualTo(UserField.USERNAME.getValue(), username.toLowerCase())
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -95,7 +88,7 @@ public class UserFirestoreDataStore extends FirestoreDataStore<User> implements 
     }
 
     public void existEmail(String email){
-        firestore.collection(FirestoreCollectionsLabels.USER.getValue())
+        firestore.collection(CollectionsLabels.USER.getValue())
                 .whereEqualTo(UserField.EMAIL.getValue(), email.toLowerCase())
                 .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override

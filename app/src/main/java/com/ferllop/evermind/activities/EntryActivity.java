@@ -92,8 +92,4 @@ public class EntryActivity extends AppCompatActivity implements UserDataStoreLis
 
     }
 
-    @Override
-    public void onUserDataStoreResult(DataStoreMessage message) {
-
-    }
 }

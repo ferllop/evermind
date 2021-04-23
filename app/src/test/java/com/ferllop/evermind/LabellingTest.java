@@ -38,7 +38,7 @@ public class LabellingTest {
 
     @Test(expected = AssertionError.class)
     public void wrong_characters_in_a_label_contained_in_a_comma_separated_list_will_throw_assert_error(){
-        Labelling wrongLabel = new Labelling("label1 label2");
+        Labelling wrongLabel = new Labelling("label1, label2#uyu");
     }
 
     @Test(expected = AssertionError.class)

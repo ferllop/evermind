@@ -90,11 +90,6 @@ public class CardFirestoreDataStore extends FirestoreDataStore<Card> implements 
     }
 
     @Override
-    public void onUserDataStoreResult(DataStoreMessage message) {
-
-    }
-
-    @Override
     protected CrudDataStoreListener<Card> getCrudListener() {
         return this;
     }

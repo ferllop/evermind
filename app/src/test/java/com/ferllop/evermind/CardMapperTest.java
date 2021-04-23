@@ -29,7 +29,7 @@ public class CardMapperTest {
     Card cardAsCard;
 
     @Before
-    public void setId(){
+    public void setData(){
         id = "xyz";
         authorID = "TheAuthorID";
         authorUsername = "TheAuthorUsername";
@@ -84,8 +84,9 @@ public class CardMapperTest {
     @Test
     public void should_convert_a_Card_to_a_String_key_Object_value_Map_with_labels(){
         createCardAsCard();
-        Map<String, Boolean> labelling = (Map<String, Boolean>) new CardMapper().execute(cardAsCard).get(CardField.LABELLING.getValue());
-
+        Map<String, Boolean> labelling = (Map<String, Boolean>) new CardMapper()
+                .execute(cardAsCard)
+                .get(CardField.LABELLING.getValue());
         assertTrue(labelling.get(label1));
         assertTrue(labelling.get(label2));
     }
@@ -94,7 +95,6 @@ public class CardMapperTest {
     public void should_convert_a_String_key_Object_value_map_to_a_Card_with_an_id(){
         createCardAsMap();
         assertEquals(id, new CardMapper().execute(id, cardAsMap).getId());
-
     }
 
     @Test
@@ -123,7 +123,9 @@ public class CardMapperTest {
     @Test
     public void should_convert_a_String_key_Object_value_map_to_a_Card_with_labels(){
         createCardAsMap();
-        assertEquals("label1", new CardMapper().execute(id, cardAsMap).getLabelling().getLabels().get(0));
-        assertEquals("label2", new CardMapper().execute(id, cardAsMap).getLabelling().getLabels().get(1));
+        assertEquals("label1",
+                new CardMapper().execute(id, cardAsMap).getLabelling().getLabels().get(0));
+        assertEquals("label2",
+                new CardMapper().execute(id, cardAsMap).getLabelling().getLabels().get(1));
     }
 }

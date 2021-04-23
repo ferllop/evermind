@@ -23,7 +23,8 @@ import com.ferllop.evermind.repositories.listeners.UserDataStoreListener;
 
 import java.util.List;
 
-public class RegisterActivity extends AppCompatActivity implements UserDataStoreListener, VerifyEmailDialog.VerifyEmailDialogListener {
+public class RegisterActivity extends AppCompatActivity
+        implements UserDataStoreListener, VerifyEmailDialog.VerifyEmailDialogListener {
 
     final String TAG = "MYAPP-registeract";
     EditText name;
@@ -175,11 +176,6 @@ public class RegisterActivity extends AppCompatActivity implements UserDataStore
 
     @Override
     public void onAuthActionResult(AuthMessage message) {
-
-    }
-
-    @Override
-    public void onUserDataStoreResult(DataStoreMessage message) {
 
     }
 

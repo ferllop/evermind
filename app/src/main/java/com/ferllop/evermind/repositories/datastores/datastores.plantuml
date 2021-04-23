@@ -1,0 +1,198 @@
+@startuml
+
+title __DATASTORES's Class Diagram__\n
+
+  namespace com.ferllop.evermind {
+    namespace repositories {
+      namespace datastores {
+        interface com.ferllop.evermind.repositories.datastores.AuthDataStore {
+            {abstract} + isUserVerified()
+            {abstract} + login()
+            {abstract} + logout()
+            {abstract} + register()
+            {abstract} + sendResetPasswordEmail()
+            {abstract} + sendVerificationEmailToCurrentUser()
+        }
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace repositories {
+      namespace datastores {
+        class com.ferllop.evermind.repositories.datastores.AuthFirestoreDataStore {
+            ~ TAG : String
+            - auth : FirebaseAuth
+            + AuthFirestoreDataStore()
+            + isUserVerified()
+            + login()
+            + logout()
+            + register()
+            + sendResetPasswordEmail()
+            + sendVerificationEmailToCurrentUser()
+        }
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace repositories {
+      namespace datastores {
+        class com.ferllop.evermind.repositories.datastores.CardFirestoreDataStore {
+            ~ TAG : String
+            + CardFirestoreDataStore()
+            + getFromSearch()
+            + onDelete()
+            + onError()
+            + onLoad()
+            + onLoadAll()
+            + onSave()
+            + onUserDataStoreResult()
+            # getCrudListener()
+        }
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace repositories {
+      namespace datastores {
+        class com.ferllop.evermind.repositories.datastores.CrudFirestoreDataStore {
+            ~ collection : String
+            ~ firestore : FirebaseFirestore
+            ~ listener : CrudDataStoreListener<T>
+            ~ mapper : ModelMapper<T>
+            - TAG : String
+            + CrudFirestoreDataStore()
+            + delete()
+            + getAll()
+            + getFromUniqueField()
+            + insert()
+            + load()
+            + update()
+        }
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace repositories {
+      namespace datastores {
+        abstract class com.ferllop.evermind.repositories.datastores.FirestoreDataStore {
+            ~ collection : String
+            ~ crud : CrudFirestoreDataStore<T>
+            ~ firestore : FirebaseFirestore
+            ~ mapper : ModelMapper<T>
+            + FirestoreDataStore()
+            + delete()
+            + getAll()
+            + getFromUniqueField()
+            + insert()
+            + load()
+            + update()
+            {abstract} # getCrudListener()
+        }
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace repositories {
+      namespace datastores {
+        class com.ferllop.evermind.repositories.datastores.SubscriptionFirestoreDataStore {
+            ~ TAG : String
+            + SubscriptionFirestoreDataStore()
+            + deleteAllWithCardID()
+            + onDelete()
+            + onError()
+            + onLoad()
+            + onLoadAll()
+            + onSave()
+            + onUserDataStoreResult()
+            + updateLevel()
+            # getCrudListener()
+        }
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace repositories {
+      namespace datastores {
+        class com.ferllop.evermind.repositories.datastores.UserFirestoreDataStore {
+            ~ TAG : String
+            + UserFirestoreDataStore()
+            + existEmail()
+            + existUsername()
+            + onDelete()
+            + onError()
+            + onLoad()
+            + onLoadAll()
+            + onSave()
+            + onUserDataStoreResult()
+            + updateDayStartTime()
+            + updateUserLastConnection()
+            + updateUserLastLogin()
+            + updateUserName()
+            + updateUserStatus()
+            # getCrudListener()
+        }
+      }
+    }
+  }
+  
+
+  namespace com.ferllop.evermind {
+    namespace repositories {
+      namespace datastores {
+        class com.ferllop.evermind.repositories.datastores.UserLocalDataStore {
+            ~ context : Context
+            ~ prefix : String
+            - TAG : String
+            + UserLocalDataStore()
+            + clear()
+            + getDayStartTime()
+            + getID()
+            + getName()
+            + getUsername()
+            + setDayStartTime()
+            + setID()
+            + setName()
+            + setUser()
+            + setUsername()
+            - getPrefs()
+            - getStringFromShared()
+            - setStringFromShared()
+        }
+      }
+    }
+  }
+  
+
+  com.ferllop.evermind.repositories.datastores.AuthFirestoreDataStore .up.|> com.ferllop.evermind.repositories.datastores.AuthDataStore
+  com.ferllop.evermind.repositories.datastores.AuthFirestoreDataStore o-- com.ferllop.evermind.repositories.listeners.AuthListener : listener
+  com.ferllop.evermind.repositories.datastores.CardFirestoreDataStore .up.|> com.ferllop.evermind.repositories.listeners.CrudDataStoreListener
+  com.ferllop.evermind.repositories.datastores.CardFirestoreDataStore -up-|> com.ferllop.evermind.repositories.datastores.FirestoreDataStore
+  com.ferllop.evermind.repositories.datastores.CardFirestoreDataStore o-- com.ferllop.evermind.repositories.listeners.CardDataStoreListener : listener
+  com.ferllop.evermind.repositories.datastores.SubscriptionFirestoreDataStore .up.|> com.ferllop.evermind.repositories.listeners.CrudDataStoreListener
+  com.ferllop.evermind.repositories.datastores.SubscriptionFirestoreDataStore -up-|> com.ferllop.evermind.repositories.datastores.FirestoreDataStore
+  com.ferllop.evermind.repositories.datastores.SubscriptionFirestoreDataStore o-- com.ferllop.evermind.repositories.listeners.SubscriptionDataStoreListener : listener
+  com.ferllop.evermind.repositories.datastores.UserFirestoreDataStore .up.|> com.ferllop.evermind.repositories.listeners.CrudDataStoreListener
+  com.ferllop.evermind.repositories.datastores.UserFirestoreDataStore -up-|> com.ferllop.evermind.repositories.datastores.FirestoreDataStore
+  com.ferllop.evermind.repositories.datastores.UserFirestoreDataStore o-- com.ferllop.evermind.repositories.listeners.UserDataStoreListener : listener
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

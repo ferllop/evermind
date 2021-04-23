@@ -23,7 +23,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
-public class SubscriptionFirestoreDataStore extends FirestoreDataStore<Subscription> implements CrudDataStoreListener<Subscription>{
+public class SubscriptionFirestoreDataStore extends FirestoreDataStore<Subscription>
+        implements CrudDataStoreListener<Subscription>{
     final String TAG = "MYAPP-Subscription";
 
     SubscriptionDataStoreListener listener;
@@ -107,11 +108,4 @@ public class SubscriptionFirestoreDataStore extends FirestoreDataStore<Subscript
         listener.onLoadAllSubscriptions(subs);
     }
 
-    @Override
-    public void onUserDataStoreResult(DataStoreMessage message) {
-        switch(message){
-            case NOT_FOUND:
-                break;
-        }
-    }
 }

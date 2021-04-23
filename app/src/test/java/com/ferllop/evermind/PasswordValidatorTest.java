@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class PasswordValidatorTest {
     final String TAG = "MYAPP:tet";
@@ -13,7 +14,7 @@ public class PasswordValidatorTest {
 
     @Before
     public void init(){
-        validPassword = "aA-45678901234567890123456789012";
+        validPassword = getValidPassword();
     }
 
     @Test
@@ -37,6 +38,17 @@ public class PasswordValidatorTest {
         assertFalse(UserRepository.isValidPassword(validPassword.replaceAll("-", "a")));
     }
 
+    @Test
+    public void valid_password_has_at_least_one_special_character(){
+        char[] specialCharacters = "-_:,;:<.>+@#|%&/()=?¿¡!".toCharArray();
+        for(char specialChar : specialCharacters){
+            assertTrue(UserRepository.isValidPassword(
+                    this.getValidPassword().replaceAll("-", String.valueOf(specialChar))
+            ));
+        }
+    }
 
-
+    private String getValidPassword(){
+        return "aA-45678901234567890123456789012";
+    }
 }

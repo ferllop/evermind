@@ -1,22 +1,23 @@
 @startuml
 'https://plantuml.com/use-case-diagram
 left to right direction
-'rectangle LoginUseCases {
-'    usecase "Register"
-'    usecase "Login"
-'    usecase "Logout"
-'}
-'
-'rectangle SettingsUseCases{
-'    usecase "Change starting day hour"
-'    usecase "Change his own name"
-'}
-'
-'User -up-> (Register)
-'User -up-> (Login)
-'User -up-> (Logout)
-'User -down-> (Change starting day hour)
-'User -down-> (Change his own name)
+rectangle LoginUseCases {
+    usecase "Register"
+    usecase "Login"
+    usecase "Logout"
+    usecase "Reset password"
+}
+
+rectangle SettingsUseCases{
+    usecase "Change starting day hour"
+    usecase "Change his own name"
+}
+
+User -up-> (Logout)
+User -up-> (Login)
+User -up-> (Register)
+User -down-> (Change starting day hour)
+User -down-> (Change his own name)
 
 
 'rectangle ApplicationUseCases_partA{
@@ -49,11 +50,11 @@ left to right direction
 'User -down-> (Unsubscribe to card)
 
 
-rectangle AdminUseCases{
-    usecase "Import cards in batch"
-}
-
-Admin -up-|> User
-Admin --> (Import cards in batch)
+'rectangle AdminUseCases{
+'    usecase "Import cards in batch"
+'}
+'
+'Admin -up-|> User
+'Admin --> (Import cards in batch)
 
 @enduml

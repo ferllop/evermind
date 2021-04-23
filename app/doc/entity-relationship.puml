@@ -1,6 +1,6 @@
 @startuml
 
-title Evermind - entity relationship
+title Evermind - Relational model
 skinparam nodesep 70
 left to right direction
 ' uncomment the line below if you're using computer with a retina display
@@ -20,7 +20,7 @@ left to right direction
 ' see: http://plantuml.com/classes.html#More
 hide methods
 hide stereotypes
-
+top to bottom direction
 ' entities
 
 note as N1
@@ -30,10 +30,8 @@ note as N1
       italic is foreign key
 endNote
 
-user .. N1
-N1 .. card
 Table(user, "user\n(User in our system)") {
-    primary_key(id) INTEGER
+    primary_key(id) VARCHAR
     not_null(name) VARCHAR[16]
     not_null(unique(username)) VARCHAR[16]
     not_null(unique(email)) VARCHAR[64]
@@ -43,22 +41,26 @@ Table(user, "user\n(User in our system)") {
     not_null(last_connection) TIMESTAMP
     not_null(sign_in) TIMESTAMP
     not_null(day_start_time) INTEGER
+}
 
-
-
+Table(subscription, "subscription\n(A subscription of\na user to a card") {
+    primary_key(user_id) VARCHAR
+    primary_key(card_id) VARCHAR
+    not_null(level) INTEGER
+    last_review TIMESTAMP
+    next_review TIMESTAMP
 }
 
 Table(card, "card\n(An answer/question set)") {
-    primary_key(id) INTEGER
-    foreign_key(author_id) INTEGER
+    primary_key(id) VARCHAR
+    foreign_key(author_id) VARCHAR
     question VARCHAR
     answer VARCHAR
     labelling MULTIVALUATED VARCHAR
 }
 
-
-user "1" -right- "0..*" card : create
-user "0..*" -right- "0..*" card : is subcribed to
+user "1" -- "0..*" subscription
+card "1" -- "0..*" subscription
 
 
 @enduml

@@ -26,12 +26,11 @@ import com.ferllop.evermind.repositories.listeners.SubscriptionDataStoreListener
 
 import java.util.List;
 
-public class SearchResultsFragment extends Fragment implements CardDataStoreListener, SubscriptionDataStoreListener {
+public class SearchResultsFragment extends Fragment
+        implements CardDataStoreListener, SubscriptionDataStoreListener {
 
     private static final String SEARCH_QUERY = "searchQuery";
     private static final String CARDS_ID = "cardsID";
-    private static final String TAG = "MYAPP-SearchFrag";
-
     private OnSearchHaveResults listener;
     private String searchQuery;
     private String[] cardsID;

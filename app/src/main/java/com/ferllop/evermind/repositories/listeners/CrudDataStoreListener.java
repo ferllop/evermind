@@ -12,5 +12,4 @@ public interface CrudDataStoreListener<T extends Model> {
     void onError(DataStoreError error);
     void onSave(T item);
     void onLoadAll(List<T> items);
-    void onUserDataStoreResult(DataStoreMessage message);
 }

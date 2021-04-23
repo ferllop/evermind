@@ -90,13 +90,13 @@ public class SettingsActivity extends MainNavigationActivity implements UserData
     }
 
     private void importData() {
-        InputStream inputStream = getResources().openRawResource(R.raw.evermind);
-        BufferedReader bufferedReader = new BufferedReader(
-                new InputStreamReader(inputStream, Charset.forName("UTF-8"))
-        );
+        //InputStream inputStream = getResources().openRawResource(R.raw.evermind);
+        //BufferedReader bufferedReader = new BufferedReader(
+                //new InputStreamReader(inputStream, Charset.forName("UTF-8"))
+        //);
         String line = "";
-        try {
-            while((line = bufferedReader.readLine()) != null){
+        //try {
+            //while((line = bufferedReader.readLine()) != null){
                 Log.d(TAG, "importData: line" + line);
                 String[] tokens = line.split(",");
                 String question = tokens[0];
@@ -115,11 +115,11 @@ public class SettingsActivity extends MainNavigationActivity implements UserData
                             new Card(userLocal.getID(), userLocal.getUsername(), question, answer, labels)
                     );
                 }
-            }
+            //}
             Toast.makeText(this, R.string.cards_imported, Toast.LENGTH_SHORT);
-        } catch (IOException err){
-            Log.d(TAG, "importData: " + err);
-        }
+        //} catch (IOException err){
+         //   Log.d(TAG, "importData: " + err);
+        //}
     }
 
     private void saveNewTime() {
@@ -201,11 +201,6 @@ public class SettingsActivity extends MainNavigationActivity implements UserData
 
     @Override
     public void onLoadAll(List<User> user) {
-
-    }
-
-    @Override
-    public void onUserDataStoreResult(DataStoreMessage message) {
 
     }
 

@@ -3,7 +3,7 @@ package com.ferllop.evermind.repositories;
 import com.ferllop.evermind.models.Level;
 import com.ferllop.evermind.models.Subscription;
 import com.ferllop.evermind.repositories.datastores.SubscriptionFirestoreDataStore;
-import com.ferllop.evermind.repositories.fields.FirestoreCollectionsLabels;
+import com.ferllop.evermind.repositories.fields.CollectionsLabels;
 import com.ferllop.evermind.repositories.fields.SubscriptionField;
 import com.ferllop.evermind.repositories.listeners.SubscriptionDataStoreListener;
 import com.ferllop.evermind.repositories.mappers.SubscriptionMapper;
@@ -18,7 +18,7 @@ public class SubscriptionRepository{
     public SubscriptionRepository(SubscriptionDataStoreListener listener) {
         this.dataStore = new SubscriptionFirestoreDataStore(
                 FirebaseFirestore.getInstance(),
-                FirestoreCollectionsLabels.SUBSCRIPTION.getValue(),
+                CollectionsLabels.SUBSCRIPTION.getValue(),
                 new SubscriptionMapper(),
                 listener
         );

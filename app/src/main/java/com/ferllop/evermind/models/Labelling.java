@@ -14,7 +14,6 @@ public class Labelling {
     public Labelling(List<String> labels) {
         for(String label: labels){
             if(!isValid(label)) {
-                Log.d(TAG, "Label: not valid: " + label);
                 throw new AssertionError();
             }
         }
@@ -53,6 +52,6 @@ public class Labelling {
     }
 
     public static boolean isValid(String labelling){
-        return !labelling.matches(".*[^-,\\w].*");
+        return !labelling.matches(".*[^-,\\w\\s].*");
     }
 }

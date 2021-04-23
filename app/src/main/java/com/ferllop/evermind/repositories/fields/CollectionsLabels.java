@@ -1,13 +1,13 @@
 package com.ferllop.evermind.repositories.fields;
 
-public enum FirestoreCollectionsLabels {
+public enum CollectionsLabels {
     CARD("cards"),
     USER("users"),
     SUBSCRIPTION("subscriptions");
 
     private final String value;
 
-    FirestoreCollectionsLabels(String value){
+    CollectionsLabels(String value){
         this.value = value;
     }
 
